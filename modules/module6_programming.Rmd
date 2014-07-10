@@ -1,0 +1,333 @@
+% R bootcamp, Module 5: Programming
+% August 2013, UC Berkeley
+% Jacob Lynn
+
+# `if`-`else` statements
+
+```{r}
+val <- rnorm(1)
+val
+if (val < 0) {
+  "val is negative!"
+} else {
+  "val is positive"
+}
+```
+
+Chaining `if` statements:
+```{r}
+val <- rnorm(1)
+val
+if (val < -1) {
+  "val is more than one standard deviation below the mean."
+} else if (abs(val) <= 1) {
+  "val is within one standard deviation of the mean."
+} else {
+  "val is more than one standard deviation above the mean."
+}
+```
+
+Zero evaluates to `FALSE`, all other numbers evaluate to `TRUE`. (And the string "true" evaluates to `TRUE` too... but not other strings.)
+```{r}
+val <- 3.1
+if (val) {
+  "3.1 is true?"
+}
+```
+```{r}
+if ("true") {
+  "true is true?"
+}
+```
+```{r}
+if ("bear") {
+  "bear is true?"
+}
+```
+
+# Loops
+
+One of the major reasons why programming languages exist is to **automate** away annoying or tedious tasks. Loops are a basic way to do that.
+
+But be careful -- frequently, there is a more R-standard (and usually faster) way to do the same thing.
+
+# `for` loop
+
+Abstract structure of `for loop`:
+```{r,eval=FALSE}
+for (variable in sequence) {
+  statement
+}
+```
+
+More concretely:
+```{r}
+myseq <- seq(5,20,by=5)
+for (i in myseq) {
+  print(i)
+}
+```
+
+And more directly:
+```{r}
+for (i in seq(2,8, by=2)) {
+  print(i)
+}
+```
+
+# `while` loop
+
+Abstractly:
+```{r, eval=FALSE}
+while (condition) {
+  statements
+}
+```
+
+Concretely:
+
+```{r}
+i <- 0
+while (i < 10) {
+  i <- i + 1
+  print(i)
+}
+```
+
+It's easy to create infinite loops!
+
+# Examples: Fibonacci numbers
+
+First 12 Fibonacci numbers:
+```{r}
+myseq[1] <- 0
+myseq[2] <- 1
+for (i in seq(3,12)) {
+  myseq[i] <- myseq[i-2] + myseq[i-1]
+}
+myseq
+```
+
+Fibonacci numbers less than 500:
+```{r}
+myseq[1] <- 0
+myseq[2] <- 1
+i <- 2
+currentVal <- 1
+while (currentVal < 500) {
+  myseq[i+1] <- currentVal
+  currentVal <- myseq[i] + myseq[i+1]
+  i = i+1
+}
+myseq
+```
+
+# Flow control: `next` and `break` statements
+
+`next` skips the current evaluation of the loop statements:
+```{r}
+for (i in seq(1,10)) {
+  if (i == 5) {
+    next
+  }
+  print(i)
+}
+```
+
+`break` immediately ends loop evaluation:
+```{r}
+val <- 0
+i <- 0
+while(TRUE) {
+  i <- i + 1
+  val <- val + rnorm(1)
+  if (abs(val) > 3) {
+    break
+  }
+}
+val
+i
+```
+
+# Avoid loops
+
+Loops are frequently the wrong solution.
+```{r}
+vals <- rnorm(100)
+maxVal <- vals[1]
+for (val in vals) {
+  if (val > maxVal) {
+    maxVal = val
+  }
+}
+maxVal
+```
+
+Try to use builtin functions instead:
+```{r}
+max(vals)
+```
+
+Operate directly on vectors rather than looping over them:
+```{r}
+myseq <- seq(2,20, by =2)
+for(i in seq(1,10)) {
+  myseq[i] <- myseq[i] + 2
+}
+myseq
+seq(2,20, by =2)+2
+```
+
+**Less code** (although sometimes opaque) and **faster** (R-specific).
+
+# User-defined functions
+
+Functions: take **arguments** as input, (usually) **return** values as output.
+
+Why define your own functions? Primary reasons:
+
+1. Reusability
+2. Clarity
+
+# User-defined functions II: we need a function
+
+Remember this?
+```{r}
+val <- 3.1
+if (val) {
+  "3.1 is true?"
+}
+```
+```{r}
+if ("true") {
+  "true is true?"
+}
+```
+```{r}
+if ("bear") {
+  "bear is true?"
+}
+```
+
+# User-defined functions III: a function
+
+```{r, fig.cap=""}
+isItTrue <- function(val) {
+  if (val) {
+    return(paste(val, "is true"))
+  } else {
+    paste(val, "ain't true")
+  }
+}
+
+isItTrue(3.1)
+isItTrue("false")
+isItTrue("bear")
+```
+
+Note:
+
+1. R is *loosely-typed*: it doesn't care what kind of variable we pass as arguments until it's time to use them (but then it may throw an error)
+2. Return results via return() statement **or** last line evaluated
+
+# User-defined functions IV: invisible return
+
+```{r, fig.cap=""}
+histNormal <- function(N) {
+  vals <- rnorm(N)
+  hist(vals)
+  invisible(max(vals))
+}
+
+histNormal(1000)
+max <- histNormal(1000)
+max
+```
+
+# User-defined functions V: multiple arguments, default values
+
+```{r, echo=TRUE, results='markup', fig.cap=""}
+newFunction <- function(num, threshold=0, modifier=2) {
+  if (num < threshold) {
+    return(num / modifier)
+  } else {
+    return(num * modifier)
+  }
+}
+newFunction(2.6)
+```
+
+R lazily matches arguments from left to right:
+```{r}
+newFunction(2.6, 3)
+newFunction(2.6, 3, 1.3)
+```
+
+But we can explicitly specify which argument is which:
+```{r}
+newFunction(2.6, modifier=1.3, threshold=3)
+```
+
+And we can pass the other arguments to most pre-defined R functions:
+```{r, fig.cap=""}
+hist(sapply(rnorm(10000), newFunction), breaks=60, freq=FALSE)
+hist(sapply(rnorm(10000), newFunction, modifier=1), breaks=60, freq=FALSE)
+```
+
+# User-defined functions VI: `...` argument
+
+```{r, fig.cap=""}
+
+args(hist)
+histNormalWrapper <- function(N, ...) {
+  vals <- rnorm(N)
+  hist(vals, ...)
+}
+
+histNormalWrapper(1000)
+histNormalWrapper(1000, breaks=50)
+```
+
+# Anonymous functions
+
+Define throwaway functions on the fly:
+```{r, fig.cap=""}
+hist(sapply(rnorm(10000), function(x) {x*3}), breaks=60, freq=FALSE)
+```
+
+(Note that a function is just an object like any other R object -- that means that it can be passed as an argument to other functions like sapply().)
+
+# Scoping
+
+**Scope** refers to which variables a given piece of code can access.
+
+R uses **lexical scoping**: functions can access variables in their own scope relative to where they are **defined** (**not** relative to where they are called).
+
+Scoping is a hard topic... maybe best understood by example:
+```{r}
+a <- 1
+b <- 2
+f<-function(x)
+{
+  if (x=="a") {a}
+  else if (x=="b") {b}
+}
+g<-function(x)
+{
+  a <- 2
+  b <- 1
+  f(x)
+}
+g("a")
+a
+```
+
+(**global** vs. **local** scope)
+
+# Breakout
+
+1) Write a function that returns the mean of N normally distributed random numbers.
+
+2) Extend exercise #1: allow the user to pass the mean and standard deviation of the normal distribution (but provide default values in case they don't), and return both mean and median of the generated random numbers.
+
+3) Write a function that repeatedly generates random normal variables until it generates a random number more than N standard deviations from the mean. Return the number of samples performed up to that point.

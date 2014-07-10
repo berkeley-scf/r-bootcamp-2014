@@ -1,0 +1,19 @@
+Read data into R as:
+library(foreign)
+data <- read.dta('file.dta')
+
+heights.dta:
+Data file from example in Gelman and Hill's Data Analysis using Regression and Mutlilevel/Hierarchical Models
+no apparent meta data, but the book describes the data as from a 1994 survey of adult Americans, and used in the book for regressions of earnings on height.
+The meaning of the codings for various variables should be inferrable from knowing a bit about US demographics - I can help with this if needed.
+
+2004_labeled_processed_race.dta:
+Data used in Gelman's article, 
+[2007] Rich state, poor state, red state, blue state: What's the matter with Connecticut? {\em Quarterly Journal of Political Science} {\bf 2}, 345--367. (Andrew Gelman, Boris Shor, Joseph Bafumi, and David Park) 
+download from http://nowpublishers.com/articles/quarterly-journal-of-political-science/QJPS-6026/supplementary-info
+
+exit poll data from the 2004 election. Again the meaning of the codings for various variables should be inferrable from knowing a bit about US demographics - I can help with this if needed.
+
+Note that the heights data have some continuous variables but the election data are all categorical.
+
+stateIncome.txt is extracted from http://www.census.gov/compendia/databooks/2010/tables/sma_A-33.xls and provides average income by state based on data for 2005-2007.

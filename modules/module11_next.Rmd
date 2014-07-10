@@ -1,0 +1,47 @@
+% R bootcamp, Module 12: Next steps
+% August 2013, UC Berkeley
+% Chris Paciorek
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+```
+
+# The R way
+
+Note to BB: remember to start recording.
+
+As we've seen R is powerful, flexible, and wide-ranging. 
+
+It's also sprawling, disorganized, and use-at-your-own risk. 
+
+Base packages, widely-used packages and packages by frequent R contributors are more trustworthy. 
+
+# Some of the 'features' of R
+
+* R is inconsistent in its naming conventions
+    - Some functions are 'camelCase'; others are 'dot.separated'; others 'use_underscores'. For programmers used to OOP, the use of dots is maddening.
+  * Multiple OOP paradigms and OOP is not as clean or full-featured as other languages
+  * R has multiple graphics packages that different functions use for default plot construction (`base`, `grid`, `lattice`, and `ggplot2`)
+  * R has multiple packages and functions to do the same analysis
+  * R obscures some of what happens behind the scenes in a way that can be confusing and lead to errors: type coercion/casting, recycling, etc.
+
+Any other things that you found frustrating and don't think are well-designed?
+
+
+# R tutorials and materials
+
+Some of this material was borrowed/modified from [Jared Knowles' bootcamp](http://jaredknowles.com/r-bootcamp/)
+
+CRAN has [manuals](http://www.cran.r-project.org/manuals.html) and [contributed learning material](http://www.cran.r-project.org/other-docs.html).
+
+[D-Lab](dlab.berkeley.edu) holds workshops on R and other topics, as well as having drop-in office hours. 
+
+
+# Some good books
+
+* Adler, Joseph; R in a Nutshell (available electronically through OskiCat: [http://uclibs.org/PID/151634](http://uclibs.org/PID/151634)) (hands-on)
+* Chambers, John; Software for Data Analysis: Programming with R (available electronically through OskiCat: [http://dx.doi.org/10.1007/978-0-387-75936-4](http://dx.doi.org/10.1007/978-0-387-75936-4)) (More conceptual/theoretical)
+* Murrell, Paul; R Graphics, 2nd ed. [http://www.stat.auckland.ac.nz/\~paul/RG2e](http://www.stat.auckland.ac.nz/\~paul/RG2e/)
+* Murrell, Paul; Introduction to Data Technologies. [http://www.stat.auckland.ac.nz/\~paul/ItDT/](http://www.stat.auckland.ac.nz/\~paul/ItDT/)
+

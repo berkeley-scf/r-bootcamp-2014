@@ -1,0 +1,37 @@
+% R bootcamp, Module 8: Breakout solutions
+% August 2013, UC Berkeley
+% Chris Krogslund (ckrogslund@berkeley.edu)
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+library(plyr)
+library(reshape2)
+library(ggplot2)
+library(lattice)
+library(gridExtra)
+mydata<-read.csv("data/cpds.csv")
+```
+
+Breakout Questions:
+
+1) Not all variable types are suitable for representation by every ggplot aesthetic.  What kinds of variables can the aesthetics color, size, and shape meaningfully represent? 
+
+2) ggplot graphics are often layered, with some data represented by a set of aesthetics being overlayed upon a different combination of data and aesthetics.  Can you fit simple linear trend lines to every facet of the grided voter turnout graph?  Hint: use a simple linear regression and consult ?geom_smooth
+
+Breakout Answers:
+
+1) 
+
+Color: discrete, continuous, ordered, unordered; 
+Size: discrete, continuous, ordered, unordered; 
+Shape: discrete, unordered
+
+2) 
+
+```{r}
+ggplot(data=mydata, aes(x=year, y=vturn))+geom_point()+facet_wrap(~country)+
+  geom_smooth(method="lm", color="red", size=1)
+```
+
+

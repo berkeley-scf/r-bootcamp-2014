@@ -1,0 +1,60 @@
+% R bootcamp, Module 5: Programming
+% August 2013, UC Berkeley
+% Jacob Lynn
+========================================================
+
+# Solutions to breakout problems: problem #1
+
+1) Write a function that returns the mean of N normally distributed random numbers.
+
+```{r}
+meanOfNormals <- function(N) {
+  mean(rnorm(N))
+}
+
+meanOfNormals(1)
+meanOfNormals(10)
+meanOfNormals(100)
+meanOfNormals(1000)
+meanOfNormals(10000)
+```
+
+# Solutions to breakout problems: problem #2
+
+2) Extend exercise #1: allow the user to pass parameters for the normal distribution, and return both mean and median.
+
+```{r}
+statsOfNormals <- function(N, mean=0, sd=1) {
+  myVars <- rnorm(N, mean, sd)
+  out <- list(mean(myVars), median(myVars))
+  names(out) <- c("mean","median")
+  out
+}
+
+statsOfNormals(1, 5, 2)
+statsOfNormals(10, 5, 1)
+statsOfNormals(100, 3)
+statsOfNormals(1000, 3)
+statsOfNormals(10000, 3)
+```
+
+# Solutions to breakout problems: problem #3
+
+3) Write a function that repeatedly generates random normal variables until it generates a random number more than N standard deviations from the mean. Return the number of samples performed up to that point.
+
+```{r}
+nUntilFluctuation <- function(N) {
+  i <- 0
+  var <- 0
+  while (abs(var) < N) {
+    var = rnorm(1)
+    i = i+1
+  }
+  i
+}
+
+nUntilFluctuation(1.0)
+nUntilFluctuation(2.0)
+nUntilFluctuation(3.0)
+nUntilFluctuation(4.0)
+```

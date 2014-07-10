@@ -1,0 +1,57 @@
+% R bootcamp, Module 2: Breakout solutions
+% August 2013, UC Berkeley
+% Chris Paciorek
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+require(foreign)
+require(fields)
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+vote <- read.dta('../data/2004_labeled_processed_race.dta')
+earnings <- read.dta('../data/heights.dta')
+answers <- c(TRUE, TRUE, FALSE, FALSE)
+update <- c(TRUE, FALSE, TRUE, FALSE)
+```
+
+# Problem 1
+
+Using the presidential preference dataset, create a new column based on *age9* that gives, as a numeric value, the midpoint of the age range assigned to each person. Try to do this with a combination of subsetting and string operations (i.e., can you convert the character numbers to actual numbers). To simplify things, feel free to get rid of the rows for ages "75 and over".
+    
+
+```{r}
+vote$age9 <- as.character(vote$age9)
+vote$age9[vote$age9 == "75 or over"] <- "75-99"
+lower <- as.numeric(substring(vote$age9, 1, 2))
+upper <- as.numeric(substring(vote$age9, 4, 5))
+vote$approxAge <- (lower + upper) / 2
+hist(vote$approxAge, breaks = 40)
+```
+
+# Problem 2
+
+Go back to slide 6 on logical vectors and figure out what is going on in the last few lines of code.
+
+
+```{r}
+answers & update
+answers * update
+as.numeric(answers)*as.numeric(update)
+
+answers | update
+answers + update
+as.logical(answers + update)
+```
+
+# Problem 3
+
+Go back to slide 22 and figure out what is going on with that complicated last line of code.
+
+```{r}
+table(vote$race, vote$pres04)
+xtab <- xtable(table(vote$race, vote$pres04))
+print.xtable
+?print.xtable
+```
+
+So there is a special `print()` method associated with xtables and one of its options is to print out an HTML version of the table. 

@@ -1,0 +1,308 @@
+% R Bootcamp, Module 8: Graphics
+% August 2013, UC Berkeley
+% Chris Krogslund (ckrogslund@berkeley.edu)
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+library(plyr)
+library(reshape2)
+library(ggplot2)
+library(lattice)
+library(gridExtra)
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+mydata <- read.csv("../data/cpds.csv")
+```
+
+# Out with the old...
+
+You've already seen how to construct basic plots 
+
+```{r, fig.cap=" "}
+x<-rnorm(n=1000, mean=0, sd=1)
+
+hist(x=x, breaks=20)
+abline(v=0, col="red", lwd=4)
+plot(density(x), main="Density of x")
+abline(v=0, col="red", lwd=4)
+y<-x^3-2*x^2+0.5*x
+
+dat<-arrange(data.frame(x,y), x)
+plot(dat$x,dat$y, type="p")
+plot(dat$x,dat$y, type="l")
+plot(dat$x,dat$y, type="o")
+
+y<-2*x+rnorm(n=length(x), mean=0, sd=2)
+reg<-lm(y~x)
+plot(x,y)
+abline(reg, col="red", lwd=4)
+```
+
+And so on...
+
+# Out with the old...
+
+- These are nice and everything, but...
+
+- ... they're not like this (made with a single line of code):
+
+
+# ... in with the new!
+
+-lattice (Deepayan Sarkar, ISI, Delhi)
+
+-ggplot2 (Hadley Wickham, again)
+
+- Both are built on "grid", both are really huge improvements over base R graphics
+
+- Both also have entire ***books*** written about them (~200-300 pp.)
+
+# lattice v. ggplot2
+
+- lattice is 
+
+a) faster (though only noticeable over many and large plots), 
+
+b) simpler (at first),
+
+c) better at trellis graphs
+
+d) able to do 3d graphs
+
+- ggplot2 is 
+
+a) generally more elegant, 
+
+b) more syntactically logical (and therefore simpler, once you learn it),
+
+c) better at grouping
+
+d) able to interface with maps
+
+# First, some data
+
+Armingeon et al., *Comparative Political Data Set I*, (2012)
+
+```{r}
+colnames(mydata)
+```
+
+# Basic usage: lattice
+
+The general call for lattice graphics looks something like this:
+
+```{r, eval=FALSE}
+graph_type(formula, data=    , [options])
+```
+
+The specifics of the formula differ for each graph type, but the general format is straightforward
+
+```{r, eval=FALSE}
+x             # Show the distribution of x
+
+x~y           # Show the relationship between x and y 
+
+x~y|A         # Show the relationship between x and y conditional on the values of A
+
+x~y|A*B       # Show the relationship between x and y conditional on the combinations of values in A and B
+
+z~y*x         # Show the 3D relationship between x, y, and z
+```
+
+# Basic usage: ggplot2
+
+The general call for ggplot2 graphics looks something like this:
+
+```{r, eval=FALSE}
+ggplot(data=      , aes(x=    ,y=      , [options]))+geom_xxxx()+...+...+...
+```
+
+Note that ggplot2 graphs in layers (hence the endless +...+...+...), which really makes the extra layer part of the call
+
+```{r, eval=FALSE}
+...+geom_xxxx(data=      , aes(x=     ,y=     ,[options]),[options])+...+...+...
+```
+
+You can see the layering effect by comparing the same graph with different colors for each layer
+
+```{r, fig.cap=" ", warning=FALSE}
+ggplot(data=mydata, aes(x=vturn, y=realgdpgr))+geom_point(color="black")+geom_point(data=mydata, aes(x=vturn, y=unemp), color="red")
+
+ggplot(data=mydata, aes(x=vturn, y=realgdpgr))+geom_point(color="red")+geom_point(data=mydata, aes(x=vturn, y=unemp), color="black")
+```
+
+# lattice v. ggplot2: Kernel Densities
+
+```{r, fig.cap=" ", warning=FALSE}
+densityplot(~vturn, data=mydata) # lattice
+ggplot(data=mydata, aes(x=vturn))+geom_density() # ggplot2
+```
+
+# lattice v. ggplot2: X-Y scatter plots
+
+```{r, fig.cap=" ", warning=FALSE}
+xyplot(outlays~vturn, data=mydata) #lattice
+ggplot(data=mydata, aes(x=vturn, y=outlays))+geom_point() # ggplot2
+```
+
+# lattice v. ggplot2: X-Y line plots
+
+```{r, fig.cap=" ", warning=FALSE}
+xyplot(vturn~year, data=mydata, subset=mydata$country=="France") #lattice (points)
+ggplot(data=subset(x=mydata, subset=country=="France", select=c("vturn", "year")), aes(x=year, y=vturn) )+geom_point() # ggplot2 (points)
+xyplot(vturn~year, data=mydata, subset=mydata$country=="France", type="l") #lattice (line)
+ggplot(data=subset(x=mydata, subset=country=="France", select=c("vturn", "year")), aes(x=year, y=vturn) )+geom_line() # ggplot2 (line)
+```
+
+# lattice v. ggplot2: "trellis" plots 
+```{r, fig.cap=" ", warning=FALSE}
+xyplot(vturn~year|country, data=mydata) #lattice
+ggplot(data=mydata, aes(x=year, y=vturn))+geom_point()+facet_wrap(~country) #ggplot2
+```
+
+# lattice v. ggplot2: countour plots
+```{r, fig.cap=" ", warning=FALSE}
+data(volcano)
+volcano3d <- melt(volcano)
+names(volcano3d) <- c("xvar", "yvar", "zvar")
+contourplot(zvar~xvar+yvar, data=volcano3d) #lattice
+ggplot(data=volcano3d, aes(x=xvar, y=yvar, z = zvar))+geom_contour() #ggplot2
+```
+
+# lattice v. ggplot2: tile/image plots
+```{r, fig.cap=" ", warning=FALSE}
+data(volcano)
+volcano3d <- melt(volcano)
+names(volcano3d) <- c("xvar", "yvar", "zvar")
+levelplot(zvar~xvar+yvar, data=volcano3d) #lattice
+ggplot(data=volcano3d, aes(x=xvar, y=yvar, z = zvar))+geom_tile(aes(fill=zvar)) #ggplot2
+```
+
+# lattice: 3D plots
+```{r, fig.cap=" ", warning=FALSE}
+cloud(outlays~year*vturn, data=mydata, subset=mydata$country=="France")
+cloud(outlays~year*vturn|country, data=mydata, subset=is.element(mydata$country, c("Greece", "Portugal", "Ireland", "Spain"))==T)
+```
+
+# ggplot2: Groups in a single pane
+```{r, fig.cap=" ", warning=FALSE}
+mydata.subset<-subset(x=mydata, subset=is.element(country, c("Greece", "Portugal", "Ireland", "Spain")), select=c("year", "country", "vturn", "realgdpgr"))
+
+ggplot(data=mydata.subset, aes(x=year, y=vturn, color=))+geom_line(aes(color=country))
+ggplot(data=mydata.subset, aes(x=year, y=vturn, linetype=))+geom_line(aes(linetype=country))
+ggplot(data=mydata.subset, aes(x=year, y=vturn, shape=))+geom_point(aes(shape=country))
+ggplot(data=mydata.subset, aes(x=year, y=vturn, shape=))+geom_point(aes(shape=country))
+ggplot(data=mydata.subset, aes(x=year, y=vturn, color=, size=))+geom_point(aes(color=country, size=realgdpgr))
+```
+
+# ggplot2 and the Grammar of Graphics
+
+- By now, you might be noticing some trends in how these two packages approach graphics
+
+- lattice tends to focus on a particular type of graph and how to represent cross-sectional variation by splitting it up into smaller chunks
+
+- Becoming a proficient user of lattice requires learning a huge array of graph-specific formulas and options
+
+- ggplot2 tries to represent much more of the cross-sectional variation by making use of various "aesthetics"; general approach is based on *The Grammar of Graphics*
+
+# ggplot2, aesthetics, and the Grammar of Graphics
+
+- Basic idea is that the visualization of all data requires four items
+
+1) One or more **statistics** conveying information about the data (identities, means, medians, etc.)
+
+2) A **coordinate system** that differentiates between the intersections of statistics (at most two for ggplot, three for lattice)
+
+3) **Geometries** that differentiate between off-coordinate variation in *kind*
+
+4) **Scales** that differentiate between off-coordinate variation in *degree*
+
+- ggplot2 allows the user to manipulate all four of these items
+
+# Anatomy of aes()
+
+```{r, eval=FALSE}
+ggplot(data=      , aes(x=     , y=       , color=      , linetype=     , shape=       , size=       ))
+```
+
+Can you see how the different aesthetic types have been implemented?
+
+# Titles, labels, options, etc.
+```{r, fig.cap=" ", warning=FALSE}
+xyplot(vturn~year, data=mydata, subset=mydata$country=="France", 
+       xlab="The X Label", ylab="The Y Label", xlim=c(1980, 1989), 
+       main="The Title") #lattice (points)
+ggplot(data=subset(x=mydata, subset=country=="France", select=c("vturn", "year")), aes(x=year, y=vturn))+
+  geom_point()+xlab(label="The X Label")+ylab(label="The Y Lab")+xlim(1980,1989)+ggtitle(label="The Title") # ggplot2 (points)
+```
+
+# Combining many plots
+```{r, warning=FALSE}
+x<-rnorm(n=1000, mean=0, sd=1)
+y<-x^3-2*x^2+0.5*x
+
+dat<-arrange(data.frame(x,y), x)
+par(mfrow=c(3,1))
+plot(dat$x,dat$y, type="p")
+plot(dat$x,dat$y, type="l")
+plot(dat$x,dat$y, type="o")
+
+plot1=ggplot(data=mydata.subset, aes(x=year, y=vturn, color=))+geom_line(aes(color=country))
+plot2=ggplot(data=mydata.subset, aes(x=year, y=vturn, linetype=))+geom_line(aes(linetype=country))
+plot3=ggplot(data=mydata.subset, aes(x=year, y=vturn, shape=))+geom_point(aes(shape=country))
+grid.arrange(plot1, plot2, plot3, nrow=3, ncol=1)
+```
+
+# Exporting your fancy graphics
+
+Two basic image types
+
+1) Raster/Bitmap (.png, .jpeg)
+
+Every pixel of a plot contains its own separate coding; not so great if you want to resize the image
+
+```{r, eval=FALSE}
+jpeg(filename="bah.png", width=   , height=    )
+plot(x,y)
+dev.off()
+```
+
+2) Vector (.pdf, .ps)
+
+Every element of a plot is encoded with a function that gives its coding conditional on several factors; great for resizing
+
+```{r, eval=FALSE}
+pdf(filename="bah.pdf", width=   , height=    )
+plot(x,y)
+dev.off()
+```
+
+# Exporting your fancy graphics with ggplot
+
+```{r, eval=FALSE}
+ggsave(filename=, plot=, scale=, width=, height=)
+```
+
+# Breakout!
+
+- Two-part breakout
+
+1) Not all variable types are suitable for representation by every ggplot aesthetic.  What kinds of variables can the aesthetics color, size, and shape meaningfully represent? 
+
+2) ggplot graphics are often layered, with some data represented by a set of aesthetics being overlayed upon a different combination of data and aesthetics.  Can you fit simple linear trend lines to every facet of the grided voter turnout graph?  Hint: use a simple linear regression and consult ?geom_smooth
+
+# Breakout Answers!
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,224 @@
+\batchmode
+\makeatletter
+\def\input@path{{/accounts/gen/vis/paciorek/staff/workshops/r-bootcamp-2013/schedule//}}
+\makeatother
+\documentclass[12pt]{article}\usepackage{graphicx, color}
+%% maxwidth is the original width if it is less than linewidth
+%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
+\makeatletter
+\def\maxwidth{ %
+  \ifdim\Gin@nat@width>\linewidth
+    \linewidth
+  \else
+    \Gin@nat@width
+  \fi
+}
+\makeatother
+
+\definecolor{fgcolor}{rgb}{0.2, 0.2, 0.2}
+\newcommand{\hlnumber}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlfunctioncall}[1]{\textcolor[rgb]{0.501960784313725,0,0.329411764705882}{\textbf{#1}}}%
+\newcommand{\hlstring}[1]{\textcolor[rgb]{0.6,0.6,1}{#1}}%
+\newcommand{\hlkeyword}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlargument}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlcomment}[1]{\textcolor[rgb]{0.180392156862745,0.6,0.341176470588235}{#1}}%
+\newcommand{\hlroxygencomment}[1]{\textcolor[rgb]{0.43921568627451,0.47843137254902,0.701960784313725}{#1}}%
+\newcommand{\hlformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hleqformalargs}[1]{\textcolor[rgb]{0.690196078431373,0.250980392156863,0.0196078431372549}{#1}}%
+\newcommand{\hlassignement}[1]{\textcolor[rgb]{0,0,0}{\textbf{#1}}}%
+\newcommand{\hlpackage}[1]{\textcolor[rgb]{0.588235294117647,0.709803921568627,0.145098039215686}{#1}}%
+\newcommand{\hlslot}[1]{\textit{#1}}%
+\newcommand{\hlsymbol}[1]{\textcolor[rgb]{0,0,0}{#1}}%
+\newcommand{\hlprompt}[1]{\textcolor[rgb]{0.2,0.2,0.2}{#1}}%
+
+\usepackage{framed}
+\makeatletter
+\newenvironment{kframe}{%
+ \def\at@end@of@kframe{}%
+ \ifinner\ifhmode%
+  \def\at@end@of@kframe{\end{minipage}}%
+  \begin{minipage}{\columnwidth}%
+ \fi\fi%
+ \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
+ \colorbox{shadecolor}{##1}\hskip-\fboxsep
+     % There is no \\@totalrightmargin, so:
+     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
+ \MakeFramed {\advance\hsize-\width
+   \@totalleftmargin\z@ \linewidth\hsize
+   \@setminipage}}%
+ {\par\unskip\endMakeFramed%
+ \at@end@of@kframe}
+\makeatother
+
+\definecolor{shadecolor}{rgb}{.97, .97, .97}
+\definecolor{messagecolor}{rgb}{0, 0, 0}
+\definecolor{warningcolor}{rgb}{1, 0, 1}
+\definecolor{errorcolor}{rgb}{1, 0, 0}
+\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
+
+\usepackage{alltt}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+\usepackage{setspace}
+\onehalfspacing
+
+\makeatletter
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage{/accounts/gen/vis/paciorek/latex/paciorek-asa,times,graphics}
+\input{/accounts/gen/vis/paciorek/latex/paciorekMacros}
+%\renewcommand{\baselinestretch}{1.5}
+\usepackage[unicode=true]{hyperref}
+\hypersetup{unicode=true, pdfusetitle,
+bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=true,}
+
+\makeatother
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+
+\begin{document}
+
+
+\title{R bootcamp - August 2013: Syllabus/schedule}
+
+\maketitle
+
+\subsection*{}
+
+Unless otherwise noted, sessions are 60-70 minutes long, including
+time for work on breakout problems.
+\begin{itemize}
+\item Day 1 morning (8:30-12:30) (learning R)
+
+\begin{itemize}
+\item Session 0: introduction, what is R, starting R, why R? why not R?
+(Chris P.) (10 minutes)
+\item Session 1: basics of R, with Rstudio (Chris P.)
+
+\begin{itemize}
+\item R as a calculator
+\item helpful shortcuts: tab-complete, up arrow, Ctrl-\{up arrow\}
+\item vectors and indexing and subset assignment
+\item some basic functions; help()
+\item vectorized calculations, comparisons
+\item basic R objects: vectors, matrices, dataframes, lists
+\item managing R objects, the R workspace
+\item basic graphics
+\item breakout problems  
+\end{itemize}
+\item Session 2: Working with data (Chris P.)
+
+\begin{itemize}
+\item dataframes/matrices
+\item attributes, missing values and factors
+\item subsetting
+\item strings
+\item reading/writing data; working directory, foreign package
+\item breakout problems 
+\end{itemize}
+\item Break (20 minutes)
+\item Session 3: Calculations (Chris P.)
+
+\begin{itemize}
+\item vectorized calculations and efficiency
+\item apply, lapply
+\item tabulation, stratified analyses, aggregation, merging data
+\item breakout problems 
+\end{itemize}
+\end{itemize}
+\item Lunch (on your own) (12:30-1:30)
+\item Day 1 afternoon (1:30-5:00) (programming and real-world work)
+
+\begin{itemize}
+\item Session 4: R resources (Chris P.) (30 minutes)
+
+\begin{itemize}
+\item packages - installing, loading, namespaces
+\item getting R help online 
+\end{itemize}
+\item Session 5: programming in R (Jacob)
+
+\begin{itemize}
+\item loops, if-else
+\item writing your own functions, function arguments, functions as objects
+\item basic scoping and environments
+\item breakout problems
+\end{itemize}
+\item Break (20 minutes)
+\item Session 6: doing useful stuff (Chris K.)
+
+\begin{itemize}
+\item stratified analyses: groupwise operations (see plyr: subset, mutate,
+summarise, arrange); split-apply-combine
+\item reshape
+\item regression, GLMs 
+\item breakout problems/homework 
+\end{itemize}
+\end{itemize}
+\item Day 2 morning (9-12:30) (more real-world work)
+
+\begin{itemize}
+\item Session 7: Some core tools (Chris P.) (45 minutes)
+
+\begin{itemize}
+\item go over homework
+\item smoothing
+\item optimization
+\item simulation, sample()
+\item dates and times
+\item breakout 
+\end{itemize}
+\item Session 8: Graphics (Chris K.)
+
+\begin{itemize}
+\item exporting graphics (vector/raster formats)
+\item lattice graphics
+\item ggplot2
+\item breakout problems 
+\end{itemize}
+\item Break (20 minutes)
+\item Session 9: Workflows, coding practices, and project management (Jarrod)
+
+\begin{itemize}
+\item scripting, source(); separating data, code, figures
+\item R in batch mode and command line mode
+\item timing, memory use, debugging
+\item reproducible research with knitr, Rmd
+\item version control for code and data; Git
+\item breakout problems
+\end{itemize}
+\end{itemize}
+\item Lunch (on your own) (12:30-1:30)
+\item Day 2 afternoon (1:30-4:30) (more advanced topics) 
+
+\begin{itemize}
+\item Session 10: quick tastes of advanced topics (Chris P.)
+
+\begin{itemize}
+\item OOP (S3, S4, ReferenceClasses)
+\item computing on the language (using R to write and evaluate R code)
+\item errors and try-catch
+\item encodings
+\item working with databases
+\item breakout problems
+\end{itemize}
+\item Break + Feedback forms (20 minutes)
+\item Session 11: parallel processing (Chris P.)
+
+\begin{itemize}
+\item foreach
+\item parApply and variants
+\item RNG issues
+\item breakout problems 
+\end{itemize}
+\item Session 12: Wrapping up (Chris P.) (15 minutes)
+
+\begin{itemize}
+\item R inconsistencies and different ways to do things 
+\item Where to learn more (campus and non-campus resources)\end{itemize}
+\end{itemize}
+\end{itemize}
+
+
+\end{document}

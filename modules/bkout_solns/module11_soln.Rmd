@@ -1,0 +1,44 @@
+% R bootcamp, Module 11: Breakout solutions
+% August 2013, UC Berkeley
+% Chris Paciorek
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+require(foreign)
+require(fields)
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+vote <- read.dta('../data/2004_labeled_processed_race.dta')
+```
+
+# Problem
+
+Fit logistic regression models of preference for Bush/Kerry on income, stratified by state. Use `foreach` or a parallel version of one of the *apply* variants.  Collect the resulting coefficients (and standard errors, if you're feeling ambitious) in a clean format such as a matrix or data frame.  Check to see if multiple cores are being used in the execution.
+
+
+```{r}
+require(parallel)
+nCores <- 4
+p <- sum(table(vote$income) != 0)
+
+spl <- split(vote, vote$state)
+system.time({out <- lapply(spl, 
+  function(x) {
+    mod <- glm(pres04 ~ income, data = x)
+    summary(mod)$coefficients[ , 1:2] # leave off z-value/p-value
+  }
+)})
+
+system.time({out <- mclapply(spl, 
+  function(x) {
+    mod <- glm(pres04 ~ income, data = x)
+    summary(mod)$coefficients[ , 1:2] # leave off z-value/p-value
+  }
+)})
+coefs <- array(unlist(out), c(p, 2, length(spl)))
+identical(c(coefs[ , , 3]), c(out[[3]])) # check ordering...
+
+```
+
+Note that there was no point in parallelizing this particular computation given the size of the problem!
+

@@ -1,0 +1,64 @@
+% R bootcamp, Module 6/Overnight: Breakout solutions
+% August 2013, UC Berkeley
+% Chris Paciorek and Chris Krogslund
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+require(foreign)
+require(fields)
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+vote <- read.dta('../data/2004_labeled_processed_race.dta')
+earnings <- read.dta('../data/heights.dta')
+```
+
+# Breakout
+
+Consider the voting preference data. Fit a logistic regression to the data for California (state number 5), modeling preference for Bush (pres04=2) vs. Kerry (pres04=1) (removing the other candidates) as a function of income, potentially including additional covariates such as sex, race and age. What do you find in terms of how income associates with voting preference?
+
+```{r}
+ca <- vote[vote$state == 5, ]
+ca <- ca[ca$pres04 == 1 | ca$pres04 == 2, ]
+ca$pres04[ca$pres04 == 2] <- 0 # 0=bush; 1=kerry
+mod0 <- glm(pres04 ~ income, data = ca, family = binomial)
+mod1 <- glm(pres04 ~ income + race + sex, data = ca, family = binomial)
+# stratified models
+mod_white <- glm(pres04 ~ income + sex, data = ca[ca$race == 'white', ], 
+  family = binomial)
+mod_black <- glm(pres04 ~ income + sex, data = ca[ca$race == 'black', ], 
+  family = binomial)
+```
+
+How do you predict the probability of voting for Kerry for a given set of covariate values? Consider the `predict.glm()` function and what its help page says. Or write code that converts from the model coefficients to the probability scale. Compare the predicted probability of voting for Kerry for a white male of high income with a white male of low income. Do the same for white females. 
+
+```{r}
+predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', race = 'white'))
+predict(mod1, newdata = data.frame(income = "$15,000-$29,999", sex = 'female', race = 'white'))
+predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', race = 'black'))
+```
+
+
+# Ambitious solutions
+
+Using the tools for stratified analyses we have seen today, fit separate models of voting preference as a function of (personal) income and sex (and potentially additional covariates) for each state (or a collection of states of interest to you). How do the effect of income and sex vary by state? The file stateIncome.txt is a tab-delimited file of mean income by state. See if the effects of income and sex are correlated with the state-level mean income. 
+
+The following only barely scratches the surface of what one could/should do.
+
+```{r}
+vote_white <- vote[vote$race == "white", ]
+spl <- split(vote_white, vote_white$state)
+out <- sapply(spl, function(x) {
+  mod <- glm(pres04 ~ income + sex, data = x, family = binomial)
+  mod$coef
+})
+
+stateIncome <- read.table('../data/stateIncome.txt', sep = '\t', stringsAsFactors = FALSE)
+names(stateIncome) <- c('state', 'avgIncome')
+stateIncome <- stateIncome[-9, ] # remove DC
+identical(stateIncome[ , 1], row.names(state.x77)) # check ordering
+
+plot(stateIncome$avgIncome, out[6, ], xlab = 'average state income', ylab = 'female effect')
+# identify(stateIncome$avgIncome, out[6, ])
+stateIncome[37, ] # perhaps a large standard error?
+```
+

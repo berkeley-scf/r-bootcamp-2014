@@ -1,0 +1,167 @@
+% R bootcamp, Module 0: Recruit processing
+% August 2013, UC Berkeley
+% Chris Paciorek
+
+# A few administrative things
+
+## Where to find stuff
+
+The bSpace site is the main site for the bootcamp. It has information on software installation, a zip file with the materials for the modules (under Resources), and the Chat Room for online questions.  See http://dlab.berkeley.edu/training/r-bootcamp for accessing the bSpace site and note that you need to follow the instructions there when you access the site for the first time.
+
+The Github site (https://github.com/berkeley-scf/r-bootcamp-2013) is updated more regularly and is the master repository for materials for the modules; you can also get the individual files from Github. Instructions for accessing the materials on Github are available in one of the later slides in this document and on the bSpace site.
+
+If you have an administrative question, email r-bootcamp@lists.berkeley.edu.
+
+## Airbears Wireless
+
+If you need Airbears access as a guest (i.e., you don't have a CalNet ID), try:
+
+* Username:	guest-181500 Password:	gXbxexOly4
+* Username:	guest-181501 Password:	UPZMRTr5u5
+* Username:	guest-181502 Password:	DCHCaq3ehO
+* Username:	guest-181503 Password:	Mvn1FrnsXz
+* Username:	guest-181504 Password:	gkMj6jLG4m
+* Username:	guest-181505 Password:	7i9fuiiyYN
+* Username:	guest-181506 Password:	Z0WHEruUWZ
+* Username:	guest-181507 Password:	m12GkCsrqc
+
+
+# A little warm-up
+
+Note to BB: Remember to start recording.
+
+This isn't really all that related to R, programming or statistics, but check out the 'binary solo' in this [Flight of the Conchords song](http://www.geeksugar.com/Flight-Conchords-Binary-Robot-Video-19831449).
+
+# How we'll operate
+
+The bootcamp will be organized in modules, each of which will be a combination of lecture/demo presentation concluded by a breakout session in which you'll work on a problem or two. Solutions to the breakout problems will be presented before the start of the next module. 
+
+Counselors will be available to help answer any questions you have (just wave to one of them), or feel free to just ask the presenter during the presentation. The counselors will also be monitoring the [bSpace chat room](https://bspace.berkeley.edu/portal/site/28905ed6-df96-4778-b2a7-d87fb6405ba2/page/f99ad10a-a841-4345-926d-c419b1a02913), so feel free to type in a question there and one of the counselors will answer the question. Or if you know the answer, help us out by answering it yourself or adding your thoughts. 
+
+Your counseloRs are: Jacob, Laura, Chris K., Jarrod, Tessa, Fu, Chao, Marla, and Christine.
+
+# Suggestions on how to get the most out of the bootcamp
+
+I encourage you to:
+
+- try out the code as we walk through it
+- We'll illustrate a lot of syntax and concepts by example; keep your eyes open!
+- try to guess what the syntax means in cases we haven't yet seen that syntax
+- play with it and try variations and try to break it and see what happens
+- tell us if something interesting happens as you experiment, or post a comment in the chat room
+- ask questions of me, the counselors, and in the chat room
+
+This is a bootcamp. So there may be some pain involved! If you find yourself not following everything, that's ok. You may miss some details, but try to follow the basics and the big picture. 
+
+# RStudio and R Markdown
+
+We'll present most of the material from within RStudio, using R Markdown documents with embedded R code. R Markdown is an extension to the Markdown markup language which makes it easy to write HTML in a simple plain text format.  This allows us to both run the R code directly as well as compile on-the-fly to an HTML file that can be used for presentation. All files will be available on [bspace, under Resources](https://bspace.berkeley.edu/portal/site/28905ed6-df96-4778-b2a7-d87fb6405ba2) and [Github](https://github.com/berkeley-scf/r-bootcamp-2013).  Note that Github is likely to have the most up-to-date documents while bSpace will only be updated periodically.
+
+Note: The files named *moduleX_blah_slides.html* have individual slides, while the files named *moduleX_blah.html* have the same content but all on one page.
+
+Warning: in some cases the processing of the R code in the R Markdown is screwy and the slides have error messages that do not occur if you just run the code directly in R or RStudio. 
+
+# Using Github to get the documents
+
+To download the files from Github, you can do the following. 
+
+## Within RStudio
+
+Within RStudio go to Project->New Project->Version Control->Git and enter:
+
+- "Repository URL": https://github.com/berkeley-scf/r-bootcamp-2013
+- "Project Directory Name": r-bootcamp-2013 (or something else of your choosing)
+- "Directory": ~/Desktop (or somewhere of your choosing)
+
+Then to update from the repository to get any changes we've made, you can select (from within RStudio):
+Tools->Version Control->Pull Branches
+
+or from the Workspace/History/Git window:
+Git->More->Pull Branches
+
+Be warned that you probably do not want to make your own notes or changes to the files we are providing. Because if you do, and you then do a "Git Pull" to update the materials, you'll have to deal with the conflict between your local version and our version. You probably will want to make a personal copy of such files in another directory or by making copies of files with new names.
+
+## From a terminal window
+
+- cd /directory/where/you/want/repository/located
+- git clone https://github.com/berkeley-scf/r-bootcamp-2013/
+
+Then to update from the repository to get any changes we've made:
+
+- cd /directory/where/you/put/the/repository/r-bootcamp-2013
+- git pull
+
+
+# What is R?
+
+- R is an Open Source (and freely available) environment for statistical computing and graphics
+- It is a full-featured programming language, in particular a scripting language (with similarities to Matlab and Python)
+- It can be run interactively or as a batch/background job
+- R is being actively developed with ongoing updates/new releases
+- R has a variety of built-in as well as community-provided packages that extend its functionality with code and data; see [CRAN](http://www.cran.r-project.org) for the thousands of add-on packages
+- It is freely-available and modifiable 
+- Available for Windows, Mac OS X, and [Linux](http://dilbert.com/strips/comic/1995-06-24/)
+
+
+# Modes of using R
+
+- From the command line in a Linux/Mac terminal window
+- Using the Windows/Mac GUIs
+- Using the RStudio GUI, an 'integrated development environment'
+- Running an R script in the background on a Linux/Mac machine (Windows?)
+
+# Starting R and RStudio
+
+The pieces of an R session include:
+
+- The R console
+- Scripts containing your code
+- Help files
+- Graphics windows
+- Workspace containing your objects, which hold data and information
+
+RStudio provides an integrated development environment in which all of these pieces are in a single application and tightly integrated, with a built-in editor for your code/scripts. 
+
+# Why R?
+
+- R is widely used (statisticians, scientists, social scientists) and has the widest statistical functionality of any software
+- Users add functionality via packages all the time
+- R is free and available on all major platforms
+- As a scripting language, R is very powerful, flexible, and easy to use
+- As a scripting language, R allows for reproducibility and automating tasks
+- As a language, R can do essentially anything
+- Wide usage helps to improve quality and reduce bugs
+- R can interact with other software, databases, the operating system, the web, etc.
+- R is built on C and can call user-written and external C code and packages (in particular, see the *Rcpp* R package)
+
+# Why Not R?
+
+* Other software is better than R at various tasks
+    
+    E.g., [Python](http://imgs.xkcd.com/comics/python.png) is very good for text manipulation, interacting with the operating system, and as a glue for tying together various applications/software in a workflow
+* R can be much slower than compiled languages (but is often quite fast with good coding practices!)
+* R's packages are only as good as the person who wrote them; no explicit quality control
+* R is a sprawling and unstandardized
+
+# What are my other options? Get me out of here!
+
+- Python
+- Matlab/Octave
+- Julia?
+- C/C++
+- SAS
+- Stata
+
+# My hidden agenda - see Session 9
+
+The building blocks of scientific computing:
+
+- reproducibility
+- scripting
+- version control
+- automating repetitive tasks
+
+# The Legal Stuff
+
+- Some of this material was drawn from [Jared Knowles R bootcamp](http://jaredknowles.com/r-bootcamp/url)
+- You are free to use, modify and redistribute any of this material with or without attribution

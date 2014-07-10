@@ -1,0 +1,407 @@
+% R bootcamp, Module 2: Working with objects and data
+% August 2013, UC Berkeley
+% Chris Paciorek
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+```
+
+# Matrices and Arrays
+
+Note to BB: remember to start recording.
+
+Let's review matrices
+
+- Matrices are two-dimensional collections of values of the same type
+- We can have numeric, integer, character, or logical matrices, character matrices.
+- You can't mix types within a matrix
+```{r}
+mat <- matrix(rnorm(12), nrow = 3, ncol = 4)
+mat
+
+# vectorized calcs work with matrices too
+mat*4
+mat <- cbind(mat, 1:3)
+mat
+```
+
+Arrays are like matrices but can have more or fewer than two dimensions.
+```{r}
+arr <- array(rnorm(12), c(2, 3, 4))
+arr
+```
+
+# Attributes
+
+Objects have *attributes*.
+
+```{r attr}
+attributes(mat)
+rownames(mat) <- c('first', 'middle', 'last')
+mat
+attributes(mat)
+
+mat[4]
+attributes(mat) <- NULL
+mat
+is.matrix(mat)
+```
+What can you infer about what a matrix is in R?
+
+What kind of object are the attributes themselves? How do I check?
+
+# Matrices are stored column-major
+
+This is like Fortran but not like C. 
+
+```{r}
+mat <- matrix(1:12, 3, 4)
+mat
+c(mat)
+```
+You can go smoothly back and forth between a matrix (or an array) and a vector:
+```{r}
+identical(mat, matrix(c(mat), 3, 4))
+identical(mat, matrix(c(mat), 3, 4, byrow = TRUE))
+```
+
+This is a common cause of bugs!
+
+
+# Missing values and other special values
+
+Since it was designed by statisticians, R handles missing value very well relative to other languages.
+
+* `NA` is a missing value
+```{r}
+vec <- rnorm(12)
+vec[c(3, 5)] <- NA
+vec
+length(vec)
+sum(vec)
+sum(vec, na.rm = TRUE)
+hist(vec)
+is.na(vec)
+```
+Be careful because many R functions won't warn you that they are ignoring the missing values.
+
+* To infinity and beyond
+```{r}
+big <- 1e500 
+big
+big + 7
+```
+
+* `NaN` stands for Not a Number
+```{r}
+sqrt(-5)
+big - big
+1/0
+```
+
+* `NULL`
+```{r nulldata}
+vec <- c(vec, NULL) 
+vec
+length(vec)
+a <- NULL
+a + 7
+a[3, 4]
+is.null(a)
+myList <- list(a = 7, b = 5)
+myList$a <- NULL  # works for data frames too
+myList
+```
+
+`NA` can hold a place but `NULL` cannot.
+`NULL` is useful for having a function argument default to 'nothing'. See `help(crossprod)`, which can compute either $X^{\top}X$ or $X^{\top}Y$.  
+
+
+# Logical vectors
+```{r}
+answers <- c(TRUE, TRUE, FALSE, FALSE)
+update <- c(TRUE, FALSE, TRUE, FALSE)
+
+answers & update
+answers | update
+# note the vectorized boolean arithmetic
+
+# what am I doing here?
+sum(answers)
+mean(answers)
+answers + update
+```
+
+What do you think R is doing to do arithmetic on logical vectors?
+
+Tricks with logicals...
+
+```{r}
+identical(answers & update, as.logical(answers * update))
+identical(answers | update, as.logical(answers + update))
+```
+
+# Data frames
+
+A review from Module 1...
+
+- Data frames are combinations of vectors of the same length, but can be of different types
+- Data frames are what is used for standard rectangular (record by field) datasets, similar to a spreadsheet
+- Data frames are a functionality that both sets R aside from some languages (e.g., Matlab) and provides functionality similar to some statistical packages (e.g., Stata, SAS)
+
+```{r}
+require(foreign)
+vote=read.dta('../data/2004_labeled_processed_race.dta')
+class(vote)
+head(vote)
+str(vote)
+```
+
+# Data frames are (special) lists!
+
+```{r}
+is.list(vote)
+length(vote)
+vote[[3]][1:5]
+lapply(vote, class) 
+```
+
+`lapply()` is a function used on lists; it works here to apply the `class()` function to each element of the list, which in this case is each field/column.
+
+# But lists are also vectors!
+
+```{r}
+length(vote)
+someFields <- vote[c(3,5)]
+head(someFields)
+identical(vote[c(3,5)], vote[ , c(3,5)])
+```
+
+In general the placement of commas in R is crucial, but here, two different operations give the same result because of the underlying structure of data frames.
+
+# Factors
+- A factor is a special and sometimes frustrating data type in R used for categorical data
+
+```{r fac}
+class(vote$sizeplac)
+head(vote$sizeplac) # What order are the factors in?
+levels(vote[["sizeplac"]])
+summary(vote$sizeplac)
+```
+
+- What if we don't like the order these are in? Factor order is important for all kinds of things like plotting, analysis of variance, regression output, and more
+
+# Ordering the Factor
+- Ordered factors simply have an additional attribute explaining the order of the levels of a factor
+- This is a useful shortcut when we want to preserve some of the meaning provided by the order
+- Think ordinal data
+
+```{r orderedfac}
+vote <- within(vote, 
+     sizeplac_ord <- ordered(sizeplac, levels = 
+     levels(sizeplac)[c(5,3,4,2,1)])
+)
+head(vote$sizeplac_ord)
+levels(vote$sizeplac_ord)
+```
+
+Try to decipher what I just did with that complicated single line of code.
+
+# Reclassifying Factors
+- Turning factors into other data types can be tricky. All factor levels have an underlying numeric structure.
+
+```{r fac2}
+students <- factor(c('basic','proficient','advanced','basic', 
+      'advanced', 'minimal'))
+levels(students)
+unclass(students)
+```
+
+- What's wrong?
+- Be careful! The best way to convert a factor is to convert it to a character first.
+
+```{r}
+students <- factor(c('basic','proficient','advanced','basic', 
+      'advanced', 'minimal'))
+score = c(minimal = 3, basic = 1, advanced = 13, proficient = 7) # a named vector
+score["advanced"]  # look up by name
+students[3]
+score[students[3]]
+score[as.character(students[3])]
+```
+
+What's going wrong?
+
+# Subsetting
+
+There are many ways to select subsets in R. The syntax below is useful for vectors, matrices, data frames, arrays and lists.
+
+```{r}
+vec <- rnorm(20)
+mat <- matrix(vec, 4, 5)
+rownames(mat) <- letters[1:4]
+mat
+```
+1) by direct indexing
+```{r}
+vec[c(3, 5, 12:14)]
+vec[-c(3,5)]
+mat[c(2,4), 5]
+rowInd <- c(1, 3, 4)
+colInd <- c(2, 2, 1)
+mat[cbind(rowInd, colInd)]
+```
+Note the last usage where we give it a 2-column matrix of indices
+
+2) by a vector of logicals
+```{r}
+cond <- vec > 0
+vec[cond]
+mat[mat[,1] > 0, ]
+```
+3) by a vector of names
+```{r}
+mat[c('a', 'd', 'a'), ]
+```
+4) using *subset()*
+```{r}
+subset(mtcars, mpg > 20)
+```
+
+
+# Assignment into subsets
+
+We can assign into subsets by using similar syntax, as we saw with vectors.
+
+```{r}
+vec[c(3, 5, 12:14)] <- 1:5
+mat[2, 3:5] <- rnorm(3)
+mat[mat[,1] > 0, ] <- -Inf
+```
+
+# Strings
+
+R has lots of functionality for character strings. Usually these are stored as vectors of strings, each with arbitrary length.
+
+```{r}
+chars <- c('hi', 'hallo', "mother's", 'father\'s', "He said, \"hi\"" )
+length(chars)
+nchar(chars)
+paste("bill", "clinton", sep = " ")  # paste together a set of strings
+paste(chars, collapse = ' ')  # paste together things from a vector
+
+strsplit("This is the R bootcamp", split = " ")
+substring(chars, 2, 3)
+chars2 <- chars
+substring(chars2, 2, 3) <- "ZZ"
+chars2
+```
+We can search for patterns in character vectors and replace patterns (both vectorized!)
+```{r}
+grep("ther", chars)
+gsub("hi", "Hi", chars)
+```
+
+# Regular expressions (regex or regexp)
+
+Some of you may be familiar with using *regular expressions*, which is functionality for doing sophisticated pattern matching and replacement with strings. *Python* and *Perl* are both used extensively for such text manipulation. 
+
+R has a full set of regular expression capabilities available through the *grep()*, *gregexpr()*, and *gsub()* functions (among others - many R functions will work with regular expressions).
+
+You can basically do any regular expression/string manipulations in R, though the syntax may be a bit clunky at times.
+
+# The working directory
+
+To read and write from R, you need to have a firm grasp of where in the computer's filesystem you are reading and writing from. 
+
+```{r}
+getwd()  # what directory will R look in?
+setwd('~/Desktop/r-bootcamp-2013') # change the working directory
+setwd('/Users/paciorek/Desktop/tmp') # absolute path
+getwd()
+setwd('../r-bootcamp-2013') # relative path
+```
+Many errors and much confusion result from you and R not being on the same page in terms of where in the directory structure you are.
+
+# Reading data into R
+
+The workhorse for reading into a data frame is *read.table()*, which allows any separator (CSV, tab-delimited, etc.). *read.csv()* is a special case of *read.table()* for CSV files.
+
+```{r, cache=TRUE}
+rta <- read.table("../data/RTAData.csv", sep = ",", head = TRUE)
+rta[1:5, 1:5]
+dim(rta)
+# great, we're all set, right?
+# Not so fast...
+unlist(lapply(rta, class))[1:5]
+# ?read.table
+rta2 <- read.table("../data/RTAData.csv", sep = ",", head = TRUE,
+       stringsAsFactors = FALSE)
+rta2[3,3]
+unlist(lapply(rta2, class))[1:5]
+# let's delve more deeply
+levels(rta[ , 2])[c(1:5, 3041:3044)]
+rta3 <- read.table("../data/RTAData.csv", sep = ",", head = TRUE, 
+      stringsAsFactors = FALSE, na.strings = c('NA', 'x'))
+unlist(lapply(rta3, class))[1:5]
+
+# checking...
+missing <- which(rta[ , 2] == "")
+missing[1:5]
+rta3[head(missing), ]
+```
+
+It's good to first look at your data in plain text format outside of R and then to check it after you've read it into R.
+
+# Other ways to read data into R
+
+The *read.table()* family of functions just skims the surface of things...
+
+1) You can also read in a file as vector of characters, one character string per line of the file with `readLines()`, and then post-process it. 
+2) You can read fixed width format (constant number of characters per field) with `read.fwf()`.
+
+# Reading 'foreign' format data
+
+We've already seen an example of reading data produced by another statistical package with `read.dta`. There are a number of other formats that we can handle for either reading or writing. Let's see `library(help = foreign)`.
+
+R can also read in (and write out) Excel files, netCDF files, HDF5 files, etc., in many cases through add-on packages from CRAN. 
+
+A pause for a (gentle) diatribe:
+
+Please try to avoid using Excel files as a data storage format. It's proprietary, complicated (can have multiple sheets), allows a limited number of rows/columns, and files are not easily readable/viewable (unlike simple text files).
+
+# Writing data out from R
+
+Here you have a number of options. 
+
+1) You can write out R objects to an R Data file, as we've seen, using *save()* and *save.image()*.
+2) You can use *write.csv()* and *write.table()* to write data frames/matrices to flat text files with delimiters such as comma and tab.
+3) You can use *write()* to write out matrices in a simple flat text format.
+4) You can use *cat()* to write to a file, while controlling the formatting to a fine degree.
+5) You can write out in the various file formats mentioned on the previous slide
+
+# Writing out plots and tables
+```{r}
+pdf('myplot.pdf', width = 7, height = 7)
+x <- rnorm(10); y <- rnorm(10)
+plot(x, y)
+dev.off()
+```
+`xtable()` formats tables for HTML and Latex (the default).
+
+```{r}
+require(xtable)
+print(xtable(table(vote$race, vote$pres04)), type = "html")
+```
+
+Recall our discussion of the `summary()` function used on either a vector or a regression object. What do you think is going on with call to `print()` above? 
+
+# Breakout
+
+1. Using the voting/presidential preference dataset, create a new column based on *age9* that gives, as a numeric value, the midpoint of the age range assigned to each person. Try to do this with a combination of subsetting and string operations (i.e., can you convert the character numbers to actual numbers). To simplify things, feel free to get rid of the rows for ages "75 and over".
+    
+2. Go back to slide 6 on logical vectors and figure out what is going on in the last few lines of code.
+
+3. Go back to slide 22 and figure out what is going on with that complicated last line of code.

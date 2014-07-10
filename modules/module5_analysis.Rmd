@@ -1,0 +1,679 @@
+% R Bootcamp, Module 6: Useful Stuff
+% August 2013, UC Berkeley
+% Chris Krogslund (ckrogslund@berkeley.edu)
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+library(foreign)
+library(plyr)
+library(reshape2)
+library(ggplot2)
+library(lmtest)
+library(sandwich)
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+mydata <- read.dta("../data/2004_labeled_processed_race.dta")
+```
+
+# Now you've got all the basic pieces
+
+Note to BB: remember to start recording.
+
+- You know about objects in R, how to deal with them, basic calculations, working with data, and how to build your own functions 
+- That's great and everything, but by now you're probably wondering...
+- Why all that?
+    * If I wanted to calculate 439/0.834, I could just use... a calculator
+    * If I wanted to merge/subset/plot data, I could just use... (shudder) Excel or Stata
+- Why learn (or create) a new language like R just to do stuff we could already do reasonably well?
+
+# The Answer
+
+R is great at doing **useful stuff** and making it very, very easy
+
+# Useful Stuff (abridged, obviously)
+
+- Not enough time to cover all the very useful things R can do, so we'll have to focus on four of them:
+    - Stratified Analyses/Group-wise Operations (plyr)
+    - Data Manipulation (reshape2) 
+    - Regression (lm, glm, plm, lmtest)
+    - Advanced/Fancy graphics (lattice/ggplot2 graphics)
+    
+- We'll get to this last one tomorrow
+
+# An Example Dataset
+
+Replication data from Gelman et al., "Rich State, Poor State, Red State, Blue State: What’s the Matter with Connecticut?", *Quarterly Journal of Political Science*, 2007, 2: 345-367
+
+>For decades, the Democrats have been viewed as the party of the poor, with the Republicans representing the rich. Recent presidential elections, however, have shown a reverse pattern, with Democrats performing well in the richer blue states in the northeast and coasts, and Republicans dominating in the red states in the middle of the country and the south. Through multilevel modeling of individual- level survey data and county- and state-level demographic and electoral data, we reconcile these patterns.
+Furthermore, we find that income matters more in red America than in blue America. In poor states, rich people are much more likely than poor people to vote for the Republican presidential candidate, but in rich states (such as Connecticut), income has a very low correlation with vote preference.
+
+# First Steps
+
+Let's see what we're dealing with here.
+
+```{r}
+str(mydata)
+```
+
+This is a bit messy, but it's a decently comprehensive overview.
+
+# First Steps
+- A good place to start with our data is to calculate summary statistics
+- ***Caution***: Although we have some inherently ratio (continuous) variables, the authors binned the data to create ordinal variables (e.g.: Age and Income).  *Bonus*: the bins have differing widths.
+
+# First Steps
+Take a look at the variable "age9"
+```{r}
+unique(mydata$age9)
+```
+
+Binned Age | True Age
+------ | -----
+1|18-24
+2|25-29
+3|30-39 
+4|40-44
+5|45-49
+6|50-59
+7|60-64
+8|65-74
+9|75+
+
+Let's look at the mean, standard deviation, median, and quintiles for "age9"
+```{r}
+mean(x=as.numeric(mydata$age9), na.rm=T)
+sd(x=as.numeric(mydata$age9), na.rm=T)
+median(x=as.numeric(mydata$age9), na.rm=T)
+quantile(x=as.numeric(mydata$age9), na.rm=T, probs=seq(from=0, to=1, by=0.2))
+```
+
+# First Steps
+We could do the same thing for "income"
+
+```{r}
+unique(mydata$income)
+```
+
+Binned Income | True Income
+------ | -----
+1|$0-$14,999
+2|$15,000-$29,999
+3|$30,000-$49,999 
+4|$50,000-$74,999
+5|$75,000-$99,999
+6|$100,000-$149,999
+7|$150,000-$199,999
+8|$200,000- ∞
+
+```{r}
+mean(x=as.numeric(mydata$income), na.rm=T)
+sd(x=as.numeric(mydata$income), na.rm=T)
+median(x=as.numeric(mydata$income), na.rm=T)
+quantile(x=as.numeric(mydata$income), na.rm=T, probs=seq(from=0, to=1, by=0.2))
+```
+
+# First Steps
+- Of course, we're not limited to looking ordinal or ratio variables for our summary statistics
+- In fact, some of the most interesting statistics take the form of frequencies
+
+# For example...
+Gender balance?
+
+```{r}
+gender<-mydata$sex
+gender<-gender[!is.na(gender)]
+unique(gender)
+```
+```{r}
+males<-length(gender[gender=="male"])/length(gender)*100
+cat(males,"%", sep="")
+females<-length(gender[gender=="female"])/length(gender)*100
+cat(females,"%", sep="")
+```
+
+# For example...
+Political balance?
+
+```{r}
+partyid<-mydata$partyid
+partyid<-partyid[!is.na(partyid)]
+unique(partyid)
+```
+```{r}
+dem<-length(partyid[partyid=="democrat"])/length(partyid)*100
+cat(dem,"%", sep="")
+rep<-length(partyid[partyid=="republican"])/length(partyid)*100
+cat(rep,"%", sep="")
+ind<-length(partyid[partyid=="independent"])/length(partyid)*100
+cat(ind,"%", sep="")
+other<-length(partyid[partyid=="something else"])/length(partyid)*100
+cat(other,"%", sep="")
+```
+
+# For example...
+Racial balance?
+
+```{r}
+race<-mydata$race
+race<-race[!is.na(race)]
+unique(race)
+```
+```{r}
+white<-length(race[race=="white"])/length(race)*100
+cat(white,"%", sep="")
+black<-length(race[race=="black"])/length(race)*100
+cat(black,"%", sep="")
+hispanic<-length(race[race=="hispanic/latino"])/length(race)*100
+cat(hispanic,"%", sep="")
+asian<-length(race[race=="asian"])/length(race)*100
+cat(asian,"%", sep="")
+other<-length(race[race=="other"])/length(race)*100
+cat(other,"%", sep="")
+```
+
+# This can get really complicated really quickly
+- Suppose we wanted to know how voting behavior in the 2004 Presidential Election varies by race
+- That means we have to calculate frequencies as above for each race in {White, Black, Hispanic/Latino, Asian, Other} and each vote choice in {Bush, Kerry, Nader, Other, No Vote}.
+
+# How to tackle these tabulations?
+All techniques for this problem rely on the ***split-apply-combine*** strategy
+
+**First,** take the data (or some object) and *split* it into smaller datasets on the basis of some variable
+
+Dataset A
+
+x|y|z
+-----|------|-----
+1|1|1
+2|2|1
+3|3|1
+4|1|2
+5|2|2
+6|3|2
+
+Datasets B and C (Dataset A split according to "z") 
+
+x|y|z| | | | | |x|y|z
+-----|------|-----|-----|-----|-----|-----|-----|-----|-----|-----
+1|1|1| | | | | |4|1|2
+2|2|1| | | | | |5|2|2
+3|3|1| || | | |6|3|2
+
+# How to tackle these tabulations?
+**Second,** apply some function to each one of the smaller datasets/objects 
+
+Example function: *mean* of variables "x" and "y"
+
+Datasets B' and C'
+
+mean(x)|mean(y)|z| | | | | |mean(x)|mean(y)|z
+-----|------|-----|-----|-----|-----|-----|-----|-----|-----|-----
+2|2|1| | | | | |5|2|2
+
+# How to tackle these tabulations?
+**Third,** combine the results into a larger dataset/object
+
+Datasets B' and C'
+
+mean(x)|mean(y)|z| | | | | |mean(x)|mean(y)|z
+-----|------|-----|-----|-----|-----|-----|-----|-----|-----|-----
+2|2|1| | | | | |5|2|2
+
+Dataset A'
+
+mean(x)|mean(y)|z
+-----|------|-----
+2|2|1
+5|2|2
+
+# Tabulating the hard way
+
+**Split**
+```{r}
+white.sub<-mydata[which(mydata$race=="white" & is.na(mydata$race)==F),]
+
+black.sub<-mydata[which(mydata$race=="black" & is.na(mydata$race)==F),]
+
+hispanic.sub<-mydata[which(mydata$race=="hispanic/latino" & is.na(mydata$race)==F),]
+```
+
+**Apply**
+```{r}
+white.pres04<-white.sub$pres04
+white.pres04<-white.pres04[is.element(white.pres04, c(1:3,9))==T]
+
+white.k<-length(white.pres04[white.pres04==1])/length(white.pres04)*100
+white.b<-length(white.pres04[white.pres04==2])/length(white.pres04)*100
+white.n<-length(white.pres04[white.pres04==3])/length(white.pres04)*100
+white.o<-length(white.pres04[white.pres04==9])/length(white.pres04)*100
+
+black.pres04<-black.sub$pres04
+black.pres04<-black.pres04[is.element(black.pres04, c(1:3,9))==T]
+
+black.k<-length(black.pres04[black.pres04==1])/length(black.pres04)*100
+black.b<-length(black.pres04[black.pres04==2])/length(black.pres04)*100
+black.n<-length(black.pres04[black.pres04==3])/length(black.pres04)*100
+black.o<-length(black.pres04[black.pres04==9])/length(black.pres04)*100
+```
+.
+.
+.
+
+**Combine**
+```{r}
+percent<-as.vector(c(white.k, white.b, white.n, white.o, black.k, black.b, black.n, black.o))
+vote<-rep(c("kerry", "bush", "nader", "other"),2)
+race<-c(rep("white", 4), rep("black", 4))
+newdata<-data.frame(race,vote,percent)
+print(newdata)
+```
+.
+.
+.
+
+# Tabulating the less-hard way
+
+**Split**
+```{r}
+races=split(mydata$pres04, mydata$race)
+```
+**Apply/Combine**
+```{r}
+results<-matrix(NA, nrow=length(races), ncol=length(c(1:3,9)))
+rownames(results)<-objects(races)
+colnames(results)<-c("kerry", "bush", "nader", "other")
+print(results)
+for(i in 1:length(races)){
+race.subset<-races[[i]]
+race.subset<-race.subset[is.element(race.subset, c(1:3,9))==T]
+results[i,"kerry"]<-length(race.subset[race.subset==1])/length(race.subset)*100
+results[i,"bush"]<-length(race.subset[race.subset==2])/length(race.subset)*100
+results[i,"nader"]<-length(race.subset[race.subset==3])/length(race.subset)*100
+results[i,"other"]<-length(race.subset[race.subset==9])/length(race.subset)*100
+}
+print(results)
+```
+
+# Tabulating the easy way
+
+```{r}
+cleandat<-mydata[which(is.element(mydata$pres04, c(1:3,9))==T & is.na(mydata$race)==F),]
+
+vote.by.race<-ddply(.data=cleandat, .variables=.(race), summarize, 
+      kerry=length(pres04[pres04==1])/length(pres04)*100, 
+      bush=length(pres04[pres04==2])/length(pres04)*100, 
+      nader=length(pres04[pres04==3])/length(pres04)*100, 
+      other=length(pres04[pres04==9])/length(pres04)*100 
+)
+
+print(vote.by.race)
+```
+
+# plyr
+
+*plyr* (Hadley Wickham, Rice) is the go-to package for all your splitting-applying-combining needs
+
+Among its many benefits (above base R capabilities):
+
+- Don't have to worry about different name, argument, or output consistencies
+- Easily parallelized 
+- Input from, and output to, data frames, matricies, and lists
+- Progress bars for lengthy computation
+- Informative error messages
+
+# Using plyr: how to select functions
+
+Two questions:
+
+1) What is the class of your input object?
+
+2) What is the class of your desired output object?
+
+- If you want to split a **d**ata frame, and return results as a **d**ata frame, you use **dd**ply
+
+- If you want to split a **d**ata frame, and return results as a **l**ist, you use **dl**ply
+
+- If you want to split a **l**ist, and return results as a **d**ata frame, you use **ld**ply
+
+# Using plyr: how to write commands
+
+All of the major plyr functions have the same basic syntax
+
+```{r, eval=FALSE}
+xxply(.data=   , .variables=.(     ,     ,     ,...), .fun=        )
+```
+
+Consider the previous example using ddply:
+
+```{r, eval=FALSE}
+vote.by.race<-ddply(.data=cleandat, .variables=.(race), summarize, 
+      kerry=length(pres04[pres04==1])/length(pres04)*100, 
+      bush=length(pres04[pres04==2])/length(pres04)*100, 
+      nader=length(pres04[pres04==3])/length(pres04)*100, 
+      other=length(pres04[pres04==9])/length(pres04)*100 
+)
+```
+
+# Using plyr: dlply
+
+```{r, eval=TRUE}
+vote.by.race.dl<-dlply(.data=cleandat, .variables=.(race), summarize, 
+      kerry=length(pres04[pres04==1])/length(pres04)*100, 
+      bush=length(pres04[pres04==2])/length(pres04)*100, 
+      nader=length(pres04[pres04==3])/length(pres04)*100, 
+      other=length(pres04[pres04==9])/length(pres04)*100 
+)
+
+print(vote.by.race.dl)
+```
+
+# Using plyr: ldply
+
+```{r, eval=TRUE}
+races=split(cleandat, cleandat$race)
+
+objects(races)
+vote.by.race.ld<-ldply(.data=races, summarize, 
+      kerry=length(pres04[pres04==1])/length(pres04)*100, 
+      bush=length(pres04[pres04==2])/length(pres04)*100, 
+      nader=length(pres04[pres04==3])/length(pres04)*100, 
+      other=length(pres04[pres04==9])/length(pres04)*100 
+)
+
+print(vote.by.race.ld)
+```
+
+# Using plyr: llply
+
+```{r, eval=TRUE}
+vote.by.race.ll<-llply(.data=races, summarize, 
+      kerry=length(pres04[pres04==1])/length(pres04)*100, 
+      bush=length(pres04[pres04==2])/length(pres04)*100, 
+      nader=length(pres04[pres04==3])/length(pres04)*100, 
+      other=length(pres04[pres04==9])/length(pres04)*100 
+)
+
+print(vote.by.race.ll)
+```
+
+# Common functions used with plyr: transform
+
+*transform*: applies a function to a data frame and returns the altered version of that data frame
+
+```{r}
+olddat<-ddply(.data=cleandat, .variables=.(race), transform, old=ifelse(age65=="65 or over", 1,0))
+
+print(olddat[20:40,c("sex", "race", "age65", "old")])
+```
+
+Note that *transform* can't do transformations that involve the results of other transformations from the same call
+
+```{r}
+oldmendat<-ddply(.data=cleandat, .variables=.(race), transform, old=ifelse(age65=="65 or over", 1,0), old.man=ifelse(old==1 & sex=="male",1,0))
+```
+
+For this, we need...
+
+# Common functions used with plyr: mutate
+
+*mutate*: just like transform, but it executes the commands iteratively so that transformations can be carried out that rely on previous transformations from the same call
+
+```{r}
+oldmendat<-ddply(.data=cleandat, .variables=.(race), mutate, old=ifelse(age65=="65 or over", 1,0), old.man=ifelse(old==1 & sex=="male",1,0))
+
+print(oldmendat[40:80,c("sex", "race", "age65", "old", "old.man")])
+```
+
+# Common functions used with plyr: arrange
+
+*arrange*: orders a data frame on the basis of column contents
+
+```{r}
+snippet<-oldmendat[1:50,c("sex", "race", "age65", "old", "old.man")]
+print(snippet)
+arrange(df=snippet, sex, desc(age65))
+arrange(df=snippet, desc(sex), age65)
+```
+
+# Last note on functions
+
+Any function will work, just remember that when writing *function(x)*, the *x* that you're getting is one slice of your input object with a single value for your chosen splitting variable.  Is the same class as your original object, and all functions you could apply to the original object can be applied its subsets (this may be important in the very near future, hint hint...)
+
+# Reshaping Data
+
+- Often times, even before we're interested in doing all this group-wise stuff, we need to reshape our data
+
+- For instance, say you download a huge dataset from the World Bank, IMF, OECD, etc.
+
+- There's a good chance your data will look something like this:
+
+# Reshaping Data
+
+```{r, include=FALSE}
+country<-c("Australia", "Austria", "Belgium", "Canada", "Denmark", "France")
+var_1995<-runif(6,0,100)
+var_1996<-runif(6,0,100)
+var_1997<-runif(6,0,100)
+var_1998<-runif(6,0,100)
+var_1999<-runif(6,0,100)
+var_2000<-runif(6,0,100)
+var_2001<-runif(6,0,100)
+wb<-data.frame(country, var_1995,var_1996,var_1997,var_1998,var_1999,var_2000,var_2001)
+```
+```{r, echo=FALSE}
+print(wb)
+```
+
+# Reshaping Data
+- If you've ever tried to make a time series graph of any kind, you know this can be really annoying
+
+- But fear not...
+
+# reshape2
+
+- Once again, Hadley Wickham has made all our lives easier, this time with *reshape2*
+
+- Though base R does have commands for reshaping data (*aggregate*, *by*, *tapply*, etc.), each of their input commands are slightly different and are only suited for specific reshaping tasks
+
+- *reshape2* really only has two commands, and their functions are in their names: *melt* and *cast*
+
+# Using reshape2: melt
+
+Basic idea is to take your data frame and melt it into three essential components
+
+1) Case identifiers (e.g.: an individual, a country)
+
+2) Characteristic variables (e.g.: age, race, gender)
+
+3) Variable values (e.g.: {White, Black, Hispanic/Latino, Asian, Other} for race)
+
+# Using reshape2: melt
+
+In the example from before, our only case identifier is *country*, and our only characteristic variable is *var* (with observations from 1995-2001)
+
+```{r, echo=FALSE}
+print(wb)
+```
+
+# Using reshape2: melt
+
+The generic call for melt looks like this:
+
+```{r, eval=FALSE}
+melt(data=       , id.vars=c("    ", "     ", "    ",...))
+```
+
+Note that you can also customize the names of the columns that store the variable names and values
+
+We can melt the previous example to a nice time series by the call
+
+```{r}
+wb.melted<-melt(data=wb, id.vars="country")
+print(wb.melted)
+wb.melted$variable<-as.numeric(gsub(pattern="var_", replacement="", x=wb.melted$variable))
+print(wb.melted)
+```
+
+This comes in really handy when we want to make, say, panel data graphs (though random variabes aren't that great to look at)
+```{r, echo=FALSE}
+ggplot(data=wb.melted, aes(x=variable, y=value, colour=))+geom_line(aes(colour=country), size=1)
+```
+
+# Using reshape2: cast (acast, dcast)
+
+- Sometimes, once we've melted down the data, we want to recast it
+
+- There are two main functions for this: **a**cast (for producing **a**rrays) and **d**cast (for producing **d**ata frames)
+
+# Using reshape2: cast (acast, dcast)
+
+The generic call for (d)cast looks like this:
+
+```{r eval=FALSE}
+dcast(data=      , formula=x_var1+x_var2 ~ y_var1+yvar2, fun.aggregate=      )
+```
+
+Note that data frames cannot be produced with more than two dimensions
+
+# Using reshape2: cast (acast, dcast)
+
+We can then recast our melted data from the previous example back into its original format
+
+```{r}
+wb.melted$variable<-paste("var_", wb.melted$variable, sep="")
+
+wb.recast<-dcast(data=wb.melted, formula=country~variable)
+
+print(wb.recast)
+```
+
+# Regression
+
+Running regressions in R is extremely simple, very straightforwd (though doing things with standard errors requires a little extra work)
+
+- Most basic, catch-all regression function in R is *glm*
+
+- *glm* fits a generalized linear model with your choice of family/link function (gaussian, logit, poisson, etc.)
+
+- *lm* is just a standard linear regression (equivalent to glm with family=gaussian(link="identity"))
+
+# glm
+
+The basic glm call looks something like this:
+
+```{r eval=FALSE}
+glm(formula=y~x1+x2+x3+..., family=familyname(link="linkname"), data=       )
+```
+
+There are a whole bunch of families and links to use (help(family) for a full list), but some essentials are **binomial(link = "logit")**, **gaussian(link = "identity")**, and **poisson(link = "log")**
+
+# An Example
+
+Suppose we want to regress being an old man on political party identification, income, and religion using a logit model.  The glm call would be something like this:
+
+```{r}
+oldman.reg<-glm(formula=old.man~partyid+income+relign8, family=binomial(link="logit"), data=oldmendat)
+```
+
+When we store this regression in an object, we get access to several items of interest
+
+```{r}
+objects(oldman.reg)
+oldman.reg$coefficients
+oldman.reg$df.residual
+oldman.reg$aic
+```
+
+# summary.glm()
+But often times, we just want a nice summary.  R has a series of "summary" functions for certain object classes ("glm", in this case) that automatically create nice overviews of the regression results from all the information contained in a fitted object.
+
+```{r}
+sum.oldman.reg<-summary(oldman.reg)
+
+print(sum.oldman.reg)
+```
+
+Can also extract useful things from the summary object (like a matrix of coefficient estimates...)
+
+```{r}
+objects(sum.oldman.reg)
+coef<-sum.oldman.reg$coefficients
+print(coef)
+```
+
+
+# Factors with glm
+
+Note that, in our results, R has broken up our variables into their different factor levels (as it will do whenever your regressors have factor levels)
+
+If your data aren't factorized, you can tell glm to factorize a variable (i.e. create dummy variables on the fly) by writing
+
+```{r, eval=FALSE}
+glm(formula=y~x1+x2+factor(x3), family=family(link="link"), data=data)
+```
+
+This is really helpful for doing fixed effects (although you may need to use either the package *plm*, or de-mean the data in advance, if you want two-way fixed effects -- and careful with those standard errors)
+
+# Interactions with glm
+
+x1:x2 interacts all terms in x1 with all terms in x2
+
+```{r}
+summary(glm(formula=old.man~partyid:relign8, family=binomial(link="logit"), data=oldmendat))
+```
+
+# Interactions with glm
+
+x1*x2 produces the cross of x1 and x2, or x1+x2+x1:x2
+
+```{r}
+summary(glm(formula=old.man~partyid*relign8, family=binomial(link="logit"), data=oldmendat))
+```
+
+# Regression Diagnostics
+
+The package *lmtest* has most of what you'll need to run basic regression diagnostics.
+
+Breusch-Pagan Test for Heteroscedasticity 
+```{r}
+bptest(oldman.reg)
+```
+
+Breusch-Pagan Test for Heteroscedasticity 
+```{r}
+bptest(oldman.reg)
+```
+
+Also have tests for autocorrelation of disturbances (Durwin-Watson), higher-order serial correlation (Breusch-Godfrey)
+
+Can also estimate heteroskedasticity/autocorrelation consistent standard errors via *coeftest* and the *sandwich* package
+```{r}
+coeftest(x=oldman.reg, vcov.=vcovHC)
+```
+
+For panel data, the *plm* package also allows you to compute panel-corrected (Beck-Katz) standard errors
+
+# Breakout and overnight homework
+
+Consider the voting preference data. Fit a logistic regression to the data for California (state number 5), modeling preference for Bush (pres04=2) vs. Kerry (pres04=1) (removing the other candidates) as a function of income, potentially including additional covariates such as sex, race and age. What do you find in terms of how income associates with voting preference?
+
+How do you predict the probability of voting for Kerry for a given set of covariate values? Consider the `predict.glm()` function and what its help page says. Or write code that converts from the model coefficients to the probability scale. Compare the predicted probability of voting for Kerry for a white male of high income with a white male of low income. Do the same for white females. 
+
+If you're feeling ambitious...
+
+Using the tools for stratified analyses we have seen today, fit separate models of voting preference as a function of (personal) income and sex (and potentially additional covariates) for each state (or a collection of states of interest to you). How do the effect of income and sex vary by state? The file stateIncome.txt is a tab-delimited file of mean income by state. See if the effects of income and sex are correlated with the state-level mean income. 
+
+For our purposes here, don't worry much about the uncertainty in the estimates you get in the logistic regression modeling, but of course in a real analysis you would need to do this. 
+
+Note that the translation from the state numbers to names can be obtained by looking at:
+`numToName <- data.frame(name = row.names(state.x77), num = 1:50)`.
+
+# Breakout Answers!
+
+
+
+
+
+
+
+

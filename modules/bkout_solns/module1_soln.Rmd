@@ -1,0 +1,38 @@
+% R bootcamp, Module 2: Breakout solutions
+% August 2013, UC Berkeley
+% Chris Paciorek
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+require(foreign)
+require(fields)
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+vote <- read.dta('../data/2004_labeled_processed_race.dta')
+earnings <- read.dta('../data/heights.dta')
+```
+
+# Problem 1
+
+Create a new R object that contains the heights in meters ($1 m \approx 39.4 in$) using the *height1* and *height2*  variables in the *earnings* dataset. Make a histogram of the new variable with breakpoints between the bins every 10 cm.
+
+
+```{r}
+inchPerMeter <- 39.4
+inchPerFoot <- 12
+hgt_m <- (earnings$height1 * inchPerFoot + earnings$height2) / inchPerMeter
+hist(hgt_m, breaks = seq(1.4, 2.1, by = .1))
+```
+
+# Problem 2
+
+For a random subset of 100 individuals from the earnings dataset, create a vector with their earnings.
+
+
+```{r}
+smp <- sample(1:nrow(earnings), 100)
+sub <- earnings$earn[smp]
+```
+
+
+

@@ -1,0 +1,119 @@
+% R bootcamp, Module 9: Breakout solutions
+% August 2013, UC Berkeley
+% Jarrod Millman
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+```
+
+# Problem 1 & 2
+
+See last slide of presentation for details.
+
+# Problem 3
+
+Debug `fun3` in `r-bootcamp-2013/modules/src/profile-example.R`.
+
+<pre><code class="r"># Two changes
+fun3 &lt;- function(x) {
+    omit &lt;- F
+    n &lt;- ncol(x) <strike>nrow(x)</strike>
+    for (i in 1:n)
+      omit &lt;- omit | s.na(x[, i]) <strike>is.na(x[i, ])</strike>
+    x[!omit, ]
+}
+</code></pre>
+
+As shown above, the broken version of this function was working on rows.  The
+correct version operates on columns.
+
+# Problem 4
+
+Profile and interpret results.
+
+
+```{bash}
+$ ./profile-example.R
+   user  system elapsed
+ 43.992   0.018  44.306
+   user  system elapsed
+  0.454   0.004   0.467
+   user  system elapsed
+  0.081   0.002   0.084
+
+$ R CMD Rprof profile-1.out
+
+Each sample represents 0.02 seconds.
+Total run time: 44.04 seconds.
+
+Total seconds: time spent in function and callees.
+Self seconds: time spent in function alone.
+
+   %       total       %        self
+ total    seconds     self    seconds    name
+ 100.0     44.04       1.0      0.46     "fun1"
+ 100.0     44.04       0.0      0.00     "print"
+ 100.0     44.04       0.0      0.00     "unix.time"
+  98.7     43.48      98.7     43.48     "rbind"
+   0.2      0.10       0.2      0.10     "any"
+
+
+   %        self       %      total
+  self    seconds    total   seconds    name
+  98.7     43.48      98.7     43.48     "rbind"
+   1.0      0.46     100.0     44.04     "fun1"
+   0.2      0.10       0.2      0.10     "any"
+
+$ R CMD Rprof profile-2.out
+Each sample represents 0.02 seconds.
+Total run time: 0.46 seconds.
+
+Total seconds: time spent in function and callees.
+Self seconds: time spent in function alone.
+
+   %       total       %        self
+ total    seconds     self    seconds    name
+ 100.0      0.46      69.6      0.32     "fun2"
+ 100.0      0.46       0.0      0.00     "print"
+ 100.0      0.46       0.0      0.00     "unix.time"
+   8.7      0.04       8.7      0.04     "any"
+   8.7      0.04       8.7      0.04     "is.na"
+   4.3      0.02       4.3      0.02     "!"
+   4.3      0.02       4.3      0.02     "+"
+   4.3      0.02       4.3      0.02     "matrix"
+
+
+   %        self       %      total
+  self    seconds    total   seconds    name
+  69.6      0.32     100.0      0.46     "fun2"
+   8.7      0.04       8.7      0.04     "any"
+   8.7      0.04       8.7      0.04     "is.na"
+   4.3      0.02       4.3      0.02     "!"
+   4.3      0.02       4.3      0.02     "+"
+   4.3      0.02       4.3      0.02     "matrix"
+
+$ R CMD Rprof profile-3.out
+
+Each sample represents 0.02 seconds.
+Total run time: 0.08 seconds.
+
+Total seconds: time spent in function and callees.
+Self seconds: time spent in function alone.
+
+   %       total       %        self
+ total    seconds     self    seconds    name
+ 100.0      0.08      25.0      0.02     "fun3"
+ 100.0      0.08       0.0      0.00     "print"
+ 100.0      0.08       0.0      0.00     "unix.time"
+  50.0      0.04      50.0      0.04     "is.na"
+  25.0      0.02      25.0      0.02     "|"
+
+
+   %        self       %      total
+  self    seconds    total   seconds    name
+  50.0      0.04      50.0      0.04     "is.na"
+  25.0      0.02     100.0      0.08     "fun3"
+  25.0      0.02      25.0      0.02     "|"
+
+```

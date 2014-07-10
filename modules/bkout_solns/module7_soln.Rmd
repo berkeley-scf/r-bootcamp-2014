@@ -1,0 +1,47 @@
+% R bootcamp, Module 7: Breakout solutions
+% August 2013, UC Berkeley
+% Chris Paciorek
+
+```{r chunksetup, include=FALSE} 
+# include any code here you don't want to show up in the document,
+# e.g. package and dataset loading
+require(foreign)
+require(fields)
+if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
+earnings <- read.dta('../data/heights.dta')
+```
+
+# Problem 1
+
+Suppose you wanted to do 10-fold cross-validation for some sort of regression model fit to the *earnings* dataset. Write some R code that produces a field in the dataset that indicates which fold each observation is in. Ensure each of the folds has an equal (or as nearly equal as possible if the number of observations is not divisible by 10) number of observations. Hint: consider the *times* argument to the `rep()` function.
+
+```{r}
+nFolds <- 10
+n <- nrow(earnings)
+tmp <- round(n / nFolds) 
+foldSize <- c(rep(tmp, nFolds - 1), n-tmp*(nFolds-1))
+if(sum(foldSize) != n) stop("division into folds is incorrect")
+fold <- rep(1:nFolds, times = foldSize)
+if(sum(table(fold) == foldSize) != nFolds) stop("division into folds is incorrect")
+set.seed(0)
+earnings$fold <- sample(fold)
+```
+
+
+# Problem 2
+
+Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size `n` from a skewed or discrete distribution and show that if `n` is big enough, the distribution of the means (of each sample of size `n`) looks approximately normal in a histogram. Do it without any looping! 
+
+```{r}
+sampleSizes <- c(10, 50, 300)
+
+plotFun <- function(n, numReps = 10000) {
+   devs <- matrix(rchisq(n*numReps, df = 2), nrow = 10000)
+   hist(rowMeans(devs), xlab = 'mean of sample', 
+   main = paste("n = ", n, sep = ''))
+}
+
+par(mfrow = c(1, length(sampleSizes)), mai = c(.5, .5, .3, .1))
+sapply(sampleSizes, plotFun)
+```
+

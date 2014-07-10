@@ -1,0 +1,1 @@
+zip modules/modules.zip modules/module*{Rmd,html} data/*dta data/cpds.csv data/2004*csv data/stateIncome.txt data/README modules/make_slides modules/bkout_solns/*Rmd modules/figs/* modules/src/*  modules/Makefile preparation/*txt
