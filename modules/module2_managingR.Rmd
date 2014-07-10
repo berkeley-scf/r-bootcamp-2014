@@ -1,5 +1,5 @@
-% R bootcamp, Module 4: R packages and resources
-% August 2013, UC Berkeley
+% R bootcamp, Module 2: Managing R and R resources
+% August 2014, UC Berkeley
 % Chris Paciorek
 
 ```{r chunksetup, include=FALSE} 

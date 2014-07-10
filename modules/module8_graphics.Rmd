@@ -1,5 +1,5 @@
 % R Bootcamp, Module 8: Graphics
-% August 2013, UC Berkeley
+% August 2014, UC Berkeley
 % Chris Krogslund (ckrogslund@berkeley.edu)
 
 ```{r chunksetup, include=FALSE} 

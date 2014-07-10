@@ -1,5 +1,5 @@
-% R bootcamp, Module 12: Next steps
-% August 2013, UC Berkeley
+% R bootcamp, Module 11: Next steps
+% August 2014, UC Berkeley
 % Chris Paciorek
 
 ```{r chunksetup, include=FALSE} 

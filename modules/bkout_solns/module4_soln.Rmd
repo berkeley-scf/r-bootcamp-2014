@@ -1,5 +1,5 @@
-% R bootcamp, Module 3: Breakout solutions
-% August 2013, UC Berkeley
+% R bootcamp, Module 4: Breakout solutions
+% August 2014, UC Berkeley
 % Chris Paciorek
 
 ```{r chunksetup, include=FALSE} 
