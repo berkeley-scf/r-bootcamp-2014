@@ -6,9 +6,9 @@
 
 ## Where to find stuff
 
-The bSpace site is the main site for the bootcamp. It has information on software installation, a zip file with the materials for the modules (under Resources), and the Chat Room for online questions.  See http://dlab.berkeley.edu/training/r-bootcamp for accessing the bSpace site and note that you need to follow the instructions there when you access the site for the first time.
+The Piazza site ([https://piazza.com/berkeley/summer2014/rbootcamp2014/home](https://piazza.com/berkeley/summer2014/rbootcamp2014/home)) is the main site for the bootcamp. It has information on logistics, software installation, and the Q&A area for online questions.  It also has a link to a zip file with all the workshop materials.
 
-The Github site (https://github.com/berkeley-scf/r-bootcamp-2013) is updated more regularly and is the master repository for materials for the modules; you can also get the individual files from Github. Instructions for accessing the materials on Github are available in one of the later slides in this document and on the bSpace site.
+The Github site ([https://github.com/berkeley-scf/r-bootcamp-2014](https://github.com/berkeley-scf/r-bootcamp-2014)) is updated more frequently (sometimes in real time) and is the master repository for materials for the modules; you can also get the individual files from Github. Instructions for accessing the materials on Github are on the Piazza site.
 
 If you have an administrative question, email r-bootcamp@lists.berkeley.edu.
 
@@ -16,19 +16,17 @@ If you have an administrative question, email r-bootcamp@lists.berkeley.edu.
 
 If you need Airbears access as a guest (i.e., you don't have a CalNet ID), try:
 
-* Username:	guest-181500 Password:	gXbxexOly4
-* Username:	guest-181501 Password:	UPZMRTr5u5
-* Username:	guest-181502 Password:	DCHCaq3ehO
-* Username:	guest-181503 Password:	Mvn1FrnsXz
-* Username:	guest-181504 Password:	gkMj6jLG4m
-* Username:	guest-181505 Password:	7i9fuiiyYN
-* Username:	guest-181506 Password:	Z0WHEruUWZ
-* Username:	guest-181507 Password:	m12GkCsrqc
+* Username:	guest-256415 Password:	AnFshjc3N5
+* Username:	guest-256416 Password:	5G2W5sDoo6
+* Username:	guest-256417 Password:	QrMerb3Mud
+* Username:	guest-256418 Password:	Qt2Ozbuslv
+* Username:	guest-256419 Password:	XEO42kAi5u
+* Username:	guest-256420 Password:	tZZgrvA4Dq
+* Username:	guest-256421 Password:	ubrHNVqEA8
+* Username:	guest-256422 Password:	j4GYuWKr2g
 
 
 # A little warm-up
-
-Note to BB: Remember to start recording.
 
 This isn't really all that related to R, programming or statistics, but check out the 'binary solo' in this [Flight of the Conchords song](http://www.geeksugar.com/Flight-Conchords-Binary-Robot-Video-19831449).
 
@@ -36,16 +34,16 @@ This isn't really all that related to R, programming or statistics, but check ou
 
 The bootcamp will be organized in modules, each of which will be a combination of lecture/demo presentation concluded by a breakout session in which you'll work on a problem or two. Solutions to the breakout problems will be presented before the start of the next module. 
 
-Counselors will be available to help answer any questions you have (just wave to one of them), or feel free to just ask the presenter during the presentation. The counselors will also be monitoring the [bSpace chat room](https://bspace.berkeley.edu/portal/site/28905ed6-df96-4778-b2a7-d87fb6405ba2/page/f99ad10a-a841-4345-926d-c419b1a02913), so feel free to type in a question there and one of the counselors will answer the question. Or if you know the answer, help us out by answering it yourself or adding your thoughts. 
+Counselors will be available to help answer any questions you have (just wave to one of them), or feel free to just ask the presenter during the presentation. The counselors will also be monitoring the [Piazza Q&A area](https://piazza.com/berkeley/summer2014/rbootcamp2014/home), so feel free to type in a question there and one of the counselors will answer the question. Or if you know the answer, help us out by answering it yourself or adding your thoughts. 
 
-Your counseloRs are: Jacob, Laura, Chris K., Jarrod, Tessa, Fu, Chao, Marla, and Christine.
+Your counseloRs are: Gabriela, Chris K., and Jarrod.
 
 # Suggestions on how to get the most out of the bootcamp
 
 I encourage you to:
 
 - try out the code as we walk through it
-- We'll illustrate a lot of syntax and concepts by example; keep your eyes open!
+-  keep your eyes open! -- We'll illustrate a lot of syntax and concepts by example
 - try to guess what the syntax means in cases we haven't yet seen that syntax
 - play with it and try variations and try to break it and see what happens
 - tell us if something interesting happens as you experiment, or post a comment in the chat room
@@ -55,7 +53,7 @@ This is a bootcamp. So there may be some pain involved! If you find yourself not
 
 # RStudio and R Markdown
 
-We'll present most of the material from within RStudio, using R Markdown documents with embedded R code. R Markdown is an extension to the Markdown markup language which makes it easy to write HTML in a simple plain text format.  This allows us to both run the R code directly as well as compile on-the-fly to an HTML file that can be used for presentation. All files will be available on [bspace, under Resources](https://bspace.berkeley.edu/portal/site/28905ed6-df96-4778-b2a7-d87fb6405ba2) and [Github](https://github.com/berkeley-scf/r-bootcamp-2013).  Note that Github is likely to have the most up-to-date documents while bSpace will only be updated periodically.
+We'll present most of the material from within RStudio, using R Markdown documents with embedded R code. R Markdown is an extension to the Markdown markup language which makes it easy to write HTML in a simple plain text format.  This allows us to both run the R code directly as well as compile on-the-fly to an HTML file that can be used for presentation. All files will be available on [as a zip file on Piazza](https://piazza.com/berkeley/summer2014/rbootcamp2014/home) and [Github](https://github.com/berkeley-scf/r-bootcamp-2014).  Note that Github is likely to have the most up-to-date documents while the zip file will only be updated periodically.
 
 Note: The files named *moduleX_blah_slides.html* have individual slides, while the files named *moduleX_blah.html* have the same content but all on one page.
 
@@ -69,8 +67,8 @@ To download the files from Github, you can do the following.
 
 Within RStudio go to Project->New Project->Version Control->Git and enter:
 
-- "Repository URL": https://github.com/berkeley-scf/r-bootcamp-2013
-- "Project Directory Name": r-bootcamp-2013 (or something else of your choosing)
+- "Repository URL": https://github.com/berkeley-scf/r-bootcamp-2014
+- "Project Directory Name": r-bootcamp-2014 (or something else of your choosing)
 - "Directory": ~/Desktop (or somewhere of your choosing)
 
 Then to update from the repository to get any changes we've made, you can select (from within RStudio):
@@ -83,13 +81,15 @@ Be warned that you probably do not want to make your own notes or changes to the
 
 ## From a terminal window
 
-- cd /directory/where/you/want/repository/located
-- git clone https://github.com/berkeley-scf/r-bootcamp-2013/
+Run the following commands:
+
+- `cd /directory/where/you/want/repository/located`
+- `git clone https://github.com/berkeley-scf/r-bootcamp-2014`
 
 Then to update from the repository to get any changes we've made:
 
-- cd /directory/where/you/put/the/repository/r-bootcamp-2013
-- git pull
+- `cd /directory/where/you/want/to/put/the/repository/r-bootcamp-2014`
+- `git pull`
 
 
 # What is R?
@@ -152,14 +152,17 @@ RStudio provides an integrated development environment in which all of these pie
 - SAS
 - Stata
 
-# My hidden agenda - see Session 9
+# My hidden agenda 
 
-The building blocks of scientific computing:
+In addition to learning some R, this workshop will expose you to a way of thinking about doing your computational work. 
 
-- reproducibility
+The building blocks of scientific computing include:
+
 - scripting
-- version control
+- reproducibility
 - automating repetitive tasks
+- version control (note our basic use of Git)
+
 
 # The Legal Stuff
 

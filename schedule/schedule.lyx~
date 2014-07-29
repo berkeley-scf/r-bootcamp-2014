@@ -110,7 +110,7 @@ ask participants to play with code as we go along and see if they can break
 \end_layout
 
 \begin_layout Standard
-Unless otherwise noted, sessions are about 75 minutes long, including time
+Unless otherwise noted, modules are about 75 minutes long, including time
  for work on breakout problems.
 \end_layout
 
@@ -120,7 +120,7 @@ Day 1 morning (8:30-12:15) (learning R)
 
 \begin_deeper
 \begin_layout Itemize
-Session 0: Introduction, what is R, starting R, why R? why not R? (Chris
+Module 0: Introduction, what is R, starting R, why R? why not R? (Chris
  P.) (10 minutes)
 \begin_inset Note Note
 status open
@@ -135,7 +135,7 @@ scripting, text files, notes
 \end_layout
 
 \begin_layout Itemize
-Session 1: Basics of R, with Rstudio (Chris P.)
+Module 1: Basics of R, with Rstudio (Chris P.)
 \end_layout
 
 \begin_deeper
@@ -197,7 +197,7 @@ Break (20 minutes)
 \end_layout
 
 \begin_layout Itemize
-Session 2: Managing R and your analyses (Chris P.) (45 minutes)
+Module 2: Managing R and your analyses (Chris P.) (45 minutes)
 \end_layout
 
 \begin_deeper
@@ -206,23 +206,15 @@ managing R objects, the R workspace
 \end_layout
 
 \begin_layout Itemize
-the working directory
-\end_layout
-
-\begin_layout Itemize
 using packages (installing, loading, namespaces)
 \end_layout
 
 \begin_layout Itemize
-Github and version control
+the working directory and basic file reading/writing
 \end_layout
 
 \begin_layout Itemize
-basic file reading/writing
-\end_layout
-
-\begin_layout Itemize
-foreign package
+Git, Github and version control
 \end_layout
 
 \begin_layout Itemize
@@ -249,7 +241,7 @@ in R
 
 \end_deeper
 \begin_layout Itemize
-Session 3: Working with data (Chris P.)
+Module 3: Working with data (Chris P.)
 \end_layout
 
 \begin_deeper
@@ -299,7 +291,7 @@ Day 1 afternoon (1:45-5:00) (programming and real-world work)
 
 \begin_deeper
 \begin_layout Itemize
-Session 4: Calculations (Chris P.)
+Module 4: Calculations (Chris P.)
 \end_layout
 
 \begin_deeper
@@ -345,7 +337,7 @@ Break (20 minutes)
 \end_layout
 
 \begin_layout Itemize
-Session 5: Doing useful stuff (Chris K.)
+Module 5: Doing useful stuff (Chris K.)
 \end_layout
 
 \begin_deeper
@@ -395,7 +387,7 @@ Day 2 morning (9-12:30) (more real-world work)
 
 \begin_deeper
 \begin_layout Itemize
-Session 6: Programming in R (Chris P.)
+Module 6: Programming in R (Chris P.)
 \end_layout
 
 \begin_deeper
@@ -431,7 +423,7 @@ status open
 
 \end_deeper
 \begin_layout Itemize
-Session 7: Some core tools (Chris P.) (45 minutes)
+Module 7: Some core tools (Chris P.) (45 minutes)
 \end_layout
 
 \begin_deeper
@@ -471,7 +463,7 @@ Break (20 minutes)
 \end_layout
 
 \begin_layout Itemize
-Session 8: Graphics (Chris K.)
+Module 8: Graphics (Chris K.)
 \begin_inset Note Note
 status open
 
@@ -524,7 +516,7 @@ Day 2 afternoon (2:00-4:30) (more advanced topics)
 
 \begin_deeper
 \begin_layout Itemize
-Session 9: Workflows, coding practices, and project management
+Module 9: Workflows, coding practices, and project management
 \begin_inset Note Note
 status open
 
@@ -575,7 +567,7 @@ Break + Feedback forms (20 minutes)
 \end_layout
 
 \begin_layout Itemize
-Session 10: Advanced topic morsels (Chris P.) (60 minutes)
+Module 10: Advanced topic morsels (Chris P.) (60 minutes)
 \end_layout
 
 \begin_deeper
@@ -619,7 +611,7 @@ status open
 
 \end_deeper
 \begin_layout Itemize
-Session 11: Wrapping up (Chris P.) (15 minutes)
+Module 11: Wrapping up (Chris P.) (15 minutes)
 \end_layout
 
 \begin_deeper

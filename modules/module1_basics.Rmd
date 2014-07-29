@@ -5,14 +5,13 @@
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
+if(Sys.getenv('USER') == 'paciorek') rm(list = ls())
 if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
 library(foreign)
 vote <- read.dta('../data/2004_labeled_processed_race.dta')
 ```
 
 # R as a calculator
-
-Note: Remember to start recording.
 
 ```{r computing,echo=TRUE,results='markup'}
 2 + 2 # add numbers
@@ -77,7 +76,7 @@ If you're starting to type something you've typed before, or the long name of an
 - RStudio: select a line or block for execution
 - Put your code in a file and use `source()`. For example: `source('myRcodeFile.R')`
 
-Are there other tricks that anyone knows of?
+**Question**: Are there other tricks that anyone knows of?
 
 # Vectors in R
 
@@ -125,8 +124,8 @@ We can substitute values into vectors
 vals[4] <- -35
 vals[1:2] <- 0
 
-# How does R process these next subset operations?
 vals <- rnorm(100)
+# How does R process these next subset operations?
 vals[vals < 0] <- 0
 vals[1:8]
 
@@ -171,7 +170,7 @@ vec1 + vec3
 vec1 + vec4
 ```
 
-Tell me what's going on. What choices were made by the R developers?
+**Question**: Tell me what's going on. What choices were made by the R developers?
 
 # R is a functional language
 
@@ -197,23 +196,31 @@ help(lm)
 
 ?log
 
-# ??'regr' # take out the '#' - there's an issue with Markdown processing...
+# ??'regr' # take out the '#' to demo live - there's an issue with Markdown processing...
 ```
 
 # Basic kinds of R objects
 
 Vectors are not the only kinds of R objects.
 
-* Vectors: vectors of various types (numeric (i.e., decimal/floating point/double), integer, boolean, character), all items must be of the same type
+### Vectors 
 
-* Matrices: matrices of various types, all items must be of the same type
+Vectors of various types (numeric (i.e., decimal/floating point/double), integer, boolean, character), all items must be of the same type
+
+### Matrices
+
+Matrices of various types, all items must be of the same type
+
 ```{r}
 mat <- matrix(rnorm(9), nrow = 3)
 t(mat) %*% mat
 dim(mat)
 ``` 
 
-* Data frames: collections of columns of potentially different types
+### Data frames
+
+Collections of columns of potentially different types
+
 ```{r}
 library(foreign)
 vote <- read.dta('../data/2004_labeled_processed_race.dta')
@@ -228,7 +235,10 @@ class(vote$sex)
 class(vote$age9)
 ```
 
-* Lists: collections of disparate or complicated objects
+### Lists
+
+Collections of disparate or complicated objects
+
 ```{r}
 myList <- list(stuff = 3, mat = matrix(1:4, nrow = 2), 
    moreStuff = c("china", "japan"), list(5, "bear"))
@@ -269,7 +279,7 @@ summary(y)
 summary(mod)
 ```
 
-What do you think R is doing behind the scenes?
+**Question**: What do you think R is doing behind the scenes?
 
 Consider `summary.lm`.
 
@@ -318,31 +328,8 @@ is.data.frame(vote)
 is.list(vote)
 ```
 
-What have you learned? Does it make sense? 
+**Question**: What have you learned? Does it make sense? 
 
-# Managing and saving the workspace
-
-R also has functions for learning about the collection of objects in your workspace. Some of this is built in to RStudio.
-
-```{r}
-ls()  # search the user workspace (global environment)
-rm(x)    # delete a variable
-ls()
-ls.str() # list and describe variables
-```
-
-Finally we can save the objects in our R session:
-```{r}
-ls()
-save.image('module1.Rda')
-rm(list = ls())
-ls()
-load('module1.Rda') 
-# the result of this may not be quite right in the slide version
-ls()
-```
-
-Challenge: how would I find all of my objects that have 'x' in their names?
 
 # A bit on plotting
 
@@ -374,6 +361,12 @@ plot(earnings$earn ~ earnings$height, xlab = 'height (cm)', ylab = 'earnings (lo
 
 # Breakout
 
+0) What has been most confusing for you in this Module? Write it down on a piece of paper and leave it on the front desk, and we'll discuss it at the start of the next Module.
+
 1) Create a new R object that contains the heights in meters ($1 m \approx 39.4 in$) using the *height1* and *height2*  variables in the *earnings* dataset. Make a histogram of the new variable with breakpoints between the bins every 10 cm.
 
 2) For a random subset of 100 individuals from the earnings dataset, create a vector with their earnings.
+
+3) Make plots of earnings against height separately for males and females.
+
+

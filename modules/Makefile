@@ -1,7 +1,7 @@
 .PHONY: module0_induction module1_basics module2_managingR module3_data \
         module4_calc module5_analysis module6_programming \
 	module7_coreTools module8_graphics module9_workflows \
-        module10_advanced module11_parallel
+        module10_advanced module11_next
 
 #all: clean module0_induction module1_basics module2_data module3_calc \
 #           module4_resources module5_programming module6_analysis \

@@ -206,23 +206,15 @@ managing R objects, the R workspace
 \end_layout
 
 \begin_layout Itemize
-the working directory
-\end_layout
-
-\begin_layout Itemize
 using packages (installing, loading, namespaces)
 \end_layout
 
 \begin_layout Itemize
-Github and version control
+the working directory and basic file reading/writing
 \end_layout
 
 \begin_layout Itemize
-basic file reading/writing
-\end_layout
-
-\begin_layout Itemize
-foreign package
+Git, Github and version control
 \end_layout
 
 \begin_layout Itemize
@@ -270,7 +262,7 @@ strings
 \end_layout
 
 \begin_layout Itemize
-reading/writing data
+more on reading data
 \end_layout
 
 \begin_layout Itemize

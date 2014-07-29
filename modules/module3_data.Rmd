@@ -10,8 +10,6 @@ if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
 
 # Matrices and Arrays
 
-Note to BB: remember to start recording.
-
 Let's review matrices
 
 - Matrices are two-dimensional collections of values of the same type
@@ -42,15 +40,20 @@ attributes(mat)
 rownames(mat) <- c('first', 'middle', 'last')
 mat
 attributes(mat)
+```
 
+Now let's do a bit of manipulation and see if you can infer how R represents matrices internally.
+
+```
 mat[4]
 attributes(mat) <- NULL
 mat
 is.matrix(mat)
 ```
-What can you infer about what a matrix is in R?
 
-What kind of object are the attributes themselves? How do I check?
+**Question**: What can you infer about what a matrix is in R?
+
+**Question**: What kind of object are the attributes themselves? How do I check?
 
 # Matrices are stored column-major
 
@@ -134,7 +137,7 @@ mean(answers)
 answers + update
 ```
 
-What do you think R is doing to do arithmetic on logical vectors?
+**Question**: What do you think R is doing to do arithmetic on logical vectors?
 
 Tricks with logicals...
 
@@ -182,7 +185,7 @@ identical(vote[c(3,5)], vote[ , c(3,5)])
 In general the placement of commas in R is crucial, but here, two different operations give the same result because of the underlying structure of data frames.
 
 # Factors
-- A factor is a special and sometimes frustrating data type in R used for categorical data
+- A factor is a special data type in R used for categorical data. In some cases it works like magic and in others it is incredibly frustrating. 
 
 ```{r fac}
 class(vote$sizeplac)
@@ -207,7 +210,7 @@ head(vote$sizeplac_ord)
 levels(vote$sizeplac_ord)
 ```
 
-Try to decipher what I just did with that complicated single line of code.
+**Challenge**: Try to decipher what I just did with that complicated single line of code.
 
 # Reclassifying Factors
 - Turning factors into other data types can be tricky. All factor levels have an underlying numeric structure.
@@ -245,6 +248,7 @@ rownames(mat) <- letters[1:4]
 mat
 ```
 1) by direct indexing
+
 ```{r}
 vec[c(3, 5, 12:14)]
 vec[-c(3,5)]
@@ -253,19 +257,25 @@ rowInd <- c(1, 3, 4)
 colInd <- c(2, 2, 1)
 mat[cbind(rowInd, colInd)]
 ```
+
 Note the last usage where we give it a 2-column matrix of indices
 
 2) by a vector of logicals
+
 ```{r}
 cond <- vec > 0
 vec[cond]
 mat[mat[,1] > 0, ]
 ```
+
+What happened in the last subsetting operation?
+
 3) by a vector of names
 ```{r}
 mat[c('a', 'd', 'a'), ]
 ```
 4) using *subset()*
+
 ```{r}
 subset(mtcars, mpg > 20)
 ```
@@ -312,22 +322,13 @@ R has a full set of regular expression capabilities available through the *grep(
 
 You can basically do any regular expression/string manipulations in R, though the syntax may be a bit clunky at times.
 
-# The working directory
+# More details on reading data into R
 
-To read and write from R, you need to have a firm grasp of where in the computer's filesystem you are reading and writing from. 
-
-```{r}
-getwd()  # what directory will R look in?
-setwd('~/Desktop/r-bootcamp-2013') # change the working directory
-setwd('/Users/paciorek/Desktop/tmp') # absolute path
-getwd()
-setwd('../r-bootcamp-2013') # relative path
-```
-Many errors and much confusion result from you and R not being on the same page in terms of where in the directory structure you are.
-
-# Reading data into R
+Remember that you'll need to know the current working directory so that you know where R is looking for files.
 
 The workhorse for reading into a data frame is *read.table()*, which allows any separator (CSV, tab-delimited, etc.). *read.csv()* is a special case of *read.table()* for CSV files.
+
+You've already seen a bit of this, but let's work through a more involved example, so you can see some of the steps and tricks involved in reading data into R.
 
 ```{r, cache=TRUE}
 rta <- read.table("../data/RTAData.csv", sep = ",", head = TRUE)
@@ -362,46 +363,11 @@ The *read.table()* family of functions just skims the surface of things...
 1) You can also read in a file as vector of characters, one character string per line of the file with `readLines()`, and then post-process it. 
 2) You can read fixed width format (constant number of characters per field) with `read.fwf()`.
 
-# Reading 'foreign' format data
-
-We've already seen an example of reading data produced by another statistical package with `read.dta`. There are a number of other formats that we can handle for either reading or writing. Let's see `library(help = foreign)`.
-
-R can also read in (and write out) Excel files, netCDF files, HDF5 files, etc., in many cases through add-on packages from CRAN. 
-
-A pause for a (gentle) diatribe:
-
-Please try to avoid using Excel files as a data storage format. It's proprietary, complicated (can have multiple sheets), allows a limited number of rows/columns, and files are not easily readable/viewable (unlike simple text files).
-
-# Writing data out from R
-
-Here you have a number of options. 
-
-1) You can write out R objects to an R Data file, as we've seen, using *save()* and *save.image()*.
-2) You can use *write.csv()* and *write.table()* to write data frames/matrices to flat text files with delimiters such as comma and tab.
-3) You can use *write()* to write out matrices in a simple flat text format.
-4) You can use *cat()* to write to a file, while controlling the formatting to a fine degree.
-5) You can write out in the various file formats mentioned on the previous slide
-
-# Writing out plots and tables
-```{r}
-pdf('myplot.pdf', width = 7, height = 7)
-x <- rnorm(10); y <- rnorm(10)
-plot(x, y)
-dev.off()
-```
-`xtable()` formats tables for HTML and Latex (the default).
-
-```{r}
-require(xtable)
-print(xtable(table(vote$race, vote$pres04)), type = "html")
-```
-
-Recall our discussion of the `summary()` function used on either a vector or a regression object. What do you think is going on with call to `print()` above? 
 
 # Breakout
 
-1. Using the voting/presidential preference dataset, create a new column based on *age9* that gives, as a numeric value, the midpoint of the age range assigned to each person. Try to do this with a combination of subsetting and string operations (i.e., can you convert the character numbers to actual numbers). To simplify things, feel free to get rid of the rows for ages "75 and over".
+1. Using the voting/presidential preference dataset (*data/2004_labeled_processed_race.dta*), create a new column based on *age9* that gives, as a numeric value, the midpoint of the age range assigned to each person. Try to do this with a combination of string and subsetting operations (i.e., can you convert the character numbers to actual numbers). To simplify things as you get started, feel free to get rid of the rows for ages "75 and over" in your initial effort.
     
 2. Go back to slide 6 on logical vectors and figure out what is going on in the last few lines of code.
 
-3. Go back to slide 22 and figure out what is going on with that complicated last line of code.
+3. Go back to slide 9 and explain why `vote[c(3,5)]` and `vote[ , c(3,5)]` produce the same result.
