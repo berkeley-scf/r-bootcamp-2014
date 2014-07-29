@@ -14,8 +14,6 @@ earnings <- read.dta('../data/heights.dta')
 
 # Vectorized calculations
 
-Note to BB: remember to start recording.
-
 As we've seen, R has many functions that allow you to operate on each element of a vector all at once.
 
 ```{r}
@@ -44,7 +42,7 @@ vote$ageMin <- substring(tmp, 1, 2)
 vote$ageMin[1:5]
 ```
 
-What am I doing with `vals * (vals > 0)` ? What happens behind the scenes in R?
+**Question**: What am I doing with `vals * (vals > 0)` ? What happens behind the scenes in R?
 
 If you use a trick like this, having a comment in your code is a good idea.
 
@@ -111,7 +109,7 @@ for(i in 1:n)
 
 The same holds for using `rbind()`, `cbind()`, or adding to a list, one element at a time.
 
-This is slow and unclear:
+This is slow and unclear (in the sense that it appears the code has a bug, but it works):
 ```{r cache=TRUE}
 vals <- 0
 n <- 50000
@@ -121,7 +119,7 @@ for(i in 1:n)
 })
 ```
 
-Thoughts on why these are so slow? Think about what R might be doing behind the scenes
+**Question**: Thoughts on why these are so slow? Think about what R might be doing behind the scenes
 
 # The answer is to pre-allocate memory
 
@@ -130,7 +128,7 @@ This is not so slow. (Please ignore the for-loop hypocrisy and the fact that I c
 ```{r}
 n <- 50000
 system.time({
-vals <- rep(NA, n)
+vals <- rep(0, n)
 # alternatively: vals <- as.numeric(NA); length(vals) <- n
 for(i in 1:n)
       vals[i] <- i
@@ -184,7 +182,7 @@ params <- list(a = list(mn = 7, sd = 3), b = list(mn = 6,sd = 1),
 sapply(params, "[[", 1)
 ```
 
-Think about why this works. 
+**Challenge**: Think about why this works. 
 
 Hint:
 ```{r}
@@ -217,7 +215,7 @@ table(vote$race, vote$pres04, vote$sex)
 with(vote[vote$sex == 'female', ], table(pres04, race))
 ```
 
-Can you figure out what `with()` does just by example? 
+**Challenge**: Can you figure out what `with()` does just by example? 
 
 # Stratified analyses I
 Often we want to do individual analyses within subsets or clusters of our data.
@@ -248,7 +246,7 @@ agg <- aggregate(earn ~ ed + hisp, data = earnings, FUN = median)
 xtabs(earn ~ ., data = agg)
 ```
 
-Notice the 'long' vs. 'wide' formats. You'll see more about that sort of thing in Module 6.
+Notice the 'long' vs. 'wide' formats. You'll see more about that sort of thing in Module 5.
 
 # Discretization
 
@@ -276,7 +274,7 @@ length(out)
 summary(out[[5]])
 ```
 
-What's the business with the `if` statement? Why is this good practice?
+**Question**: What's the business with the `if` statement? Why is this good practice?
 
 # Sorting
 
@@ -292,7 +290,7 @@ ord[1:5]
 earnings_ordered <- earnings[ord, ]
 ```
 
-You could of course write your own *sort* function that uses `order()`. More in Module 5.
+You could of course write your own *sort* function that uses `order()`. More in Module 6.
 
 # Merging Data
 
@@ -304,7 +302,9 @@ In this case (as often true) we need to do some machinations to get everything p
 
 ```{r} 
 # PRE-PROCESSING
-# a bit of querying indicates the state numbers are in alphabetical order, so we can do this:
+
+# a bit of querying indicates the state numbers are in alphabetical order, 
+# so we can do this to get a 'name' column in the 'vote' dataframe:
 numToName <- data.frame(stateNum = 1:50, 
    stateName = row.names(state.x77)) 
 voteWithStateNames <- merge(vote, numToName, by.x = 'state', 
@@ -340,10 +340,10 @@ You can generate a test matrix as: `y <- matrix(sample(1:10, 12, replace = TRUE)
 
 Compute the statistic without *any* loops as follows:
 
-1. Assume you have the *e* matrix. How do you compute the statistic without loops?
+1. First, assume you have the *e* matrix. How do you compute the statistic without loops as a function of `y` and `e`?
 2. How can you construct the *e* matrix? Hint: the numerator of *e* is just an *outer product* for which the `outer()` function can be used.
 
 
 ## Problem 2
 
-For each combination of sex and education level, find the *second* largest value of earnings amongst the people in the group without any looping.
+For each combination of sex and education level in the *earnings* dataset (*data/heights.dta*), find the *second* largest value of earnings amongst the people in the group without any looping.

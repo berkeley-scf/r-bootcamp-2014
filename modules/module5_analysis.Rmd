@@ -17,8 +17,6 @@ mydata <- read.dta("../data/2004_labeled_processed_race.dta")
 
 # Now you've got all the basic pieces
 
-Note to BB: remember to start recording.
-
 - You know about objects in R, how to deal with them, basic calculations, working with data, and how to build your own functions 
 - That's great and everything, but by now you're probably wondering...
 - Why all that?
