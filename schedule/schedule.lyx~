@@ -241,7 +241,7 @@ in R
 
 \end_deeper
 \begin_layout Itemize
-Module 3: Working with data (Chris P.)
+Module 3: Working with data (Gabriela/Chris P.)
 \end_layout
 
 \begin_deeper
@@ -262,7 +262,7 @@ strings
 \end_layout
 
 \begin_layout Itemize
-reading/writing data
+more on reading data
 \end_layout
 
 \begin_layout Itemize
@@ -532,19 +532,19 @@ _medium=email
 
 \begin_deeper
 \begin_layout Itemize
-scripting, source(); separating data, code, figures
+debugging, timing, memory use
 \end_layout
 
 \begin_layout Itemize
-R in batch mode and command line mode
+scripting, source(), batch jobs
 \end_layout
 
 \begin_layout Itemize
-timing, memory use, debugging
+good coding practices
 \end_layout
 
 \begin_layout Itemize
-reproducible research with knitr, Rmd
+reproducible research
 \end_layout
 
 \begin_layout Itemize
@@ -563,7 +563,7 @@ status open
 
 \end_deeper
 \begin_layout Itemize
-Break + Feedback forms (20 minutes)
+Break
 \end_layout
 
 \begin_layout Itemize
@@ -610,6 +610,10 @@ status open
 \end_layout
 
 \end_deeper
+\begin_layout Itemize
+Fill out feedback forms (10 minutes)
+\end_layout
+
 \begin_layout Itemize
 Module 11: Wrapping up (Chris P.) (15 minutes)
 \end_layout

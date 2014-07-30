@@ -241,7 +241,7 @@ in R
 
 \end_deeper
 \begin_layout Itemize
-Module 3: Working with data (Chris P.)
+Module 3: Working with data (Gabriela/Chris P.)
 \end_layout
 
 \begin_deeper
@@ -532,38 +532,24 @@ _medium=email
 
 \begin_deeper
 \begin_layout Itemize
-scripting, source(); separating data, code, figures
+debugging, timing, memory use
 \end_layout
 
 \begin_layout Itemize
-R in batch mode and command line mode
+scripting, source(), batch jobs
 \end_layout
 
 \begin_layout Itemize
-timing, memory use, debugging
+good coding practices
 \end_layout
 
 \begin_layout Itemize
-reproducible research with knitr, Rmd
-\end_layout
-
-\begin_layout Itemize
-breakout problems
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
- [assess timing and memory use for some code?]
-\end_layout
-
-\end_inset
-
-
+reproducible research
 \end_layout
 
 \end_deeper
 \begin_layout Itemize
-Break + Feedback forms (20 minutes)
+Break (fill out feedback forms) (20 minutes)
 \end_layout
 
 \begin_layout Itemize

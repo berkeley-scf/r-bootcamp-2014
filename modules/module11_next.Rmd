@@ -9,7 +9,6 @@
 
 # The R way
 
-Note to BB: remember to start recording.
 
 As we've seen R is powerful, flexible, and wide-ranging. 
 
@@ -21,10 +20,10 @@ Base packages, widely-used packages and packages by frequent R contributors are 
 
 * R is inconsistent in its naming conventions
     - Some functions are 'camelCase'; others are 'dot.separated'; others 'use_underscores'. For programmers used to OOP, the use of dots is maddening.
-  * Multiple OOP paradigms and OOP is not as clean or full-featured as other languages
-  * R has multiple graphics packages that different functions use for default plot construction (`base`, `grid`, `lattice`, and `ggplot2`)
-  * R has multiple packages and functions to do the same analysis
-  * R obscures some of what happens behind the scenes in a way that can be confusing and lead to errors: type coercion/casting, recycling, etc.
+* Multiple OOP paradigms and OOP is not as clean or full-featured as other languages
+* R has multiple graphics packages that different functions use for default plot construction (`base`, `grid`, `lattice`, and `ggplot2`)
+* R has multiple packages and functions to do the same analysis
+* R obscures some of what happens behind the scenes in a way that can be confusing and lead to errors: type coercion/casting, recycling, etc.
 
 Any other things that you found frustrating and don't think are well-designed?
 
@@ -35,7 +34,7 @@ Some of this material was borrowed/modified from [Jared Knowles' bootcamp](http:
 
 CRAN has [manuals](http://www.cran.r-project.org/manuals.html) and [contributed learning material](http://www.cran.r-project.org/other-docs.html).
 
-[D-Lab](dlab.berkeley.edu) holds workshops on R and other topics, as well as having drop-in office hours. 
+[D-Lab](http://dlab.berkeley.edu) holds workshops on R and other topics, as well as having drop-in office hours. 
 
 
 # Some good books
@@ -45,3 +44,7 @@ CRAN has [manuals](http://www.cran.r-project.org/manuals.html) and [contributed 
 * Murrell, Paul; R Graphics, 2nd ed. [http://www.stat.auckland.ac.nz/\~paul/RG2e](http://www.stat.auckland.ac.nz/\~paul/RG2e/)
 * Murrell, Paul; Introduction to Data Technologies. [http://www.stat.auckland.ac.nz/\~paul/ItDT/](http://www.stat.auckland.ac.nz/\~paul/ItDT/)
 
+# Thanks!  
+
+* To Chris K., Gabriela, and Jarrod
+* To Jon Stiles and D-Lab for co-sponsorship and logistical support

@@ -55,7 +55,7 @@ But be careful -- frequently, there is a more R-standard (and usually faster) wa
 
 Abstract structure of `for loop`:
 ```{r,eval=FALSE}
-for (variable in sequence) {
+for (variable in set) {
   statement
 }
 ```

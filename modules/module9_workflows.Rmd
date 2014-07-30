@@ -1,66 +1,96 @@
 % R bootcamp, Module 9: Workflows, managing projects and good practices
 % August 2014, UC Berkeley
-% Jarrod Millman, Chris Paciorek, and Fernando Pérez
+% Chris Paciorek
 
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
+require(foreign)
+vote <- read.dta('../data/2004_labeled_processed_race.dta')
 ```
 
-# How not to make a mess of it
+# Tips for avoiding bugs
 
-> Programmers are always surrounded by complexity; we cannot avoid it. Our
-> applications are complex because we are ambitious to use our computers in
-> ever more sophisticated ways. Programming is complex because of the large
-> number of conflicting objectives for each of our programming projects. *If
-> our basic tool, the language in which we design and code our programs, is
-> also complicated, the language itself becomes part of the problem rather than
-> part of its solution.
->
-> At first I hoped that such a technically unsound project would collapse but I
-> soon realized it was doomed to success. Almost anything in software can be
-> implemented, sold, and even used given enough determination. There is nothing
-> a mere scientist can say that will stand against the flood of a hundred
-> million dollars. But there is one quality that cannot be purchased in this
-> way — and that is reliability. The price of reliability is the pursuit of the
-> utmost simplicity. It is a price which the very rich find most hard to pay.
->
-> --- C.A.R. Hoare - The Emperor's Old Clothes - Turing Award Lecture (1980)
->
+- Plan out your code in advance, including all special cases/possibilities.
+- When doing software development, write tests for your code early in
+the process. 
+- Build up code in pieces, testing along the way. Make big changes in
+small steps, sequentially checking to see if the code has broken on
+test case(s).
+- Code in a modular fashion, making good use of functions, so that you
+don't need to debug the same code multiple times. Smaller functions
+are easier to debug, easier to understand, and can be combined in
+a modular fashion (like the UNIX utilities)
+- Use core R functionality and algorithms already coded. Figure out
+if a functionality already exists in (or can be adapted from) an R
+package (or potentially in a C/Fortran library/package): code that
+is part of standard mathematical/numerical packages will probably
+be more efficient and bug-free than anything you would write.
+- Remove objects you don't need, to avoid accidentally using values
+from an old object via the scoping rules.
+- Be careful that the conditions of *if* statements and the sequences
+of *for* loops are robust when they involve evaluating R code.
+- Don't hard code numbers - use variables (e.g., number of iterations,
+parameter values in simulations), even if you don't expect to change
+the value, as this makes the code more readable and reduces bugs when
+you use the same number multiple times: 
+- Check that inputs to and outputs from functions (either functions
+you call or functions you write) are valid and use `warning()`
+and `stop()` to give a warning or stop execution when something
+unexpected happens.
+- Use `try()` with functions that may fail 
+in cases where you don't want overall execution to fail because a
+single piece of the execution fails.
+- Write code for clarity and accuracy first; then worry about efficiency.
+Write an initial version of the code in the simplest way, without
+trying to be efficient (e.g., you might use \emph{for} loops even
+if you're coding in R); then make a second version that employs efficiency
+tricks and check that both produce the same output.
 
-Note: remember to start recording.
-
-# Reproducible research
-
-> An article about computational science in a scientific
-publication is **not the scholarship itself**, it is merely
-**advertising** of the scholarship. The actual scholarship is the
-complete software development environment and the
-complete set of instructions which generated the figures.
-
-> --- Jonathan Buckheit and David Donoho, WaveLab and Reproducible Research (1995)
-
-# Style guide
-
-Try to avoid using the names of standard R functions for your objects, but R will generally be fairly smart about things.
+# Common syntax errors and bugs
+- Parenthesis mis-matches
+- `[...]` vs. `[[...]]`
+= `==` vs. `=` 
+- Comparing real numbers exactly using `==` is dangerous (more
+in a later Unit). Suppose you generate `x = 0.333333` in some
+fashion with some code and then check: `x == 1/3`. This will produce FALSE.
+- Vectors vs. single values: 
+  + `||` vs. `|` and `&&` vs `&`
+  + You expect a single value but your code gives you a vector
+  + You want to compare an entire vector but your code just compares the
+first value (e.g., in an `if` statement) -- consider using `identical()`
+or `all.equal()`
+- Silent type conversion when you don't want it, or lack of coercion
+where you're expecting it
+- Using the wrong function or variable name
+- Giving unnamed arguments to a function in the wrong order 
+- Forgetting to define a variable in the environment of a function and
+having the function, via R's scoping rules, get that variable as a global
+variable from one of the enclosing environments. At best the types
+are not compatible and you get an error; at worst, you use a garbage
+value and the bug is hard to trace. In some cases your code may work
+fine when you develop the code (if the variable exists in the enclosing
+environment), but then may not work when you restart R if the variable
+no longer exists or is different.
 
 ```{r}
-c <- 7
-c(3,5)
-c
-rm(c)
-c
+library(codetools)
+f <- function() {y <- 3; print(x + y)}
+findGlobals(f)
 ```
 
-Try to use upperCamelCase or underscores when naming your objects (and don't mix and match). Leave periods for use in the context of S3 objects.
+- R (usually helpfully) drops matrix and array dimensions that are extraneous; which can sometimes confuse later code that expects an object of a certain dimension. The `[` operator takes an additional optional argument that can avoid dropping dimensions.
 
 ```{r}
-precipExtremes <- rnorm(5)  # precip_extremes
-timeInDays <- rnorm(5)   # time_in_days
-summary.lm(lm(precipExtremes ~ timeInDays))
-```
+mat <- matrix(1:4, 2, 2)[1, ]
+dim(mat); print(mat)
+colSums(mat)
+mat <- matrix(1:4, 2, 2)[1, , drop = FALSE]
+colSums(mat)
+mat <- matrix(1:4, 2, 2)[1, ]
+colSums(mat)  # whoops
 
-* [Google's R Style Guide](http://google-styleguide.googlecode.com/svn/trunk/Rguide.xml)
+```
 
 # Debugging
 
@@ -72,15 +102,21 @@ Let's briefly see these in action. I'll demo with a set of nested functions in
 which one has an error:
 
 ```{r}
-fun1 <- function(x) {
-     x <- x * 2
-     fun2(x)
+buggyFun <- function(myDF) {
+   print(names(myDF))
+   myDF$id <- seq_len(nrow(myDF))
+   sums <- rowSums(myDF)
+   return(sums)
 }
-fun2 <- function(x) {
-     fun3(x)
-}
-fun3 <- function(x) {
-     apply(x, 1, mean)
+
+buggyFun(vote)
+traceback()
+if(FALSE) {
+  debug(buggyFun)
+  buggyFun(vote)
+
+  options(error = recover)
+  buggyFun(vote)
 }
 ```    
 
@@ -106,10 +142,12 @@ helps you think about what you want a piece of code to do, rather than just how
 it does it. This practice improves code quality by focusing your attention
 on use cases rather than getting lost in implementation details.
 
-`RUnit` is a testing framework for R, which helps automate test setup, creation,
+*RUnit* is a testing framework for R, which helps automate test setup, creation,
 execution, and reporting.  For more information, see Bioconductor's [unit testing guidelines](http://www.bioconductor.org/developers/unitTesting-guidelines/).
 
 # Timing your code
+
+First, a cautionary note...
 
 > premature optimization is the root of all evil
 >
@@ -127,7 +165,7 @@ benchmark(ifelse(x < 0, x, 0),
                    columns = c('replications', 'elapsed'))
 ```
 
-# Timing your code
+# Profiling your code
 
 For more advanced assessment of bottlenecks in your code, consider `Rprof()`.
 
@@ -154,14 +192,21 @@ fun2 <- function(x) {
 }
 ```
 
-For a suitable `x` the following code snippet will create file
-called `profile1.out` with collected timing results.
+Now let's try these two functions with profiling turned on.
 
 
 ```
+x <- matrix(rnorm(10000*30), 10000)
+x[5, 3] <- NA
+x[1000, 7] <- NA
 Rprof("profile1.out", line.profiling=TRUE)
-print(unix.time(fun1(x)))
+out1 <- fun1(x)
 Rprof(NULL)
+summaryRprof("profile1.out")
+Rprof("profile2.out", line.profiling=TRUE)
+out2 <- fun2(x)
+Rprof(NULL)
+summaryRprof("profile2.out")
 ```
 
 
@@ -180,19 +225,9 @@ object.size(x)
 print(object.size(x), units = 'auto')
 x <- rnorm(1e8)
 gc()
-rm()
+rm(x)
 gc()
 ```
-
-# Some ideas about reproducibility
-
-* Never change a dataset manually. Always have a script that operates on the data. 
-* Note when and where you download, and ideally download via a script as well (e.g., wget and curl are Linux tools for automated downloading.
-* Produce figures (e.g., from R) via a script and not by point-and-click
-* When making figures, use *save()* or *save.image()* to save all the inputs needed to recreate a figure, with the code for making the figure in a script file
-* If feasible, include your code for doing analyses and making figures in the relevant document reporting the work by using Rmarkdown or Latex with knitr or Sweave. 
-* Set the random number seed so someone else can duplicate your exact numbers
-
 
 # Scripting
 
@@ -201,11 +236,13 @@ gc()
 * Write functions to reuse code.
 * Learn a powerful, general purpose text editor
 
-If you use a good editor (such as RStudio's built-in editor, emacs with ESS, Aquamacs, it's easier to write and understand your code.
+If you use a good editor (such as RStudio's built-in editor, emacs with ESS, Aquamacs), it's easier to write and understand your code.
 
-You can then run blocks of code within RStudio easily.
+With such editors, you can generally then execute lines or blocks of code easily.
 
 To run all the code in an entire file, do `source('myCodeFile.R')`.
+
+# Batch jobs / background execution
 
 To run code as a background job in a Linux/Mac context:
 `R CMD BATCH --no-save myCodeFile.R myOutput.Rout &`
@@ -214,624 +251,91 @@ Then you don't need to leave RStudio or R or a terminal window open. Your job wi
 
 IMPORTANT: make sure to write any needed output to a file (e.g. .Rda files, CSV files, text output from print() or cat()).
 
-# The UNIX command line
+# Good coding practices: functions
 
-Being able to operate your computer from a command line rather than via point-and-click in a GUI environment provides incredible power and flexibility to the user, as well as allowing for reproducibility and automation in your work.
-
-In Linux and Mac, you just need to open a Terminal window. On the Mac this is in Applications->Utilities->Terminal. Once in the Terminal, you can treat your Mac as if it is a UNIX machine (which it is).
-
-Windows has the old MS-DOS command line that allows some command line functionality. There is something call *cygwin* that provides UNIX-like functionality.
-
-# The UNIX Philosophy
-
-> Write programs that do one thing and do it well.
->
-> Write programs to work together.
->
-> Write programs to handle text streams, because that is a universal interface.
-
---- Doug McIlroy
-
-For more details, please see:
-
-http://en.wikipedia.org/wiki/Unix_philosophy
+Use functions whenever possible. In particular try to write functions rather than carry out your work using blocks of code. Why? Functions allow us to
+reuse blocks of code easily for later use and for recreating an analysis
+(reproducible research). It's more transparent than sourcing a file
+of code because the inputs and outputs are specified formally, so
+you don't have to read through the code to figure out what it does.
 
 
+Good use of functions includes:
 
+- Write reusable code for core functionality and keep a single copy
+of the code (w/ backups of course) so you only need to change it once
+- Smaller functions are easier to debug, easier to understand, and can
+be combined in a modular fashion (like the UNIX utilities)
+- Functions should: 
+  + be modular (having a single task); 
+  + have meaningful name; and
+  + have a comment describing their purpose, inputs and outputs (see the
+help file for any standard R function for how this is done in that context).
 
+# Good coding practices: syntax
 
-# Version control
-
-The basic idea is that instead of manually trying to keep track of what changes you've made to code, data, documents, you use software to help you manage the process. This has several benefits:
-
-* easily allowing you to go back to earlier versions
-* allowing you to have multiple version you can switch between
-* allowing you to share work easily without worrying about conflicts
-* providing built-in backup
-
-At a basic level, a simple principle is to have version numbers for all your work: code, datasets, manuscripts. Whenever you make a change to a dataset, increment the version number. For code and manuscripts, increment when you make substantial changes or have obvious breakpoints in your workflow. 
-
-# Version control architectures
-
-* Client-server (e.g., CVS, Subversion)
-* Distributed (e.g., Mercurial, **Git**)
-
-# Git concepts: commit
-
-a **snapshot** of work at a point in time
-
-![Credit: ProGit book, by Scott Chacon, CC License.](figs/commit_anatomy.png)
-
-# Git concepts: repository
-
-a group of **linked** commits (DAG)
-
-![Credit: ProGit book, by Scott Chacon, CC License.](figs/threecommits.png)
-
-# Git concepts: hash
-
-toy "implementation"
-
+- Header information: put metainfo on the code into the first few lines
+of the file as comments. Include who, when, what, how the code fits
+within a larger program (if appropriate), possibly the versions of
+R and key packages that you wrote this for
+- Indentation: do this systematically (your editor can help here). This
+helps you and others to read and understand the code and can help
+in detecting errors in your code because it can expose lack of symmetry.
+- Whitespace: use a lot of it. Some places where it is good to have
+it are (1) around operators (assignment and arithmetic), (2) between
+function arguments and list elements, (3) between matrix/array indices,
+in particular for missing indices. 
+- Use blank lines to separate blocks of code and comments to say what
+the block does
+- Split long lines at meaningful places.
+- Use parentheses for clarity even if not needed for order of operations.
+For example, `a/y*x` will work but is not easy to read and
+you can easily induce a bug if you forget the order of ops.
+- Documentation - add lots of comments (but don't belabor the obvious).
+Remember that in a few months, you may not follow your own code any
+better than a stranger. Some key things to document: 
+  + summarizing a block of code, 
+  + explaining a very complicated piece of code 
+  + explaining arbitrary constant values.
+- break code into separate files (<2000-3000
+lines per file) with meaningful file names and related functions grouped
+within a file.
+- Choose a consistent naming style for objects and functions: e.g. *numIts* (lowerCamelCase) vs. *NumIts* (UpperCamelCase) vs. *num.its* vs. *num\_its*
+  + I'd suggest avoiding periods in names since periods are used for object-oriented programming in R and many other languages
+- Try to have the names be informative without being overly long.
+- Try to avoid using the names of standard R functions for your objects, but R will generally be fairly smart about things.
 ```{r}
-library('digest')
-
-# first commit
-data1 <- 'This is the start of my paper2.'
-meta1 <- 'date: 8/20/13'
-hash1 <- digest(c(data1,meta1), algo="sha1")
-cat('Hash:', hash1)
-
-# second commit, linked to the first
-data2 <- 'Some more text in my paper...'
-meta2 <- 'date: 8/20/13'
-# Note we add the parent hash here!
-hash2 <- digest(c(data2,meta2,hash1), algo="sha1")
-cat('Hash:', hash2)
+c <- 7
+c(3,5)
+c
+rm(c)
+c
 ```
+- Use active names for functions (e.g., \emph{calc_loglik}, \emph{calcLogLik})
 
-# Stage 1: Local, single-user, linear workflow
+# Reproducible research
 
-Simply type `git` (or `git help`) to see a full list of all the 'core'
-commands.  We'll now go through most of these via small practical exercises:
+> An article about computational science in a scientific
+publication is **not the scholarship itself**, it is merely
+**advertising** of the scholarship. The actual scholarship is the
+complete software development environment and the
+complete set of instructions which generated the figures.
 
+> --- Jonathan Buckheit and David Donoho, WaveLab and Reproducible Research (1995)
 
-```{r, engine='bash'}
-git help
-```
+Here are some useful articles talking about reproducibility.
 
-# `git init`: create an empty repository
+- [Wilson et at., Best practices for scientific computing, ArXiv:1210:0530](http://arxiv.org/abs/1210.0530)
+- [Gentzkow and Shapiro tutorial for social scientists](faculty.chicagobooth.edu/jesse.shapiro/research/CodeAndData.pdf)
 
 
-```{r , engine='bash'}
-cd ~/src
-rm -rf jm-git-demo
-git init jm-git-demo
-```
+# Some ideas for improving reproducibility
 
-Let's look at what git did:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-ls -la
-```
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-ls -l .git
-```
-
-# `git add`: adding content to the repository
-
-Now let's edit our first file in the test directory with a text editor... I'm
-doing it programatically here for automation purposes, but you'd normally be
-editing by hand
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-echo "My first bit of text" > file1.txt
-```
-
-Now we can tell git about this new file using the `add` command:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git add file1.txt
-```
-
-We can now ask git about what happened with `status`:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git status
-```
-
-# `git commit`: permanently record our changes in git's database
-
-For now, we are *always* going to call `git commit` either with the `-a` option
-*or* with specific filenames (`git commit file1 file2...`).  This delays the
-discussion of an aspect of git called the *index* (often referred to also as the
-'staging area') that we will cover later.  Most everyday work in regular
-scientific practice doesn't require understanding the extra moving parts that
-the index involves, so on a first round we'll bypass it.  Later on we will
-discuss how to use it to achieve more fine-grained control of what and how git
-records our actions.
-
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git commit -a -m"This is our first commit"
-```
-
-In the commit above, we  used the `-m` flag to specify a message at the command
-line.  If we don't do that, git will open the editor we specified in our
-configuration above and require that we enter a message.  By default, git
-refuses to record changes that don't have a message to go along with them
-(though you can obviously 'cheat' by using an empty or meaningless string: git
-only tries to facilitate best practices, it's not your nanny).
-
-# `git log`: what has been committed so far
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git log
-```
-
-# `git diff`: what have I changed?
-
-Let's do a little bit more work... Again, in practice you'll be editing the
-files by hand, here we do it via shell commands for the sake of automation (and
-therefore the reproducibility of this tutorial!)
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-echo "And now some more text..." >> file1.txt
-```
-
-And now we can ask git what is different:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git diff
-```
-
-# The cycle of git virtue: work, commit, work, commit, ...
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git commit -a -m"I have made great progress on this critical matter."
-```
-
-* `git log` revisited
-
-First, let's see what the log shows us now:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git log
-```
-
-Sometimes it's handy to see a very summarized version of the log:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git log --oneline --topo-order --graph
-```
-
-Git supports *aliases:* new names given to command combinations. Let's make this
-handy shortlog an alias, so we only have to type `git slog` and see this compact
-log:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-# We create our alias (this saves it in git's permanent configuration file):
-git config --global alias.slog "log --oneline --topo-order --graph"
-# And now we can use it
-git slog
-```
-
-# `git mv` and `rm`: moving and removing files
-
-While `git add` is used to add fils to the list git tracks, we must also tell it
-if we want their  names to change or for it to stop tracking them.  In familiar
-Unix fashion, the `mv` and `rm` git commands do precisely this:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git mv file1.txt file-newname.txt
-git status
-```
-
-Note that these changes must be committed too, to become permanent!  In git's
-world, until something hasn't been committed, it isn't permanently recorded
-anywhere.
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git commit -a -m"I like this new name better"
-echo "Let's look at the log again:"
-git slog
-```
-
-And `git rm` works in a similar fashion.
-
-**Optional:** Exercise
-
-Add a new file `file2.txt`, commit it, make some changes to it, commit them
-again, and then remove it (and don't forget to commit this last step!).
-
-# Local user, branching: the concept
-
-What is a branch?  Simply a *label for the 'current' commit in a sequence of
-ongoing commits*:
-
-![](figs/masterbranch.png)
-
-There can be multiple branches alive at any point in time; the working directory
-is the state of a special pointer called HEAD.  In this example there are two
-branches, *master* and *testing*, and *testing* is the currently active branch
-since it's what HEAD points to:
-
-![](figs/HEAD_testing.png)
-
-Once new commits are made on a branch, HEAD and the branch label move with the
-new commits:
-
-![](figs/branchcommit.png)
-
-This allows the history of both branches to diverge:
-
-![](figs/mergescenario.png)
-
-But based on this graph structure, git can compute the necessary information to
-merge the divergent branches back and continue with a unified line of
-development:
-
-![](figs/mergeaftermath.png)
-
-# Local user, branching: an example
-
-Let's now illustrate all of this with a concrete example.  Let's get our
-bearings first:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git status
-ls
-```
-
-We are now going to try two different routes of development: on the `master`
-branch we will add one file and on the `experiment` branch, which we will
-create, we will add a different one.  We will then merge the experimental branch
-into `master`.
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git branch experiment
-git checkout experiment
-```
-
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-echo "Some crazy idea" > experiment.txt
-git add experiment.txt
-git commit -a -m"Trying something new"
-git slog
-```
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git checkout master
-git slog
-```
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-echo "All the while, more work goes on in master..." >> file-newname.txt
-git commit -a -m"The mainline keeps moving"
-git slog
-```
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-ls
-```
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git merge experiment
-git slog
-```
-
-# Using remotes as a single user
-
-We are now going to introduce the concept of a *remote repository*: a pointer to
-another copy of the repository that lives on a different location.  This can be
-simply a different path on the filesystem or a server on the internet.
-
-For this discussion, we'll be using remotes hosted on the
-[GitHub.com](http://github.com) service, but you can equally use other services
-like [BitBucket](http://bitbucket.org) or [Gitorious](http://gitorious.org) as
-well as host your own.
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-ls
-echo "Let's see if we have any remote repositories here:"
-git remote -v
-```
-
-Since the above cell didn't produce any output after the `git remote -v` call,
-it means we have no remote repositories configured.  We will now proceed to do
-so.  Once logged into GitHub, go to the [new repository
-page](https://github.com/new) and make a repository called `test`.  Do **not**
-check the box that says `Initialize this repository with a README`, since we
-already have an existing repository here.  That option is useful when you're
-starting first at Github and don't have a repo made already on a local computer.
-
-We can now follow the instructions from the next page:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git remote add origin git@github.com:jarrodmillman/test.git
-git push -u origin master
-```
-
-Let's see the remote situation again:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git remote -v
-```
-
-We can now [see this repository publicly on github](https://github.com/jarrodmillman/test).
-
-Let's see how this can be useful for backup and syncing work between two
-different computers.  I'll simulate a 2nd computer by working in a different
-directory...
-
-
-```{r , engine='bash'}
-cd ~/src/
-# Here I clone my 'test' repo but with a different name, test2, to simulate a 2nd computer
-git clone git@github.com:jarrodmillman/test.git test2
-cd test2
-pwd
-git remote -v
-```
-
-Let's now make some changes in one 'computer' and synchronize them on the
-second.
-
-```{r , engine='bash'}
-cd ~/src/test2  # working on computer #2
-echo "More new content on my experiment" >> experiment.txt
-git commit -a -m"More work, on machine #2"
-```
-
-Now we put this new work up on the github server so it's available from the
-internet
-
-```{r , engine='bash'}
-cd ~/src/test2  # working on computer #2
-git push
-```
-
-Now let's fetch that work from machine #1:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git pull
-```
-
-# An important aside: conflict management
-
-While git is very good at merging, if two different branches modify the same
-file in the same location, it simply can't decide which change should prevail.
-At that point, human intervention is necessary to make the decision.  Git will
-help you by marking the location in the file that has a problem, but it's up to
-you to resolve the conflict.  Let's see how that works by intentionally creating
-a conflict.
-
-We start by creating a branch and making a change to our experiment file:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git branch trouble
-git checkout trouble
-echo "This is going to be a problem..." >> experiment.txt
-git commit -a -m"Changes in the trouble branch"
-```
-
-And now we go back to the master branch, where we change the *same* file:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git checkout master
-echo "More work on the master branch..." >> experiment.txt
-git commit -a -m"Mainline work"
-```
-
-So now let's see what happens if we try to merge the `trouble` branch into
-`master`:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git merge trouble
-```
-
-
-Let's see what git has put into our file:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-cat experiment.txt
-```
-
-At this point, we go into the file with a text editor, decide which changes to
-keep, and make a new commit that records our decision. To automate my edits,
-I use the `sed` command.
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-sed -i '/^</d' experiment.txt
-sed -i '/^>/d' experiment.txt
-sed -i '/^=/d' experiment.txt
-```
-
-I've now made the edits, in this case I decided that both pieces of text were useful,
-so I just accepted both additions.
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-cat experiment.txt
-```
-
-
-Let's then make our new commit:
-
-```{r , engine='bash'}
-cd ~/src/jm-git-demo
-git commit -a -m"Completed merge of trouble, fixing conflicts along the way"
-git slog
-```
-
-*Note:* While it's a good idea to understand the basics of fixing merge
-conflicts by hand, in some cases you may find the use of an automated tool
-useful.  Git supports multiple [merge
-tools](https://www.kernel.org/pub/software/scm/git/docs/git-mergetool.html): a
-merge tool is a piece of software that conforms to a basic interface and knows
-how to merge two files into a new one.  Since these are typically graphical
-tools, there are various to choose from for the different operating systems, and
-as long as they obey a basic command structure, git can work with any of them.
-
-
-# Collaborating on github with a small team
-
-Single remote with shared access: we are going to set up a shared collaboration
-with one partner (the person sitting next to you).  This will show the basic
-workflow of collaborating on a project with a small team where everyone has
-write privileges to the same repository.
-
-Note for SVN users: this is similar to the classic SVN workflow, with the
-distinction that commit and push are separate steps.  SVN, having no local
-repository, commits directly to the shared central resource, so to a first
-approximation you can think of `svn commit` as being synonymous with `git
-commit; git push`.
-
-We will have two people, let's call them Alice and Bob, sharing a repository.
-Alice will be the owner of the repo and she will give Bob write privileges.
-
-We begin with a simple synchronization example, much like we just did above, but
-now between *two people* instead of one person.  Otherwise it's the same:
-
-- Bob clones Alice's repository.
-- Bob makes changes to a file and commits them locally.
-- Bob pushes his changes to github.
-- Alice pulls Bob's changes into her own repository.
-
-Next, we will have both parties make non-conflicting changes each, and commit
-them locally.  Then both try to push their changes:
-
-- Alice adds a new file, `alice.txt` to the repo and commits.
-- Bob adds `bob.txt` and commits.
-- Alice pushes to github.
-- Bob tries to push to github.  What happens here?
-
-The problem is that Bob's changes create a commit that conflicts with Alice's,
-so git refuses to apply them.  It forces Bob to first do the merge on his
-machine, so that if there is a conflict in the merge, Bob deals with the
-conflict manually (git could try to do the merge on the server, but in that case
-if there's a conflict, the server repo would be left in a conflicted state
-without a human to fix things up).  The solution is for Bob to first pull the
-changes (pull in git is really fetch+merge), and then push again.
-
-# Learning Git
-
-* [Git for Scientists: A Tutorial](http://nyuccl.org/pages/GitTutorial/)
-* [Gitwash: workflow for scientific Python projects](http://matthew-brett.github.io/pydagogue/gitwash_build.html)
-* [Git branching demo](http://pcottle.github.io/learnGitBranching/)
-
-# Code review 
-
-![](figs/ipython_github_pull1.png)
-
-# knitr
-
-![](figs/knitr-book.png)
-
-> Instead of imagining that our main task is to instruct a computer
-> what to do, let us concentrate rather on explaining to human beings
-> what we want a computer to do.
->
-> --- Donald Knuth, Literate programming (1984)
-
-# Makefile
-
-Make is a popular tool for process automation.  It has a declarative syntax for
-expressing dependencies between sources and targets and a simple
-(timestamp-based) mechanism for resolving when dependencies need to be rebuilt.
-
-Here is a simplified example taken from the build system for the slides for this
-bootcamp:
-
-```bash
-clean:
-        rm -rf *.md *.html
-
-
-%.md: %.Rmd
-        ./make_slides $(basename $(@))
-```
-
-# Implementing Reproducible Computational Research
-
-![In many of today’s research fields, including biomedicine, computational tools are increasingly being used so that the results can be reproduced. Researchers are now encouraged to incorporate software, data, and code in their academic papers so that others can replicate their research results. Edited by three pioneers in this emerging area, this book is the first one to explore this groundbreaking topic. It presents various computational tools useful in research, including cloud computing, data repositories, virtual machines, R’s Sweave function, XML-based programming, and more. It also discusses legal issues and case studies.](figs/ircr-book.png)
-
-# Best practices
-
-![[arXiv:1210.0530v3 [cs.MS] 29 Nov 2012](http://arxiv.org/abs/1210.0530v3)](figs/best-practices.png)
-
-
-# Don't just "make the dirt fly!"
-
-![](figs/panama-canal.png)
-
-# Breakout
-
-1. Configure Git for use at the commandline (see next slide).
-
-1. Clone practice problem:
-```bash
-cd <where you want to work>
-git clone https://github.com/berkeley-scf/r-bootcamp-2013.git
-```
-
-1. Debug `fun3` in `r-bootcamp-2013/modules/src/profile-example.R`.
-
-1. Profile and interpret results.
-
-# Breakout: configure Git
-
-The minimal amount of configuration for git to work without pestering you is to
-tell it who you are:
-
-``` bash
-git config --global user.name "Jarrod Millman"
-git config --global user.email "millman@berkeley.edu"
-```
-
-And how you will edit text files (it will often ask you to edit messages and
-other information, and thus wants to know how you like to edit your files):
-
-``` bash
-# Put here your preferred editor. If this is not set, git will honor
-# the $EDITOR environment variable
-git config --global core.editor /usr/bin/jed  # a lightweight unix editor
-
-# On Windows Notepad will do in a pinch, I recommend Notepad++ as a free alternative
-# On the mac, you can set nano or emacs as a basic option
-
-# And while we're at it, we also turn on the use of color, which is very useful
-git config --global color.ui "auto"
-```
+* Never change a dataset manually, including in pre-processing and post-processing. Always have a script that operates on the data (or results/output). 
+* Always have version numbers for datasets 
+* Note when and where you download, and ideally download via a script as well (e.g., *wget* and *curl* are UNIX tools for automated downloading.
+* Produce figures (e.g., from R) via a script and not by point-and-click
+* When making figures, use `save()` or `save.image()` to save all the inputs needed to recreate a figure, with the code for making the figure in a script file
+* If feasible, include your code for doing analyses and making figures in the relevant document reporting the work by using R Markdown or *Latex* with *knitr* or *Sweave*. 
+* Always set the random number seed so someone else can duplicate your exact numbers
+* Use version control tools such as Git! 

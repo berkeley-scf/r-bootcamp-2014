@@ -11,8 +11,6 @@ earnings <- read.dta('../data/heights.dta')
 
 # This purpose of this module
 
-Note to BB: start recording.
-
 For some of the topics here, my goal is not to teach you how to fish, but merely to tell you that fish exist, they are delicious, that they can be caught, and where one might go to figure out how to catch them.
 
 # Object-oriented programming (OOP) in R
@@ -64,20 +62,22 @@ When `predict()` is called on a GLM object, it first calls the generic `predict(
 Making an object and class-specific methods under S3 is simple. 
 
 ```{r}
-rboot2013 <- list(month = 'August', year = 2013, 
+rboot2014 <- list(month = 'August', year = 2014, 
   instructor = 'Paciorek', attendance = 100)
-class(rboot2013) <- "workshop"
+class(rboot2014) <- "workshop"
 
-rboot2013
-is(rboot2013, "workshop")
-rboot2013$instructor 
+rboot2014
+is(rboot2014, "workshop")
+rboot2014$instructor 
 
 print.workshop <- function(x) {
     with(x,
        cat("A workshop held in ", month, " ", year, "; taught by ", instructor, ".\nThe attendance was ", attendance, ".\n", sep = ""))
     invisible(x)
 }
-rboot2013 # doesn't execute correctly in the slide creation
+
+# doesn't execute correctly in the slide creation, do comment our here:
+# rboot2014 
 ```
  
 Note that we rely on the generic `print()` already existing in R. Otherwise we'd need to create it.
@@ -97,10 +97,10 @@ require(lme4)
 require(methods)
 fm1 <- lmer(Reaction ~ Days + (Days|Subject), sleepstudy)
 class(fm1)
-methods(class = "mer")
+methods(class = "lmerMod")
 slotNames(fm1)
-fm1$ranef
-fm1@ranef
+fm1$theta
+fm1@theta
 ```
 
 # A brief mention of Reference Classes
@@ -173,8 +173,9 @@ print(edLevel)
 }
 ```
 
-1) What happened?
-2) Why did it go through the education levels in that order? (12, 16, 17, ...)
+**Questions**:
+1. What happened?
+2. Why did it go through the education levels in that order? (12, 16, 17, ...)
 
 # How we can `try()` harder
 
@@ -458,7 +459,7 @@ out <- foreach(i = 1:nSims, .combine = c) %dopar% {
 out[1:5]
 ```
 
-What do you think are the advantages and disadvantages of having many small tasks vs. a few large tasks?
+**Question**: What do you think are the advantages and disadvantages of having many small tasks vs. a few large tasks?
 
 You can leave out the `.combine` argument - `foreach` will do something reasonably sensible on its own in terms of combining the results from the different tasks.
 
@@ -531,18 +532,9 @@ See my [notes on distributed computing](http://www.stat.berkeley.edu/scf/paciore
 
 # Breakout
 
-Figure out how many cores your laptop has. 
+If you're interested in parallelization, try the following:
 
-Fit logistic regression models of preference for Bush/Kerry on income, stratified by state. Use `foreach` or a parallel version of one of the *apply* variants.  Collect the resulting coefficients (and standard errors, if you're feeling ambitious) in a clean format such as a matrix or data frame.  Check to see if multiple cores are being used in the execution.
+1. Figure out how many cores your laptop has. 
 
-
-
-# Breakout
-
-Does anyone notice any grammatical issues in [this Dilbert strip](http://dilbert.com/strips/comic/2008-05-07/)?
-
-Please fill out the feedback form!
-https://docs.google.com/spreadsheet/viewform?formkey=dHBaaW5GdVBESWJDUnp6enZNdXpIeUE6MA
-
-Have a snack!
+2. Fit logistic regression models of preference for Bush/Kerry on income, stratified by state. Use `foreach` or a parallel version of one of the *apply* variants.  Collect the resulting coefficients (and standard errors, if you're feeling ambitious) in a clean format such as a matrix or data frame.  Check to see if multiple cores are being used in the execution.
 

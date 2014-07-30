@@ -9,11 +9,10 @@ require(fields)
 require(foreign)
 if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
 earnings <- read.dta('../data/heights.dta')
+set.seed(0)
 ```
 
 # Optimization
-
-Note to BB: remember to start recording.
 
 R provides functionality for optimization - finding maxima or minima of a function. 
 
@@ -22,7 +21,7 @@ A workhorse is `optim()`, which implements a number of optimization algorithms.
 ```{r eval=FALSE} 
 require(fields)  
 ```
-```{r fig.width=11}
+```{r fig.width=11, fig.height=5}
  banana <- function(x) {   ## Rosenbrock Banana function
          x1 <- x[1]
          x2 <- x[2]
@@ -71,7 +70,6 @@ Any hypotheses about the relationship of earnings with height and education?
 
 ```{r gamExample, cache=TRUE, fig.width=10}
 library(mgcv)
-runif(1) # not clear why this is needed; knitr throws error w/out it
 mod_male <- gam(earn ~ s(height, k = 10) + s(ed, k = 10), 
          data = earnings[earnings$sex == 1,])
 mod_female <- gam(earn ~ s(height, k = 10) + s(ed, k = 10), 
@@ -99,7 +97,7 @@ plot(mod_male_full)
 plot(mod_female_full)
 ```
 
-Comments? 
+**Comments?**
 
 # Distributions
 Since R was developed by statisticians, it handles distributions and simulation seamlessly.
@@ -111,7 +109,7 @@ All commonly-used distributions have functions in R. Each distribution has a fam
 * p - cumulative distribution function, e.g., `pnorm()`
 * q - quantile function (inverse CDF), e.g., `qnorm()`
 
-Some of the distributions include the following (in the form of their random number generator function): `rnorm()`, `runif()`, `rbinom()`, `rpois()`, `rbeta()`, `rgamma()`, `rt()`.
+Some of the distributions include the following (in the form of their random number generator function): `rnorm()`, `runif()`, `rbinom()`, `rpois()`, `rbeta()`, `rgamma()`, `rt()`, `rchisq()`.
 
 # Distributions in action
 
@@ -137,10 +135,15 @@ lines(x, dchisq(x, df = 2), col = 'red')
 
 # Other types of simulation and sampling
 
-We can draw a sample with or without replacement. Here's an example of some code that would be part of coding up a bootstrap.
+We can draw a sample with or without replacement.
 
 ```{r}
 sample(row.names(state.x77), 7, replace = FALSE)
+```
+
+Here's an example of some code that would be part of coding up a bootstrap.
+```{r}
+# actual mean
 mean(earnings$earn, na.rm = TRUE)
 # here's a bootstrap sample:
 smp <- sample(seq_len(nrow(earnings)), replace = TRUE) 
@@ -215,7 +218,7 @@ There's lots more packages/functionality for dates/times: see *lubridate* and `?
 # Breakout 
 
 1. Suppose you wanted to do 10-fold cross-validation for some sort of regression model fit to the *earnings* dataset. Write some R code that produces a field in the dataset that indicates which fold each observation is in. Ensure each of the folds has an equal (or as nearly equal as possible if the number of observations is not divisible by 10) number of observations. Hint: consider the *times* argument to the `rep()` function.
-2. Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size `n` from a skewed or discrete distribution and show that if `n` is big enough, the distribution of the means (of each sample of size `n`) looks approximately normal in a histogram. Do it without any looping! 
+2. Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size `n` from a skewed or discrete distribution and show that if `n` is big enough, the distribution of the means (of each sample of size `n`) looks approximately normal in a histogram. Do it without any looping (using techniques from earlier modules)! 
 
 I.e., I want you to show that if you have a large number (say 10,000) of means, each mean being the mean of `n` values from a distribution, the distribution of the means looks approximately normal if `n` is sufficiently big.
 
