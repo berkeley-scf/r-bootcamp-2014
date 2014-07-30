@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Matrices and Arrays</title>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Matrices and Arrays</h1>
+
+<p>Let&#39;s review matrices</p>
+
+<ul>
+<li>Matrices are two-dimensional collections of values of the same type</li>
+<li>We can have numeric, integer, character, or logical matrices, character matrices.</li>
+<li>You can&#39;t mix types within a matrix</li>
+</ul>
+
+<pre><code class="r">mat &lt;- matrix(rnorm(12), nrow = 3, ncol = 4)
+mat
+</code></pre>
+
+<pre><code>##         [,1]   [,2]   [,3]     [,4]
+## [1,] 0.04689  1.847 0.3247 -0.03832
+## [2,] 0.34115 -1.466 0.3896  1.80531
+## [3,] 0.27805 -1.168 1.7667 -0.39357
+</code></pre>
+
+<pre><code class="r">
+# vectorized calcs work with matrices too
+mat * 4
+</code></pre>
+
+<pre><code>##        [,1]   [,2]  [,3]    [,4]
+## [1,] 0.1876  7.389 1.299 -0.1533
+## [2,] 1.3646 -5.863 1.558  7.2213
+## [3,] 1.1122 -4.674 7.067 -1.5743
+</code></pre>
+
+<pre><code class="r">mat &lt;- cbind(mat, 1:3)
+mat
+</code></pre>
+
+<pre><code>##         [,1]   [,2]   [,3]     [,4] [,5]
+## [1,] 0.04689  1.847 0.3247 -0.03832    1
+## [2,] 0.34115 -1.466 0.3896  1.80531    2
+## [3,] 0.27805 -1.168 1.7667 -0.39357    3
+</code></pre>
+
+<p>Arrays are like matrices but can have more or fewer than two dimensions.</p>
+
+<pre><code class="r">arr &lt;- array(rnorm(12), c(2, 3, 4))
+arr
+</code></pre>
+
+<pre><code>## , , 1
+## 
+##          [,1]   [,2]    [,3]
+## [1,] -0.03798 0.5568 -0.9871
+## [2,]  0.36673 0.5107  0.6447
+## 
+## , , 2
+## 
+##        [,1]    [,2]   [,3]
+## [1,] 0.8991  0.9692 1.4341
+## [2,] 0.1440 -0.4457 0.3103
+## 
+## , , 3
+## 
+##          [,1]   [,2]    [,3]
+## [1,] -0.03798 0.5568 -0.9871
+## [2,]  0.36673 0.5107  0.6447
+## 
+## , , 4
+## 
+##        [,1]    [,2]   [,3]
+## [1,] 0.8991  0.9692 1.4341
+## [2,] 0.1440 -0.4457 0.3103
+</code></pre>
+
+<h1>Attributes</h1>
+
+<p>Objects have <em>attributes</em>.</p>
+
+<pre><code class="r">attributes(mat)
+</code></pre>
+
+<pre><code>## $dim
+## [1] 3 5
+</code></pre>
+
+<pre><code class="r">rownames(mat) &lt;- c(&quot;first&quot;, &quot;middle&quot;, &quot;last&quot;)
+mat
+</code></pre>
+
+<pre><code>##           [,1]   [,2]   [,3]     [,4] [,5]
+## first  0.04689  1.847 0.3247 -0.03832    1
+## middle 0.34115 -1.466 0.3896  1.80531    2
+## last   0.27805 -1.168 1.7667 -0.39357    3
+</code></pre>
+
+<pre><code class="r">attributes(mat)
+</code></pre>
+
+<pre><code>## $dim
+## [1] 3 5
+## 
+## $dimnames
+## $dimnames[[1]]
+## [1] &quot;first&quot;  &quot;middle&quot; &quot;last&quot;  
+## 
+## $dimnames[[2]]
+## NULL
+</code></pre>
+
+<p>Now let&#39;s do a bit of manipulation and see if you can infer how R represents matrices internally.</p>
+
+<pre><code>mat[4]
+attributes(mat) &lt;- NULL
+mat
+is.matrix(mat)
+</code></pre>
+
+<p><strong>Question</strong>: What can you infer about what a matrix is in R?</p>
+
+<p><strong>Question</strong>: What kind of object are the attributes themselves? How do I check?</p>
+
+<h1>Matrices are stored column-major</h1>
+
+<p>This is like Fortran but not like C. </p>
+
+<pre><code class="r">mat &lt;- matrix(1:12, 3, 4)
+mat
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    4    7   10
+## [2,]    2    5    8   11
+## [3,]    3    6    9   12
+</code></pre>
+
+<pre><code class="r">c(mat)
+</code></pre>
+
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12
+</code></pre>
+
+<p>You can go smoothly back and forth between a matrix (or an array) and a vector:</p>
+
+<pre><code class="r">identical(mat, matrix(c(mat), 3, 4))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">identical(mat, matrix(c(mat), 3, 4, byrow = TRUE))
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<p>This is a common cause of bugs!</p>
+
+<h1>Missing values and other special values</h1>
+
+<p>Since it was designed by statisticians, R handles missing value very well relative to other languages.</p>
+
+<ul>
+<li><code>NA</code> is a missing value</li>
+</ul>
+
+<pre><code class="r">vec &lt;- rnorm(12)
+vec[c(3, 5)] &lt;- NA
+vec
+</code></pre>
+
+<pre><code>##  [1] -0.1189  0.2198      NA  1.8995      NA -1.2593  0.8344  0.3339
+##  [9]  0.9650 -0.5214  1.6554 -0.3946
+</code></pre>
+
+<pre><code class="r">length(vec)
+</code></pre>
+
+<pre><code>## [1] 12
+</code></pre>
+
+<pre><code class="r">sum(vec)
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+<pre><code class="r">sum(vec, na.rm = TRUE)
+</code></pre>
+
+<pre><code>## [1] 3.614
+</code></pre>
+
+<pre><code class="r">hist(vec)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-5"/> </p>
+
+<pre><code class="r">is.na(vec)
+</code></pre>
+
+<pre><code>##  [1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
+## [12] FALSE
+</code></pre>
+
+<p>Be careful because many R functions won&#39;t warn you that they are ignoring the missing values.</p>
+
+<ul>
+<li>To infinity and beyond</li>
+</ul>
+
+<pre><code class="r">big &lt;- Inf
+big
+</code></pre>
+
+<pre><code>## [1] Inf
+</code></pre>
+
+<pre><code class="r">big + 7
+</code></pre>
+
+<pre><code>## [1] Inf
+</code></pre>
+
+<ul>
+<li><code>NaN</code> stands for Not a Number</li>
+</ul>
+
+<pre><code class="r">sqrt(-5)
+</code></pre>
+
+<pre><code>## Warning: NaNs produced
+</code></pre>
+
+<pre><code>## [1] NaN
+</code></pre>
+
+<pre><code class="r">big - big
+</code></pre>
+
+<pre><code>## [1] NaN
+</code></pre>
+
+<pre><code class="r">1/0
+</code></pre>
+
+<pre><code>## [1] Inf
+</code></pre>
+
+<ul>
+<li><code>NULL</code></li>
+</ul>
+
+<pre><code class="r">vec &lt;- c(vec, NULL)
+vec
+</code></pre>
+
+<pre><code>##  [1] -0.1189  0.2198      NA  1.8995      NA -1.2593  0.8344  0.3339
+##  [9]  0.9650 -0.5214  1.6554 -0.3946
+</code></pre>
+
+<pre><code class="r">length(vec)
+</code></pre>
+
+<pre><code>## [1] 12
+</code></pre>
+
+<pre><code class="r">a &lt;- NULL
+a + 7
+</code></pre>
+
+<pre><code>## numeric(0)
+</code></pre>
+
+<pre><code class="r">a[3, 4]
+</code></pre>
+
+<pre><code>## NULL
+</code></pre>
+
+<pre><code class="r">is.null(a)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">myList &lt;- list(a = 7, b = 5)
+myList$a &lt;- NULL  # works for data frames too
+myList
+</code></pre>
+
+<pre><code>## $b
+## [1] 5
+</code></pre>
+
+<p><code>NA</code> can hold a place but <code>NULL</code> cannot.
+<code>NULL</code> is useful for having a function argument default to &#39;nothing&#39;. See <code>help(crossprod)</code>, which can compute either \(X^{\top}X\) or \(X^{\top}Y\).  </p>
+
+<h1>Logical vectors</h1>
+
+<pre><code class="r">answers &lt;- c(TRUE, TRUE, FALSE, FALSE)
+update &lt;- c(TRUE, FALSE, TRUE, FALSE)
+
+answers &amp; update
+</code></pre>
+
+<pre><code>## [1]  TRUE FALSE FALSE FALSE
+</code></pre>
+
+<pre><code class="r">answers | update
+</code></pre>
+
+<pre><code>## [1]  TRUE  TRUE  TRUE FALSE
+</code></pre>
+
+<pre><code class="r"># note the vectorized boolean arithmetic
+
+# what am I doing here?
+sum(answers)
+</code></pre>
+
+<pre><code>## [1] 2
+</code></pre>
+
+<pre><code class="r">mean(answers)
+</code></pre>
+
+<pre><code>## [1] 0.5
+</code></pre>
+
+<pre><code class="r">answers + update
+</code></pre>
+
+<pre><code>## [1] 2 1 1 0
+</code></pre>
+
+<p><strong>Question</strong>: What do you think R is doing to do arithmetic on logical vectors?</p>
+
+<p>Tricks with logicals&hellip;</p>
+
+<pre><code class="r">identical(answers &amp; update, as.logical(answers * update))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">identical(answers | update, as.logical(answers + update))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<h1>Data frames</h1>
+
+<p>A review from Module 1&hellip;</p>
+
+<ul>
+<li>Data frames are combinations of vectors of the same length, but can be of different types</li>
+<li>Data frames are what is used for standard rectangular (record by field) datasets, similar to a spreadsheet</li>
+<li>Data frames are a functionality that both sets R aside from some languages (e.g., Matlab) and provides functionality similar to some statistical packages (e.g., Stata, SAS)</li>
+</ul>
+
+<pre><code class="r">require(foreign)
+vote = read.dta(&quot;../data/2004_labeled_processed_race.dta&quot;)
+class(vote)
+</code></pre>
+
+<pre><code>## [1] &quot;data.frame&quot;
+</code></pre>
+
+<pre><code class="r">head(vote)
+</code></pre>
+
+<pre><code>##   state pres04    sex  race  age9 partyid income relign8 age60 age65
+## 1     2      1 female white 25-29    &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; 18-29 25-29
+## 2     2      2   male white 18-24    &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; 18-29 18-24
+## 3     2      1 female black 30-39    &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; 30-44 30-39
+## 4     2      1 female black 30-39    &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; 30-44 30-39
+## 5     2      1 female white 40-44    &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; 30-44 40-49
+## 6     2      1 female white 30-39    &lt;NA&gt;   &lt;NA&gt;    &lt;NA&gt; 30-44 30-39
+##   geocode sizeplac brnagain attend year region y
+## 1       3    rural     &lt;NA&gt;   &lt;NA&gt; 2004      4 0
+## 2       3    rural     &lt;NA&gt;   &lt;NA&gt; 2004      4 1
+## 3       3    rural     &lt;NA&gt;   &lt;NA&gt; 2004      4 0
+## 4       3    rural     &lt;NA&gt;   &lt;NA&gt; 2004      4 0
+## 5       3    rural     &lt;NA&gt;   &lt;NA&gt; 2004      4 0
+## 6       3    rural     &lt;NA&gt;   &lt;NA&gt; 2004      4 0
+</code></pre>
+
+<pre><code class="r">str(vote)
+</code></pre>
+
+<pre><code>## &#39;data.frame&#39;:    76205 obs. of  17 variables:
+##  $ state   : int  2 2 2 2 2 2 2 2 2 2 ...
+##  $ pres04  : int  1 2 1 1 1 1 1 2 2 2 ...
+##  $ sex     : Factor w/ 2 levels &quot;male&quot;,&quot;female&quot;: 2 1 2 2 2 2 1 2 2 2 ...
+##  $ race    : Factor w/ 5 levels &quot;white&quot;,&quot;black&quot;,..: 1 1 2 2 1 1 1 1 1 1 ...
+##  $ age9    : Factor w/ 9 levels &quot;18-24&quot;,&quot;25-29&quot;,..: 2 1 3 3 4 3 4 1 2 1 ...
+##  $ partyid : Factor w/ 4 levels &quot;democrat&quot;,&quot;republican&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ income  : Factor w/ 8 levels &quot;under $15,000&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ relign8 : Factor w/ 8 levels &quot;protestant&quot;,&quot;catholic&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ age60   : Factor w/ 4 levels &quot;18-29&quot;,&quot;30-44&quot;,..: 1 1 2 2 2 2 2 1 1 1 ...
+##  $ age65   : Factor w/ 6 levels &quot;18-24&quot;,&quot;25-29&quot;,..: 2 1 3 3 4 3 4 1 2 1 ...
+##  $ geocode : int  3 3 3 3 3 3 3 3 3 3 ...
+##  $ sizeplac: Factor w/ 5 levels &quot;city over 500,000&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
+##  $ brnagain: Factor w/ 2 levels &quot;yes&quot;,&quot;no&quot;: NA NA NA NA NA NA NA NA NA NA ...
+##  $ attend  : Factor w/ 6 levels &quot;more than once a week&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
+##  $ year    : num  2004 2004 2004 2004 2004 ...
+##  $ region  : num  4 4 4 4 4 4 4 4 4 4 ...
+##  $ y       : num  0 1 0 0 0 0 0 1 1 1 ...
+##  - attr(*, &quot;datalabel&quot;)= chr &quot;&quot;
+##  - attr(*, &quot;time.stamp&quot;)= chr &quot; 6 Jun 2007 14:53&quot;
+##  - attr(*, &quot;formats&quot;)= chr  &quot;%8.0g&quot; &quot;%8.0g&quot; &quot;%8.0g&quot; &quot;%8.0g&quot; ...
+##  - attr(*, &quot;types&quot;)= int  251 251 251 251 251 251 251 251 251 251 ...
+##  - attr(*, &quot;val.labels&quot;)= chr  &quot;stanum&quot; &quot;presak04&quot; &quot;sex&quot; &quot;race&quot; ...
+##  - attr(*, &quot;var.labels&quot;)= chr  &quot;state id&quot; &quot;in today&#39;s election for president, did you just vote for:&quot; &quot;are you:&quot; &quot;are you:&quot; ...
+##  - attr(*, &quot;version&quot;)= int 8
+##  - attr(*, &quot;label.table&quot;)=List of 14
+##   ..$ stanum  : Named num 2
+##   .. ..- attr(*, &quot;names&quot;)= chr &quot;alaska&quot;
+##   ..$ presak04: Named num  0 1 2 3 9
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;did not vote&quot; &quot;kerry&quot; &quot;bush&quot; &quot;nader&quot; ...
+##   ..$ sex     : Named num  1 2
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;male&quot; &quot;female&quot;
+##   ..$ race    : Named num  1 2 3 4 5
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;white&quot; &quot;black&quot; &quot;hispanic/latino&quot; &quot;asian&quot; ...
+##   ..$ age9    : Named num  1 2 3 4 5 6 7 8 9
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;18-24&quot; &quot;25-29&quot; &quot;30-39&quot; &quot;40-44&quot; ...
+##   ..$ partyid : Named num  1 2 3 4
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;democrat&quot; &quot;republican&quot; &quot;independent&quot; &quot;something else&quot;
+##   ..$ income  : Named num  1 2 3 4 5 6 7 8
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;under $15,000&quot; &quot;$15,000-$29,999&quot; &quot;$30,000-$49,999&quot; &quot;$50,000-$74,999&quot; ...
+##   ..$ relign8 : Named num  1 2 3 4 5 6 7 8
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;protestant&quot; &quot;catholic&quot; &quot;mormon/lds&quot; &quot;other christian&quot; ...
+##   ..$ age60   : Named num  1 2 3 4
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;18-29&quot; &quot;30-44&quot; &quot;45-59&quot; &quot;60 or over&quot;
+##   ..$ age65   : Named num  1 2 3 4 5 6
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;18-24&quot; &quot;25-29&quot; &quot;30-39&quot; &quot;40-49&quot; ...
+##   ..$ geocode : Named num  1 2 3
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;juneau/fairbanks/rural&quot; &quot;anchorage&quot; &quot;anchorage-fairbanks corridor&quot;
+##   ..$ sizeplac: Named num  1 2 3 4 5
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;city over 500,000&quot; &quot;city: 50,000 to 500,000&quot; &quot;suburbs&quot; &quot;city: 10,000 to 49,999&quot; ...
+##   ..$ brnagain: Named num  1 2
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;yes&quot; &quot;no&quot;
+##   ..$ attend  : Named num  1 2 3 4 5 9
+##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;more than once a week&quot; &quot;once a week&quot; &quot;a few times a month&quot; &quot;a few times a year&quot; ...
+</code></pre>
+
+<h1>Data frames are (special) lists!</h1>
+
+<pre><code class="r">is.list(vote)
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<pre><code class="r">length(vote)
+</code></pre>
+
+<pre><code>## [1] 17
+</code></pre>
+
+<pre><code class="r">vote[[3]][1:5]
+</code></pre>
+
+<pre><code>## [1] female male   female female female
+## Levels: male female
+</code></pre>
+
+<pre><code class="r">lapply(vote, class)
+</code></pre>
+
+<pre><code>## $state
+## [1] &quot;integer&quot;
+## 
+## $pres04
+## [1] &quot;integer&quot;
+## 
+## $sex
+## [1] &quot;factor&quot;
+## 
+## $race
+## [1] &quot;factor&quot;
+## 
+## $age9
+## [1] &quot;factor&quot;
+## 
+## $partyid
+## [1] &quot;factor&quot;
+## 
+## $income
+## [1] &quot;factor&quot;
+## 
+## $relign8
+## [1] &quot;factor&quot;
+## 
+## $age60
+## [1] &quot;factor&quot;
+## 
+## $age65
+## [1] &quot;factor&quot;
+## 
+## $geocode
+## [1] &quot;integer&quot;
+## 
+## $sizeplac
+## [1] &quot;factor&quot;
+## 
+## $brnagain
+## [1] &quot;factor&quot;
+## 
+## $attend
+## [1] &quot;factor&quot;
+## 
+## $year
+## [1] &quot;numeric&quot;
+## 
+## $region
+## [1] &quot;numeric&quot;
+## 
+## $y
+## [1] &quot;numeric&quot;
+</code></pre>
+
+<p><code>lapply()</code> is a function used on lists; it works here to apply the <code>class()</code> function to each element of the list, which in this case is each field/column.</p>
+
+<h1>But lists are also vectors!</h1>
+
+<pre><code class="r">length(vote)
+</code></pre>
+
+<pre><code>## [1] 17
+</code></pre>
+
+<pre><code class="r">someFields &lt;- vote[c(3, 5)]
+head(someFields)
+</code></pre>
+
+<pre><code>##      sex  age9
+## 1 female 25-29
+## 2   male 18-24
+## 3 female 30-39
+## 4 female 30-39
+## 5 female 40-44
+## 6 female 30-39
+</code></pre>
+
+<pre><code class="r">identical(vote[c(3, 5)], vote[, c(3, 5)])
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<p>In general the placement of commas in R is crucial, but here, two different operations give the same result because of the underlying structure of data frames.</p>
+
+<h1>Factors</h1>
+
+<ul>
+<li>A factor is a special data type in R used for categorical data. In some cases it works like magic and in others it is incredibly frustrating. </li>
+</ul>
+
+<pre><code class="r">class(vote$sizeplac)
+</code></pre>
+
+<pre><code>## [1] &quot;factor&quot;
+</code></pre>
+
+<pre><code class="r">head(vote$sizeplac)  # What order are the factors in?
+</code></pre>
+
+<pre><code>## [1] rural rural rural rural rural rural
+## 5 Levels: city over 500,000 city: 50,000 to 500,000 ... rural
+</code></pre>
+
+<pre><code class="r">levels(vote[[&quot;sizeplac&quot;]])
+</code></pre>
+
+<pre><code>## [1] &quot;city over 500,000&quot;       &quot;city: 50,000 to 500,000&quot;
+## [3] &quot;suburbs&quot;                 &quot;city: 10,000 to 49,999&quot; 
+## [5] &quot;rural&quot;
+</code></pre>
+
+<pre><code class="r">summary(vote$sizeplac)
+</code></pre>
+
+<pre><code>##       city over 500,000 city: 50,000 to 500,000                 suburbs 
+##                    5882                   15462                   28796 
+##  city: 10,000 to 49,999                   rural                    NA&#39;s 
+##                    8449                   17501                     115
+</code></pre>
+
+<ul>
+<li>What if we don&#39;t like the order these are in? Factor order is important for all kinds of things like plotting, analysis of variance, regression output, and more</li>
+</ul>
+
+<h1>Ordering the Factor</h1>
+
+<ul>
+<li>Ordered factors simply have an additional attribute explaining the order of the levels of a factor</li>
+<li>This is a useful shortcut when we want to preserve some of the meaning provided by the order</li>
+<li>Think ordinal data</li>
+</ul>
+
+<pre><code class="r">vote &lt;- within(vote, sizeplac_ord &lt;- ordered(sizeplac, levels = levels(sizeplac)[c(5, 
+    3, 4, 2, 1)]))
+head(vote$sizeplac_ord)
+</code></pre>
+
+<pre><code>## [1] rural rural rural rural rural rural
+## 5 Levels: rural &lt; suburbs &lt; ... &lt; city over 500,000
+</code></pre>
+
+<pre><code class="r">levels(vote$sizeplac_ord)
+</code></pre>
+
+<pre><code>## [1] &quot;rural&quot;                   &quot;suburbs&quot;                
+## [3] &quot;city: 10,000 to 49,999&quot;  &quot;city: 50,000 to 500,000&quot;
+## [5] &quot;city over 500,000&quot;
+</code></pre>
+
+<p><strong>Challenge</strong>: Try to decipher what I just did with that complicated single line of code.</p>
+
+<h1>Reclassifying Factors</h1>
+
+<ul>
+<li>Turning factors into other data types can be tricky. All factor levels have an underlying numeric structure.</li>
+</ul>
+
+<pre><code class="r">students &lt;- factor(c(&quot;basic&quot;, &quot;proficient&quot;, &quot;advanced&quot;, &quot;basic&quot;, &quot;advanced&quot;, 
+    &quot;minimal&quot;))
+levels(students)
+</code></pre>
+
+<pre><code>## [1] &quot;advanced&quot;   &quot;basic&quot;      &quot;minimal&quot;    &quot;proficient&quot;
+</code></pre>
+
+<pre><code class="r">unclass(students)
+</code></pre>
+
+<pre><code>## [1] 2 4 1 2 1 3
+## attr(,&quot;levels&quot;)
+## [1] &quot;advanced&quot;   &quot;basic&quot;      &quot;minimal&quot;    &quot;proficient&quot;
+</code></pre>
+
+<ul>
+<li>What&#39;s wrong?</li>
+<li>Be careful! The best way to convert a factor is to convert it to a character first.</li>
+</ul>
+
+<pre><code class="r">students &lt;- factor(c(&quot;basic&quot;, &quot;proficient&quot;, &quot;advanced&quot;, &quot;basic&quot;, &quot;advanced&quot;, 
+    &quot;minimal&quot;))
+score = c(minimal = 3, basic = 1, advanced = 13, proficient = 7)  # a named vector
+score[&quot;advanced&quot;]  # look up by name
+</code></pre>
+
+<pre><code>## advanced 
+##       13
+</code></pre>
+
+<pre><code class="r">students[3]
+</code></pre>
+
+<pre><code>## [1] advanced
+## Levels: advanced basic minimal proficient
+</code></pre>
+
+<pre><code class="r">score[students[3]]
+</code></pre>
+
+<pre><code>## minimal 
+##       3
+</code></pre>
+
+<pre><code class="r">score[as.character(students[3])]
+</code></pre>
+
+<pre><code>## advanced 
+##       13
+</code></pre>
+
+<p>What&#39;s going wrong?</p>
+
+<h1>Subsetting</h1>
+
+<p>There are many ways to select subsets in R. The syntax below is useful for vectors, matrices, data frames, arrays and lists.</p>
+
+<pre><code class="r">vec &lt;- rnorm(20)
+mat &lt;- matrix(vec, 4, 5)
+rownames(mat) &lt;- letters[1:4]
+mat
+</code></pre>
+
+<pre><code>##      [,1]    [,2]    [,3]    [,4]   [,5]
+## a 0.42956  0.5791 -0.4504 -0.1683 0.3203
+## b 0.56585  0.5890  1.6182  0.3920 0.1222
+## c 0.23469 -1.3687  0.1612  0.5586 0.0584
+## d 0.03242 -0.3579 -1.5414  0.3896 0.9223
+</code></pre>
+
+<p>1) by direct indexing</p>
+
+<pre><code class="r">vec[c(3, 5, 12:14)]
+</code></pre>
+
+<pre><code>## [1]  0.2347  0.5791 -1.5414 -0.1683  0.3920
+</code></pre>
+
+<pre><code class="r">vec[-c(3, 5)]
+</code></pre>
+
+<pre><code>##  [1]  0.42956  0.56585  0.03242  0.58903 -1.36868 -0.35790 -0.45043
+##  [8]  1.61824  0.16121 -1.54142 -0.16826  0.39203  0.55863  0.38959
+## [15]  0.32034  0.12223  0.05840  0.92227
+</code></pre>
+
+<pre><code class="r">mat[c(2, 4), 5]
+</code></pre>
+
+<pre><code>##      b      d 
+## 0.1222 0.9223
+</code></pre>
+
+<pre><code class="r">rowInd &lt;- c(1, 3, 4)
+colInd &lt;- c(2, 2, 1)
+mat[cbind(rowInd, colInd)]
+</code></pre>
+
+<pre><code>## [1]  0.57914 -1.36868  0.03242
+</code></pre>
+
+<p>Note the last usage where we give it a 2-column matrix of indices</p>
+
+<p>2) by a vector of logicals</p>
+
+<pre><code class="r">cond &lt;- vec &gt; 0
+vec[cond]
+</code></pre>
+
+<pre><code>##  [1] 0.42956 0.56585 0.23469 0.03242 0.57914 0.58903 1.61824 0.16121
+##  [9] 0.39203 0.55863 0.38959 0.32034 0.12223 0.05840 0.92227
+</code></pre>
+
+<pre><code class="r">mat[mat[, 1] &gt; 0, ]
+</code></pre>
+
+<pre><code>##      [,1]    [,2]    [,3]    [,4]   [,5]
+## a 0.42956  0.5791 -0.4504 -0.1683 0.3203
+## b 0.56585  0.5890  1.6182  0.3920 0.1222
+## c 0.23469 -1.3687  0.1612  0.5586 0.0584
+## d 0.03242 -0.3579 -1.5414  0.3896 0.9223
+</code></pre>
+
+<p>What happened in the last subsetting operation?</p>
+
+<p>3) by a vector of names</p>
+
+<pre><code class="r">mat[c(&quot;a&quot;, &quot;d&quot;, &quot;a&quot;), ]
+</code></pre>
+
+<pre><code>##      [,1]    [,2]    [,3]    [,4]   [,5]
+## a 0.42956  0.5791 -0.4504 -0.1683 0.3203
+## d 0.03242 -0.3579 -1.5414  0.3896 0.9223
+## a 0.42956  0.5791 -0.4504 -0.1683 0.3203
+</code></pre>
+
+<p>4) using <em>subset()</em></p>
+
+<pre><code class="r">subset(mtcars, mpg &gt; 20)
+</code></pre>
+
+<pre><code>##                 mpg cyl  disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4      21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag  21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710     22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive 21.4   6 258.0 110 3.08 3.215 19.44  1  0    3    1
+## Merc 240D      24.4   4 146.7  62 3.69 3.190 20.00  1  0    4    2
+## Merc 230       22.8   4 140.8  95 3.92 3.150 22.90  1  0    4    2
+## Fiat 128       32.4   4  78.7  66 4.08 2.200 19.47  1  1    4    1
+## Honda Civic    30.4   4  75.7  52 4.93 1.615 18.52  1  1    4    2
+## Toyota Corolla 33.9   4  71.1  65 4.22 1.835 19.90  1  1    4    1
+## Toyota Corona  21.5   4 120.1  97 3.70 2.465 20.01  1  0    3    1
+## Fiat X1-9      27.3   4  79.0  66 4.08 1.935 18.90  1  1    4    1
+## Porsche 914-2  26.0   4 120.3  91 4.43 2.140 16.70  0  1    5    2
+## Lotus Europa   30.4   4  95.1 113 3.77 1.513 16.90  1  1    5    2
+## Volvo 142E     21.4   4 121.0 109 4.11 2.780 18.60  1  1    4    2
+</code></pre>
+
+<h1>Assignment into subsets</h1>
+
+<p>We can assign into subsets by using similar syntax, as we saw with vectors.</p>
+
+<pre><code class="r">vec[c(3, 5, 12:14)] &lt;- 1:5
+mat[2, 3:5] &lt;- rnorm(3)
+mat[mat[, 1] &gt; 0, ] &lt;- -Inf
+</code></pre>
+
+<h1>Strings</h1>
+
+<p>R has lots of functionality for character strings. Usually these are stored as vectors of strings, each with arbitrary length.</p>
+
+<pre><code class="r">chars &lt;- c(&quot;hi&quot;, &quot;hallo&quot;, &quot;mother&#39;s&quot;, &quot;father&#39;s&quot;, &quot;He said, \&quot;hi\&quot;&quot;)
+length(chars)
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+<pre><code class="r">nchar(chars)
+</code></pre>
+
+<pre><code>## [1]  2  5  8  8 13
+</code></pre>
+
+<pre><code class="r">paste(&quot;bill&quot;, &quot;clinton&quot;, sep = &quot; &quot;)  # paste together a set of strings
+</code></pre>
+
+<pre><code>## [1] &quot;bill clinton&quot;
+</code></pre>
+
+<pre><code class="r">paste(chars, collapse = &quot; &quot;)  # paste together things from a vector
+</code></pre>
+
+<pre><code>## [1] &quot;hi hallo mother&#39;s father&#39;s He said, \&quot;hi\&quot;&quot;
+</code></pre>
+
+<pre><code class="r">
+strsplit(&quot;This is the R bootcamp&quot;, split = &quot; &quot;)
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] &quot;This&quot;     &quot;is&quot;       &quot;the&quot;      &quot;R&quot;        &quot;bootcamp&quot;
+</code></pre>
+
+<pre><code class="r">substring(chars, 2, 3)
+</code></pre>
+
+<pre><code>## [1] &quot;i&quot;  &quot;al&quot; &quot;ot&quot; &quot;at&quot; &quot;e &quot;
+</code></pre>
+
+<pre><code class="r">chars2 &lt;- chars
+substring(chars2, 2, 3) &lt;- &quot;ZZ&quot;
+chars2
+</code></pre>
+
+<pre><code>## [1] &quot;hZ&quot;              &quot;hZZlo&quot;           &quot;mZZher&#39;s&quot;        &quot;fZZher&#39;s&quot;       
+## [5] &quot;HZZsaid, \&quot;hi\&quot;&quot;
+</code></pre>
+
+<p>We can search for patterns in character vectors and replace patterns (both vectorized!)</p>
+
+<pre><code class="r">grep(&quot;ther&quot;, chars)
+</code></pre>
+
+<pre><code>## [1] 3 4
+</code></pre>
+
+<pre><code class="r">gsub(&quot;hi&quot;, &quot;Hi&quot;, chars)
+</code></pre>
+
+<pre><code>## [1] &quot;Hi&quot;              &quot;hallo&quot;           &quot;mother&#39;s&quot;        &quot;father&#39;s&quot;       
+## [5] &quot;He said, \&quot;Hi\&quot;&quot;
+</code></pre>
+
+<h1>Regular expressions (regex or regexp)</h1>
+
+<p>Some of you may be familiar with using <em>regular expressions</em>, which is functionality for doing sophisticated pattern matching and replacement with strings. <em>Python</em> and <em>Perl</em> are both used extensively for such text manipulation. </p>
+
+<p>R has a full set of regular expression capabilities available through the <em>grep()</em>, <em>gregexpr()</em>, and <em>gsub()</em> functions (among others - many R functions will work with regular expressions).</p>
+
+<p>You can basically do any regular expression/string manipulations in R, though the syntax may be a bit clunky at times.</p>
+
+<h1>More details on reading data into R</h1>
+
+<p>Remember that you&#39;ll need to know the current working directory so that you know where R is looking for files.</p>
+
+<p>The workhorse for reading into a data frame is <em>read.table()</em>, which allows any separator (CSV, tab-delimited, etc.). <em>read.csv()</em> is a special case of <em>read.table()</em> for CSV files.</p>
+
+<p>You&#39;ve already seen a bit of this, but let&#39;s work through a more involved example, so you can see some of the steps and tricks involved in reading data into R.</p>
+
+<pre><code class="r">rta &lt;- read.table(&quot;../data/RTAData.csv&quot;, sep = &quot;,&quot;, head = TRUE)
+rta[1:5, 1:5]
+</code></pre>
+
+<pre><code>##               time X40010 X40015 X40020 X40025
+## 1 2010-03-01 14:58    821    209    828    258
+## 2 2010-03-01 15:01    804    209    804    248
+## 3 2010-03-01 15:04    892    212    801    237
+## 4 2010-03-01 15:07    857    214    821    243
+## 5 2010-03-01 15:10    849    222    834    252
+</code></pre>
+
+<pre><code class="r">dim(rta)
+</code></pre>
+
+<pre><code>## [1] 120822     62
+</code></pre>
+
+<pre><code class="r"># great, we&#39;re all set, right?  Not so fast...
+unlist(lapply(rta, class))[1:5]
+</code></pre>
+
+<pre><code>##     time   X40010   X40015   X40020   X40025 
+## &quot;factor&quot; &quot;factor&quot; &quot;factor&quot; &quot;factor&quot; &quot;factor&quot;
+</code></pre>
+
+<pre><code class="r"># ?read.table
+rta2 &lt;- read.table(&quot;../data/RTAData.csv&quot;, sep = &quot;,&quot;, head = TRUE, stringsAsFactors = FALSE)
+rta2[3, 3]
+</code></pre>
+
+<pre><code>## [1] &quot;212&quot;
+</code></pre>
+
+<pre><code class="r">unlist(lapply(rta2, class))[1:5]
+</code></pre>
+
+<pre><code>##        time      X40010      X40015      X40020      X40025 
+## &quot;character&quot; &quot;character&quot; &quot;character&quot; &quot;character&quot; &quot;character&quot;
+</code></pre>
+
+<pre><code class="r"># let&#39;s delve more deeply
+levels(rta[, 2])[c(1:5, 3041:3044)]
+</code></pre>
+
+<pre><code>## [1] &quot;&quot;     &quot;1000&quot; &quot;1001&quot; &quot;1002&quot; &quot;1003&quot; &quot;997&quot;  &quot;998&quot;  &quot;999&quot;  &quot;x&quot;
+</code></pre>
+
+<pre><code class="r">rta3 &lt;- read.table(&quot;../data/RTAData.csv&quot;, sep = &quot;,&quot;, head = TRUE, stringsAsFactors = FALSE, 
+    na.strings = c(&quot;NA&quot;, &quot;x&quot;))
+unlist(lapply(rta3, class))[1:5]
+</code></pre>
+
+<pre><code>##        time      X40010      X40015      X40020      X40025 
+## &quot;character&quot;   &quot;integer&quot;   &quot;integer&quot;   &quot;integer&quot;   &quot;integer&quot;
+</code></pre>
+
+<pre><code class="r">
+# checking...
+missing &lt;- which(rta[, 2] == &quot;&quot;)
+missing[1:5]
+</code></pre>
+
+<pre><code>## [1] 1167 1168 1169 1170 1171
+</code></pre>
+
+<pre><code class="r">rta3[head(missing), ]
+</code></pre>
+
+<pre><code>##                  time X40010 X40015 X40020 X40025 X40030 X40035 X40040
+## 1167 2010-03-04 01:16     NA     NA     NA     NA     NA     NA     NA
+## 1168 2010-03-04 01:19     NA     NA     NA     NA     NA     NA     NA
+## 1169 2010-03-04 01:22     NA     NA     NA     NA     NA     NA     NA
+## 1170 2010-03-04 01:25     NA     NA     NA     NA     NA     NA     NA
+## 1171 2010-03-04 01:28     NA     NA     NA     NA     NA     NA     NA
+## 1172 2010-03-04 01:31     NA     NA     NA     NA     NA     NA     NA
+##      X40045 X40050 X40055 X40060 X40065 X40070 X40075 X40080 X40085 X40090
+## 1167     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1168     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1169     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1170     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1171     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1172     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+##      X40092 X40095 X40100 X40105 X40110 X40115 X40120 X40125 X40130 X40135
+## 1167     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1168     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1169     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1170     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1171     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1172     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+##      X40140 X40145 X40150 X41010 X41015 X41020 X41025 X41030 X41035 X41040
+## 1167     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1168     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1169     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1170     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1171     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1172     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+##      X41045 X41050 X41055 X41060 X41065 X41070 X41075 X41080 X41085 X41090
+## 1167     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1168     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1169     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1170     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1171     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1172     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+##      X41095 X41100 X41105 X41110 X41115 X41120 X41125 X41130 X41135 X41140
+## 1167     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1168     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1169     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1170     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1171     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+## 1172     NA     NA     NA     NA     NA     NA     NA     NA     NA     NA
+##      X41145 X41150 X41155 X41160
+## 1167     NA     NA     NA     NA
+## 1168     NA     NA     NA     NA
+## 1169     NA     NA     NA     NA
+## 1170     NA     NA     NA     NA
+## 1171     NA     NA     NA     NA
+## 1172     NA     NA     NA     NA
+</code></pre>
+
+<p>It&#39;s good to first look at your data in plain text format outside of R and then to check it after you&#39;ve read it into R.</p>
+
+<h1>Other ways to read data into R</h1>
+
+<p>The <em>read.table()</em> family of functions just skims the surface of things&hellip;</p>
+
+<p>1) You can also read in a file as vector of characters, one character string per line of the file with <code>readLines()</code>, and then post-process it. 
+2) You can read fixed width format (constant number of characters per field) with <code>read.fwf()</code>.</p>
+
+<h1>Breakout</h1>
+
+<ol>
+<li><p>Using the voting/presidential preference dataset (<em>data/2004_labeled_processed_race.dta</em>), create a new column based on <em>age9</em> that gives, as a numeric value, the midpoint of the age range assigned to each person. Try to do this with a combination of string and subsetting operations (i.e., can you convert the character numbers to actual numbers). To simplify things as you get started, feel free to get rid of the rows for ages &ldquo;75 and over&rdquo; in your initial effort.</p></li>
+<li><p>Go back to slide 6 on logical vectors and figure out what is going on in the last few lines of code.</p></li>
+<li><p>Go back to slide 9 and explain why <code>vote[c(3,5)]</code> and <code>vote[ , c(3,5)]</code> produce the same result.</p></li>
+</ol>
+
+</body>
+
+</html>

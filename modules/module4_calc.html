@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<title>Vectorized calculations</title>
+
+<!-- Styles for R syntax highlighter -->
+<style type="text/css">
+   pre .operator,
+   pre .paren {
+     color: rgb(104, 118, 135)
+   }
+
+   pre .literal {
+     color: #990073
+   }
+
+   pre .number {
+     color: #099;
+   }
+
+   pre .comment {
+     color: #998;
+     font-style: italic
+   }
+
+   pre .keyword {
+     color: #900;
+     font-weight: bold
+   }
+
+   pre .identifier {
+     color: rgb(0, 0, 0);
+   }
+
+   pre .string {
+     color: #d14;
+   }
+</style>
+
+<!-- R syntax highlighter -->
+<script type="text/javascript">
+var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/</gm,"&lt;")}function f(r,q,p){return RegExp(q,"m"+(r.cI?"i":"")+(p?"g":""))}function b(r){for(var p=0;p<r.childNodes.length;p++){var q=r.childNodes[p];if(q.nodeName=="CODE"){return q}if(!(q.nodeType==3&&q.nodeValue.match(/\s+/))){break}}}function h(t,s){var p="";for(var r=0;r<t.childNodes.length;r++){if(t.childNodes[r].nodeType==3){var q=t.childNodes[r].nodeValue;if(s){q=q.replace(/\n/g,"")}p+=q}else{if(t.childNodes[r].nodeName=="BR"){p+="\n"}else{p+=h(t.childNodes[r])}}}if(/MSIE [678]/.test(navigator.userAgent)){p=p.replace(/\r/g,"\n")}return p}function a(s){var r=s.className.split(/\s+/);r=r.concat(s.parentNode.className.split(/\s+/));for(var q=0;q<r.length;q++){var p=r[q].replace(/^language-/,"");if(e[p]){return p}}}function c(q){var p=[];(function(s,t){for(var r=0;r<s.childNodes.length;r++){if(s.childNodes[r].nodeType==3){t+=s.childNodes[r].nodeValue.length}else{if(s.childNodes[r].nodeName=="BR"){t+=1}else{if(s.childNodes[r].nodeType==1){p.push({event:"start",offset:t,node:s.childNodes[r]});t=arguments.callee(s.childNodes[r],t);p.push({event:"stop",offset:t,node:s.childNodes[r]})}}}}return t})(q,0);return p}function k(y,w,x){var q=0;var z="";var s=[];function u(){if(y.length&&w.length){if(y[0].offset!=w[0].offset){return(y[0].offset<w[0].offset)?y:w}else{return w[0].event=="start"?y:w}}else{return y.length?y:w}}function t(D){var A="<"+D.nodeName.toLowerCase();for(var B=0;B<D.attributes.length;B++){var C=D.attributes[B];A+=" "+C.nodeName.toLowerCase();if(C.value!==undefined&&C.value!==false&&C.value!==null){A+='="'+m(C.value)+'"'}}return A+">"}while(y.length||w.length){var v=u().splice(0,1)[0];z+=m(x.substr(q,v.offset-q));q=v.offset;if(v.event=="start"){z+=t(v.node);s.push(v.node)}else{if(v.event=="stop"){var p,r=s.length;do{r--;p=s[r];z+=("</"+p.nodeName.toLowerCase()+">")}while(p!=v.node);s.splice(r,1);while(r<s.length){z+=t(s[r]);r++}}}}return z+m(x.substr(q))}function j(){function q(x,y,v){if(x.compiled){return}var u;var s=[];if(x.k){x.lR=f(y,x.l||hljs.IR,true);for(var w in x.k){if(!x.k.hasOwnProperty(w)){continue}if(x.k[w] instanceof Object){u=x.k[w]}else{u=x.k;w="keyword"}for(var r in u){if(!u.hasOwnProperty(r)){continue}x.k[r]=[w,u[r]];s.push(r)}}}if(!v){if(x.bWK){x.b="\\b("+s.join("|")+")\\s"}x.bR=f(y,x.b?x.b:"\\B|\\b");if(!x.e&&!x.eW){x.e="\\B|\\b"}if(x.e){x.eR=f(y,x.e)}}if(x.i){x.iR=f(y,x.i)}if(x.r===undefined){x.r=1}if(!x.c){x.c=[]}x.compiled=true;for(var t=0;t<x.c.length;t++){if(x.c[t]=="self"){x.c[t]=x}q(x.c[t],y,false)}if(x.starts){q(x.starts,y,false)}}for(var p in e){if(!e.hasOwnProperty(p)){continue}q(e[p].dM,e[p],true)}}function d(B,C){if(!j.called){j();j.called=true}function q(r,M){for(var L=0;L<M.c.length;L++){if((M.c[L].bR.exec(r)||[null])[0]==r){return M.c[L]}}}function v(L,r){if(D[L].e&&D[L].eR.test(r)){return 1}if(D[L].eW){var M=v(L-1,r);return M?M+1:0}return 0}function w(r,L){return L.i&&L.iR.test(r)}function K(N,O){var M=[];for(var L=0;L<N.c.length;L++){M.push(N.c[L].b)}var r=D.length-1;do{if(D[r].e){M.push(D[r].e)}r--}while(D[r+1].eW);if(N.i){M.push(N.i)}return f(O,M.join("|"),true)}function p(M,L){var N=D[D.length-1];if(!N.t){N.t=K(N,E)}N.t.lastIndex=L;var r=N.t.exec(M);return r?[M.substr(L,r.index-L),r[0],false]:[M.substr(L),"",true]}function z(N,r){var L=E.cI?r[0].toLowerCase():r[0];var M=N.k[L];if(M&&M instanceof Array){return M}return false}function F(L,P){L=m(L);if(!P.k){return L}var r="";var O=0;P.lR.lastIndex=0;var M=P.lR.exec(L);while(M){r+=L.substr(O,M.index-O);var N=z(P,M);if(N){x+=N[1];r+='<span class="'+N[0]+'">'+M[0]+"</span>"}else{r+=M[0]}O=P.lR.lastIndex;M=P.lR.exec(L)}return r+L.substr(O,L.length-O)}function J(L,M){if(M.sL&&e[M.sL]){var r=d(M.sL,L);x+=r.keyword_count;return r.value}else{return F(L,M)}}function I(M,r){var L=M.cN?'<span class="'+M.cN+'">':"";if(M.rB){y+=L;M.buffer=""}else{if(M.eB){y+=m(r)+L;M.buffer=""}else{y+=L;M.buffer=r}}D.push(M);A+=M.r}function G(N,M,Q){var R=D[D.length-1];if(Q){y+=J(R.buffer+N,R);return false}var P=q(M,R);if(P){y+=J(R.buffer+N,R);I(P,M);return P.rB}var L=v(D.length-1,M);if(L){var O=R.cN?"</span>":"";if(R.rE){y+=J(R.buffer+N,R)+O}else{if(R.eE){y+=J(R.buffer+N,R)+O+m(M)}else{y+=J(R.buffer+N+M,R)+O}}while(L>1){O=D[D.length-2].cN?"</span>":"";y+=O;L--;D.length--}var r=D[D.length-1];D.length--;D[D.length-1].buffer="";if(r.starts){I(r.starts,"")}return R.rE}if(w(M,R)){throw"Illegal"}}var E=e[B];var D=[E.dM];var A=0;var x=0;var y="";try{var s,u=0;E.dM.buffer="";do{s=p(C,u);var t=G(s[0],s[1],s[2]);u+=s[0].length;if(!t){u+=s[1].length}}while(!s[2]);if(D.length>1){throw"Illegal"}return{r:A,keyword_count:x,value:y}}catch(H){if(H=="Illegal"){return{r:0,keyword_count:0,value:m(C)}}else{throw H}}}function g(t){var p={keyword_count:0,r:0,value:m(t)};var r=p;for(var q in e){if(!e.hasOwnProperty(q)){continue}var s=d(q,t);s.language=q;if(s.keyword_count+s.r>r.keyword_count+r.r){r=s}if(s.keyword_count+s.r>p.keyword_count+p.r){r=p;p=s}}if(r.language){p.second_best=r}return p}function i(r,q,p){if(q){r=r.replace(/^((<[^>]+>|\t)+)/gm,function(t,w,v,u){return w.replace(/\t/g,q)})}if(p){r=r.replace(/\n/g,"<br>")}return r}function n(t,w,r){var x=h(t,r);var v=a(t);var y,s;if(v){y=d(v,x)}else{return}var q=c(t);if(q.length){s=document.createElement("pre");s.innerHTML=y.value;y.value=k(q,c(s),x)}y.value=i(y.value,w,r);var u=t.className;if(!u.match("(\\s|^)(language-)?"+v+"(\\s|$)")){u=u?(u+" "+v):v}if(/MSIE [678]/.test(navigator.userAgent)&&t.tagName=="CODE"&&t.parentNode.tagName=="PRE"){s=t.parentNode;var p=document.createElement("div");p.innerHTML="<pre><code>"+y.value+"</code></pre>";t=p.firstChild.firstChild;p.firstChild.cN=s.cN;s.parentNode.replaceChild(p.firstChild,s)}else{t.innerHTML=y.value}t.className=u;t.result={language:v,kw:y.keyword_count,re:y.r};if(y.second_best){t.second_best={language:y.second_best.language,kw:y.second_best.keyword_count,re:y.second_best.r}}}function o(){if(o.called){return}o.called=true;var r=document.getElementsByTagName("pre");for(var p=0;p<r.length;p++){var q=b(r[p]);if(q){n(q,hljs.tabReplace)}}}function l(){if(window.addEventListener){window.addEventListener("DOMContentLoaded",o,false);window.addEventListener("load",o,false)}else{if(window.attachEvent){window.attachEvent("onload",o)}else{window.onload=o}}}var e={};this.LANGUAGES=e;this.highlight=d;this.highlightAuto=g;this.fixMarkup=i;this.highlightBlock=n;this.initHighlighting=o;this.initHighlightingOnLoad=l;this.IR="[a-zA-Z][a-zA-Z0-9_]*";this.UIR="[a-zA-Z_][a-zA-Z0-9_]*";this.NR="\\b\\d+(\\.\\d+)?";this.CNR="\\b(0[xX][a-fA-F0-9]+|(\\d+(\\.\\d*)?|\\.\\d+)([eE][-+]?\\d+)?)";this.BNR="\\b(0b[01]+)";this.RSR="!|!=|!==|%|%=|&|&&|&=|\\*|\\*=|\\+|\\+=|,|\\.|-|-=|/|/=|:|;|<|<<|<<=|<=|=|==|===|>|>=|>>|>>=|>>>|>>>=|\\?|\\[|\\{|\\(|\\^|\\^=|\\||\\|=|\\|\\||~";this.ER="(?![\\s\\S])";this.BE={b:"\\\\.",r:0};this.ASM={cN:"string",b:"'",e:"'",i:"\\n",c:[this.BE],r:0};this.QSM={cN:"string",b:'"',e:'"',i:"\\n",c:[this.BE],r:0};this.CLCM={cN:"comment",b:"//",e:"$"};this.CBLCLM={cN:"comment",b:"/\\*",e:"\\*/"};this.HCM={cN:"comment",b:"#",e:"$"};this.NM={cN:"number",b:this.NR,r:0};this.CNM={cN:"number",b:this.CNR,r:0};this.BNM={cN:"number",b:this.BNR,r:0};this.inherit=function(r,s){var p={};for(var q in r){p[q]=r[q]}if(s){for(var q in s){p[q]=s[q]}}return p}}();hljs.LANGUAGES.cpp=function(){var a={keyword:{"false":1,"int":1,"float":1,"while":1,"private":1,"char":1,"catch":1,"export":1,virtual:1,operator:2,sizeof:2,dynamic_cast:2,typedef:2,const_cast:2,"const":1,struct:1,"for":1,static_cast:2,union:1,namespace:1,unsigned:1,"long":1,"throw":1,"volatile":2,"static":1,"protected":1,bool:1,template:1,mutable:1,"if":1,"public":1,friend:2,"do":1,"return":1,"goto":1,auto:1,"void":2,"enum":1,"else":1,"break":1,"new":1,extern:1,using:1,"true":1,"class":1,asm:1,"case":1,typeid:1,"short":1,reinterpret_cast:2,"default":1,"double":1,register:1,explicit:1,signed:1,typename:1,"try":1,"this":1,"switch":1,"continue":1,wchar_t:1,inline:1,"delete":1,alignof:1,char16_t:1,char32_t:1,constexpr:1,decltype:1,noexcept:1,nullptr:1,static_assert:1,thread_local:1,restrict:1,_Bool:1,complex:1},built_in:{std:1,string:1,cin:1,cout:1,cerr:1,clog:1,stringstream:1,istringstream:1,ostringstream:1,auto_ptr:1,deque:1,list:1,queue:1,stack:1,vector:1,map:1,set:1,bitset:1,multiset:1,multimap:1,unordered_set:1,unordered_map:1,unordered_multiset:1,unordered_multimap:1,array:1,shared_ptr:1}};return{dM:{k:a,i:"</",c:[hljs.CLCM,hljs.CBLCLM,hljs.QSM,{cN:"string",b:"'\\\\?.",e:"'",i:"."},{cN:"number",b:"\\b(\\d+(\\.\\d*)?|\\.\\d+)(u|U|l|L|ul|UL|f|F)"},hljs.CNM,{cN:"preprocessor",b:"#",e:"$"},{cN:"stl_container",b:"\\b(deque|list|queue|stack|vector|map|set|bitset|multiset|multimap|unordered_map|unordered_set|unordered_multiset|unordered_multimap|array)\\s*<",e:">",k:a,r:10,c:["self"]}]}}}();hljs.LANGUAGES.r={dM:{c:[hljs.HCM,{cN:"number",b:"\\b0[xX][0-9a-fA-F]+[Li]?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+(?:[eE][+\\-]?\\d*)?L\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\b\\d+\\.(?!\\d)(?:i\\b)?",e:hljs.IMMEDIATE_RE,r:1},{cN:"number",b:"\\b\\d+(?:\\.\\d*)?(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"number",b:"\\.\\d+(?:[eE][+\\-]?\\d*)?i?\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"keyword",b:"(?:tryCatch|library|setGeneric|setGroupGeneric)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\.",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\.\\.\\d+(?![\\w.])",e:hljs.IMMEDIATE_RE,r:10},{cN:"keyword",b:"\\b(?:function)",e:hljs.IMMEDIATE_RE,r:2},{cN:"keyword",b:"(?:if|in|break|next|repeat|else|for|return|switch|while|try|stop|warning|require|attach|detach|source|setMethod|setClass)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"literal",b:"(?:NA|NA_integer_|NA_real_|NA_character_|NA_complex_)\\b",e:hljs.IMMEDIATE_RE,r:10},{cN:"literal",b:"(?:NULL|TRUE|FALSE|T|F|Inf|NaN)\\b",e:hljs.IMMEDIATE_RE,r:1},{cN:"identifier",b:"[a-zA-Z.][a-zA-Z0-9._]*\\b",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"<\\-(?!\\s*\\d)",e:hljs.IMMEDIATE_RE,r:2},{cN:"operator",b:"\\->|<\\-",e:hljs.IMMEDIATE_RE,r:1},{cN:"operator",b:"%%|~",e:hljs.IMMEDIATE_RE},{cN:"operator",b:">=|<=|==|!=|\\|\\||&&|=|\\+|\\-|\\*|/|\\^|>|<|!|&|\\||\\$|:",e:hljs.IMMEDIATE_RE,r:0},{cN:"operator",b:"%",e:"%",i:"\\n",r:1},{cN:"identifier",b:"`",e:"`",r:0},{cN:"string",b:'"',e:'"',c:[hljs.BE],r:0},{cN:"string",b:"'",e:"'",c:[hljs.BE],r:0},{cN:"paren",b:"[[({\\])}]",e:hljs.IMMEDIATE_RE,r:0}]}};
+hljs.initHighlightingOnLoad();
+</script>
+
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<style type="text/css">
+body, td {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  max-width: 800px;
+  margin: auto;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 { 
+   font-size:2.2em; 
+}
+
+h2 { 
+   font-size:1.8em; 
+}
+
+h3 { 
+   font-size:1.4em; 
+}
+
+h4 { 
+   font-size:1.0em; 
+}
+
+h5 { 
+   font-size:0.9em; 
+}
+
+h6 { 
+   font-size:0.8em; 
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table, td, th {
+  border: none;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
+   }
+
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
+   }
+
+   hr { 
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
+   }
+
+   tr, img { 
+      page-break-inside: avoid; 
+   }
+
+   img { 
+      max-width: 100% !important; 
+   }
+
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
+   }
+
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
+   }
+
+   h2, h3 { 
+      page-break-after: avoid; 
+   }
+}
+</style>
+
+
+
+</head>
+
+<body>
+<h1>Vectorized calculations</h1>
+
+<p>As we&#39;ve seen, R has many functions that allow you to operate on each element of a vector all at once.</p>
+
+<pre><code class="r">vals &lt;- rnorm(1000)
+chi2vals &lt;- vals^2
+chi2_df1000 &lt;- sum(chi2vals)
+# imagine if the code above were a loop, or three separate loops
+</code></pre>
+
+<p>Advantages:</p>
+
+<ul>
+<li>much faster than looping</li>
+<li>easier to code</li>
+<li>easier to read and understand the code</li>
+</ul>
+
+<p>Sometimes there are surprises in terms of what is fast, as well as tricks for vectorizing things in unexpected ways:</p>
+
+<pre><code class="r">vals &lt;- rnorm(1e+06)
+system.time(trunc &lt;- ifelse(vals &gt; 0, vals, 0))
+</code></pre>
+
+<pre><code>##    user  system elapsed 
+##   0.344   0.016   0.362
+</code></pre>
+
+<pre><code class="r">system.time(vals &lt;- vals * (vals &gt; 0))
+</code></pre>
+
+<pre><code>##    user  system elapsed 
+##   0.008   0.000   0.010
+</code></pre>
+
+<pre><code class="r">tmp &lt;- as.character(vote$age60)
+vote$ageMin &lt;- substring(tmp, 1, 2)
+vote$ageMin[1:5]
+</code></pre>
+
+<pre><code>## [1] &quot;18&quot; &quot;18&quot; &quot;30&quot; &quot;30&quot; &quot;30&quot;
+</code></pre>
+
+<p><strong>Question</strong>: What am I doing with <code>vals * (vals &gt; 0)</code> ? What happens behind the scenes in R?</p>
+
+<p>If you use a trick like this, having a comment in your code is a good idea.</p>
+
+<h1>Linear algebra</h1>
+
+<p>R can do essentially any linear algebra you need. It uses system-level packages called BLAS (basic linear algebra subroutines) and LAPACK (linear algebra package). Note that these calculations will be essentially as fast as if you wrote C code because R just calls C and Fortran routines to do the calculations.</p>
+
+<p>The BLAS that comes with R is fairly slow. It&#39;s possible to use a faster BLAS, as well as one that uses multiple cores automatically. This can in some cases give you an order of magnitude speedup if your work involves a lot of matrix manipulations/linear algebra. More details in Module 11.</p>
+
+<h1>Vectorized vector/matrix calculations</h1>
+
+<p>Recall that <code>+</code>, <code>-</code>,<code>*</code>, <code>/</code> do vectorized calculations:</p>
+
+<pre><code class="r">A &lt;- matrix(1:9, 3)
+B &lt;- matrix(seq(4, 36, by = 4), 3)
+
+A + B
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    5   20   35
+## [2,]   10   25   40
+## [3,]   15   30   45
+</code></pre>
+
+<pre><code class="r">A + B[, 1]
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    5    8   11
+## [2,]   10   13   16
+## [3,]   15   18   21
+</code></pre>
+
+<pre><code class="r">A * B
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    4   64  196
+## [2,]   16  100  256
+## [3,]   36  144  324
+</code></pre>
+
+<pre><code class="r">A * B[, 1]
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]    4   16   28
+## [2,]   16   40   64
+## [3,]   36   72  108
+</code></pre>
+
+<p>Matrix/vector multiplication</p>
+
+<pre><code class="r">A %*% B[, 1]
+</code></pre>
+
+<pre><code>##      [,1]
+## [1,]  120
+## [2,]  144
+## [3,]  168
+</code></pre>
+
+<pre><code class="r">A %*% B
+</code></pre>
+
+<pre><code>##      [,1] [,2] [,3]
+## [1,]  120  264  408
+## [2,]  144  324  504
+## [3,]  168  384  600
+</code></pre>
+
+<pre><code class="r">
+identical(t(A) %*% A, crossprod(A))
+</code></pre>
+
+<pre><code>## [1] TRUE
+</code></pre>
+
+<p>Some decompositions</p>
+
+<pre><code class="r">require(fields)
+times &lt;- seq(0, 1, length = 100)
+R &lt;- exp(-rdist(times)/0.2)  # a correlation matrix
+e &lt;- eigen(R)
+range(e$values)
+</code></pre>
+
+<pre><code>## [1]  0.02525 32.85537
+</code></pre>
+
+<pre><code class="r">e$vectors[, 1]
+</code></pre>
+
+<pre><code>##   [1] 0.05195 0.05449 0.05699 0.05946 0.06190 0.06431 0.06669 0.06903
+##   [9] 0.07133 0.07360 0.07583 0.07802 0.08017 0.08227 0.08433 0.08635
+##  [17] 0.08833 0.09025 0.09213 0.09396 0.09575 0.09748 0.09916 0.10079
+##  [25] 0.10236 0.10388 0.10535 0.10676 0.10812 0.10942 0.11066 0.11185
+##  [33] 0.11297 0.11404 0.11505 0.11599 0.11688 0.11770 0.11846 0.11916
+##  [41] 0.11980 0.12038 0.12089 0.12134 0.12172 0.12204 0.12230 0.12249
+##  [49] 0.12262 0.12269 0.12269 0.12262 0.12249 0.12230 0.12204 0.12172
+##  [57] 0.12134 0.12089 0.12038 0.11980 0.11916 0.11846 0.11770 0.11688
+##  [65] 0.11599 0.11505 0.11404 0.11297 0.11185 0.11066 0.10942 0.10812
+##  [73] 0.10676 0.10535 0.10388 0.10236 0.10079 0.09916 0.09748 0.09575
+##  [81] 0.09396 0.09213 0.09025 0.08833 0.08635 0.08433 0.08227 0.08017
+##  [89] 0.07802 0.07583 0.07360 0.07133 0.06903 0.06669 0.06431 0.06190
+##  [97] 0.05946 0.05699 0.05449 0.05195
+</code></pre>
+
+<pre><code class="r">
+sv &lt;- svd(R)
+U &lt;- chol(R)
+
+devs &lt;- rnorm(100)
+Rinvb &lt;- solve(R, devs)  # R^{-1} b
+Rinv &lt;- solve(R)  # R^{-1} -- try to avoid this
+</code></pre>
+
+<h1>Pre-allocation</h1>
+
+<p>This is slow.</p>
+
+<pre><code class="r">vals &lt;- 0
+n &lt;- 50000
+system.time({
+    for (i in 1:n) vals &lt;- c(vals, i)
+})
+</code></pre>
+
+<pre><code>##    user  system elapsed 
+##   2.728   0.004   2.743
+</code></pre>
+
+<p>The same holds for using <code>rbind()</code>, <code>cbind()</code>, or adding to a list, one element at a time.</p>
+
+<p>This is slow and unclear (in the sense that it appears the code has a bug, but it works):</p>
+
+<pre><code class="r">vals &lt;- 0
+n &lt;- 50000
+system.time({
+    for (i in 1:n) vals[i] &lt;- i
+})
+</code></pre>
+
+<pre><code>##    user  system elapsed 
+##   1.720   0.000   1.727
+</code></pre>
+
+<p><strong>Question</strong>: Thoughts on why these are so slow? Think about what R might be doing behind the scenes</p>
+
+<h1>The answer is to pre-allocate memory</h1>
+
+<p>This is not so slow. (Please ignore the for-loop hypocrisy and the fact that I could do this as <code>vals &lt;- 1:n</code>.)</p>
+
+<pre><code class="r">n &lt;- 50000
+system.time({
+    vals &lt;- rep(0, n)
+    # alternatively: vals &lt;- as.numeric(NA); length(vals) &lt;- n
+    for (i in 1:n) vals[i] &lt;- i
+})
+</code></pre>
+
+<pre><code>##    user  system elapsed 
+##   0.072   0.000   0.071
+</code></pre>
+
+<p>Here&#39;s how to pre-allocate an empty list: </p>
+
+<pre><code class="r">vals &lt;- list()
+length(vals) &lt;- n
+head(vals)
+</code></pre>
+
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## NULL
+## 
+## [[3]]
+## NULL
+## 
+## [[4]]
+## NULL
+## 
+## [[5]]
+## NULL
+## 
+## [[6]]
+## NULL
+</code></pre>
+
+<h1>apply</h1>
+
+<p>Some functions aren&#39;t vectorized, or you may want to use a function on every row or column of a matrix/data frame, every element of a list, etc.</p>
+
+<p>For this we use the <code>apply()</code> family of functions.</p>
+
+<pre><code class="r">mat &lt;- matrix(rnorm(100 * 1000), nr = 100)
+row_min &lt;- apply(mat, MARGIN = 1, FUN = min)
+col_max &lt;- apply(mat, MARGIN = 2, FUN = max)
+</code></pre>
+
+<p>There are actually some even faster specialized functions:</p>
+
+<pre><code class="r">row_mean &lt;- rowMeans(mat)
+col_sum &lt;- colSums(mat)
+</code></pre>
+
+<h1><code>lapply()</code> and <code>sapply()</code></h1>
+
+<pre><code class="r">myList &lt;- list(rnorm(3), rnorm(3), rnorm(5))
+lapply(myList, min)
+</code></pre>
+
+<pre><code>## [[1]]
+## [1] 0.09023
+## 
+## [[2]]
+## [1] -2.425
+## 
+## [[3]]
+## [1] -1.193
+</code></pre>
+
+<pre><code class="r">sapply(myList, min)
+</code></pre>
+
+<pre><code>## [1]  0.09023 -2.42515 -1.19263
+</code></pre>
+
+<p>Note that we don&#39;t generally want to use <code>apply()</code> on a data frame. </p>
+
+<p>You can use <code>lapply()</code> and <code>sapply()</code> on regular vectors, such as vectors of indices, which can come in handy, though this is a silly example:</p>
+
+<pre><code class="r">sapply(1:10, function(x) x^2)
+</code></pre>
+
+<pre><code>##  [1]   1   4   9  16  25  36  49  64  81 100
+</code></pre>
+
+<p>Here&#39;s a cool trick to pull off a particular element of a list of lists:</p>
+
+<pre><code class="r">params &lt;- list(a = list(mn = 7, sd = 3), b = list(mn = 6, sd = 1), c = list(mn = 2, 
+    sd = 1))
+sapply(params, &quot;[[&quot;, 1)
+</code></pre>
+
+<pre><code>## a b c 
+## 7 6 2
+</code></pre>
+
+<p><strong>Challenge</strong>: Think about why this works. </p>
+
+<p>Hint:</p>
+
+<pre><code class="r">test &lt;- list(5, 7, 3)
+test[[2]]
+</code></pre>
+
+<pre><code>## [1] 7
+</code></pre>
+
+<pre><code class="r"># `[[`(test, 2) # need it commented or R Markdown processing messes it up...
+
+# `+`(3, 7)
+</code></pre>
+
+<h1>And more <code>apply()</code>s</h1>
+
+<p>There are a bunch of <code>apply()</code> variants, as well as parallelized versions of them:</p>
+
+<ul>
+<li><code>tapply()</code>, <code>vapply()</code>, <code>mapply()</code>, <code>rapply()</code>, <code>eapply()</code></li>
+<li>for parallelized versions see Module 11 or <code>?clusterApply</code>)</li>
+</ul>
+
+<h1>Tabulation</h1>
+
+<ul>
+<li>Sometimes we need to do some basic checking for the number of observations or types of observations in our dataset</li>
+<li>To do this quickly and easily, <code>table()</code> is our friend</li>
+<li>Let&#39;s look at our observations by year and grade</li>
+</ul>
+
+<pre><code class="r">unique(vote$pres04)
+</code></pre>
+
+<pre><code>## [1]  1  2  3  9 NA  0  4
+</code></pre>
+
+<pre><code class="r">tbl &lt;- table(vote$race, vote$pres04)
+tbl
+</code></pre>
+
+<pre><code>##                  
+##                       0     1     2     3     4     9
+##   white             111 26184 33045   417    14   409
+##   black              18  6183   824    56     0    21
+##   hispanic/latino     6  2665  1639    34     3    49
+##   asian               0   626   384     7     1     2
+##   other              16  1036   653    22     0    32
+</code></pre>
+
+<pre><code class="r">round(prop.table(tbl, margin = 1), 3)
+</code></pre>
+
+<pre><code>##                  
+##                       0     1     2     3     4     9
+##   white           0.002 0.435 0.549 0.007 0.000 0.007
+##   black           0.003 0.871 0.116 0.008 0.000 0.003
+##   hispanic/latino 0.001 0.606 0.373 0.008 0.001 0.011
+##   asian           0.000 0.614 0.376 0.007 0.001 0.002
+##   other           0.009 0.589 0.371 0.013 0.000 0.018
+</code></pre>
+
+<pre><code class="r">table(vote$race, vote$pres04, vote$sex)
+</code></pre>
+
+<pre><code>## , ,  = male
+## 
+##                  
+##                       0     1     2     3     4     9
+##   white              55 11200 15582   230     9   262
+##   black               6  2440   419    37     0    13
+##   hispanic/latino     3  1140   784    18     3    28
+##   asian               0   300   181     2     1     1
+##   other               7   464   335     9     0    25
+## 
+## , ,  = female
+## 
+##                  
+##                       0     1     2     3     4     9
+##   white              55 14922 17387   186     5   147
+##   black              11  3688   401    19     0     8
+##   hispanic/latino     3  1505   845    15     0    21
+##   asian               0   325   201     4     0     1
+##   other               9   566   310    12     0     7
+</code></pre>
+
+<pre><code class="r">with(vote[vote$sex == &quot;female&quot;, ], table(pres04, race))
+</code></pre>
+
+<pre><code>##       race
+## pres04 white black hispanic/latino asian other
+##      0    55    11               3     0     9
+##      1 14922  3688            1505   325   566
+##      2 17387   401             845   201   310
+##      3   186    19              15     4    12
+##      4     5     0               0     0     0
+##      9   147     8              21     1     7
+</code></pre>
+
+<p><strong>Challenge</strong>: Can you figure out what <code>with()</code> does just by example? </p>
+
+<h1>Stratified analyses I</h1>
+
+<p>Often we want to do individual analyses within subsets or clusters of our data.</p>
+
+<p>As a first step, we might want to just split our dataset by a stratifying variable.</p>
+
+<pre><code class="r">subsets &lt;- split(earnings, earnings$race)
+length(subsets)
+</code></pre>
+
+<pre><code>## [1] 5
+</code></pre>
+
+<pre><code class="r">subsets[[&quot;9&quot;]]
+</code></pre>
+
+<pre><code>##       earn height1 height2 sex race hisp ed yearbn height
+## 239     NA      NA      NA   2    9    9 16     99     NA
+## 794     NA       5       5   2    9    2 16     34     65
+## 966      0       5       1   2    9    1 16     67     61
+## 1027    NA       5       5   2    9    2 12     31     65
+## 1054     0       5       3   2    9    2  8     38     63
+## 1507  4416       5       2   2    9    2  6     18     62
+## 1676 18000       5       6   1    9    1 17     64     66
+## 1713 53000       5       3   2    9    1 17     58     63
+</code></pre>
+
+<p>The <code>%in%</code> operator can also be helpful.</p>
+
+<pre><code class="r">sub &lt;- earnings[earnings$race %in% c(1, 2, 4), ]
+</code></pre>
+
+<h1>Stratified analyses II</h1>
+
+<p>Often we want to do individual analyses within subsets or clusters of our data. R has a variety of tools for this; for now we&#39;ll look at <code>aggregate()</code> and <code>by()</code>. These are wrappers of <code>tapply()</code>. </p>
+
+<pre><code class="r">aggregate(earnings, by = list(educ = earnings$ed), FUN = median, na.rm = TRUE)
+</code></pre>
+
+<pre><code>##    educ  earn height1 height2 sex race hisp ed yearbn height
+## 1     2    NA       5     0.0   1    2    2  2    0.0   60.0
+## 2     3  1400       5     2.0   2    1    1  3   26.0   62.0
+## 3     4  6600       5     7.5   2    1    2  4   21.0   66.0
+## 4     5  1200       5     3.0   2    1    2  5   17.0   63.0
+## 5     6  4416       5     5.0   1    1    2  6   20.0   67.0
+## 6     7  7000       5     5.0   2    1    2  7   22.0   66.0
+## 7     8  6250       5     5.0   2    1    2  8   32.0   66.0
+## 8     9  7000       5     4.0   2    1    2  9   38.0   65.0
+## 9    10  8000       5     4.0   2    1    2 10   35.0   66.0
+## 10   11 10000       5     6.0   2    1    2 11   42.5   67.0
+## 11   12 13000       5     5.0   2    1    2 12   52.0   66.0
+## 12   13 15000       5     4.0   2    1    2 13   53.0   66.0
+## 13   14 20000       5     5.0   2    1    2 14   53.0   66.5
+## 14   15 17000       5     4.0   2    1    2 15   51.5   66.0
+## 15   16 24000       5     5.0   2    1    2 16   55.0   66.0
+## 16   17 25000       5     6.0   2    1    2 17   50.0   67.0
+## 17   18 30000       5     6.0   1    1    2 18   47.0   68.0
+## 18   98    NA       5     6.0   2    2    2 98   18.0   66.0
+## 19   99    NA       6     0.0   1    1    2 99   37.0   72.0
+</code></pre>
+
+<pre><code class="r">aggregate(earn ~ ed, data = earnings, FUN = median)
+</code></pre>
+
+<pre><code>##    ed  earn
+## 1   3  1400
+## 2   4  6600
+## 3   5  1200
+## 4   6  4416
+## 5   7  7000
+## 6   8  6250
+## 7   9  7000
+## 8  10  8000
+## 9  11 10000
+## 10 12 13000
+## 11 13 15000
+## 12 14 20000
+## 13 15 17000
+## 14 16 24000
+## 15 17 25000
+## 16 18 30000
+</code></pre>
+
+<pre><code class="r">aggregate(earn ~ ed + hisp, data = earnings, FUN = median)
+</code></pre>
+
+<pre><code>##    ed hisp  earn
+## 1   3    1  1400
+## 2   6    1  7000
+## 3   8    1  5200
+## 4   9    1     0
+## 5  10    1     0
+## 6  11    1 15000
+## 7  12    1 12000
+## 8  13    1 17500
+## 9  14    1 17000
+## 10 15    1  2500
+## 11 16    1 17000
+## 12 17    1 27000
+## 13 18    1 42500
+## 14  4    2  6600
+## 15  5    2  1200
+## 16  6    2  4416
+## 17  7    2  7000
+## 18  8    2  6250
+## 19  9    2  8500
+## 20 10    2  9000
+## 21 11    2 10000
+## 22 12    2 14000
+## 23 13    2 15000
+## 24 14    2 20000
+## 25 15    2 17500
+## 26 16    2 24500
+## 27 17    2 25000
+## 28 18    2 30000
+</code></pre>
+
+<pre><code class="r">agg &lt;- aggregate(earn ~ ed + hisp, data = earnings, FUN = median)
+xtabs(earn ~ ., data = agg)
+</code></pre>
+
+<pre><code>##     hisp
+## ed       1     2
+##   3   1400     0
+##   4      0  6600
+##   5      0  1200
+##   6   7000  4416
+##   7      0  7000
+##   8   5200  6250
+##   9      0  8500
+##   10     0  9000
+##   11 15000 10000
+##   12 12000 14000
+##   13 17500 15000
+##   14 17000 20000
+##   15  2500 17500
+##   16 17000 24500
+##   17 27000 25000
+##   18 42500 30000
+</code></pre>
+
+<p>Notice the &#39;long&#39; vs. &#39;wide&#39; formats. You&#39;ll see more about that sort of thing in Module 5.</p>
+
+<h1>Discretization</h1>
+
+<p>You may need to discretize a categorical variable, e.g., by education level:</p>
+
+<pre><code class="r">earnings$edLevel &lt;- cut(earnings$ed, breaks = c(0, 11, 12, 15, 16, 18, 99))
+levels(earnings$edLevel) &lt;- c(&quot;no HS diploma&quot;, &quot;HS grad&quot;, &quot;some college&quot;, &quot;college grad&quot;, 
+    &quot;grad study&quot;, &quot;other&quot;)
+boxplot(earn ~ edLevel, data = earnings)
+</code></pre>
+
+<p><img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-19"/> </p>
+
+<h1>Stratified analyses III</h1>
+
+<p><code>aggregate()</code> works fine when the output is univariate, but what about more complicated analyses than computing the median, such as fitting a set of regressions?</p>
+
+<pre><code class="r">out &lt;- by(earnings, earnings$edLevel, function(x) {
+    if (sum(!is.na(x$earn))) 
+        lm(earn ~ height, data = x) else NA
+})
+length(out)
+</code></pre>
+
+<pre><code>## [1] 6
+</code></pre>
+
+<pre><code class="r">summary(out[[5]])
+</code></pre>
+
+<pre><code>## 
+## Call:
+## lm(formula = earn ~ height, data = x)
+## 
+## Residuals:
+##    Min     1Q Median     3Q    Max 
+## -48563 -16907  -5810   6902 157470 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -121555      43803   -2.78  0.00623 ** 
+## height          2344        648    3.62  0.00041 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 29700 on 148 degrees of freedom
+##   (75 observations deleted due to missingness)
+## Multiple R-squared:  0.0812, Adjusted R-squared:  0.075 
+## F-statistic: 13.1 on 1 and 148 DF,  p-value: 0.000409
+</code></pre>
+
+<p><strong>Question</strong>: What&#39;s the business with the <code>if</code> statement? Why is this good practice?</p>
+
+<h1>Sorting</h1>
+
+<p><code>sort()</code> applied to a vector does what you expect.</p>
+
+<p>Sorting a matrix or dataframe based on one or more columns is a somewhat manual process, but once you get the hang of it, it&#39;s not bad.</p>
+
+<pre><code class="r">ord &lt;- order(earnings$earn, earnings$height, decreasing = TRUE)
+# ord &lt;- with(earnings, order(earn, height, decreasing = TRUE))
+ord[1:5]
+</code></pre>
+
+<pre><code>## [1] 1860  583  351  618  314
+</code></pre>
+
+<pre><code class="r">(earnings$earn[ord])[c(1:5, 2025:2029)]  # parentheses for clarity
+</code></pre>
+
+<pre><code>##  [1] 200000 175000 170000 148000 125000     NA     NA     NA     NA     NA
+</code></pre>
+
+<pre><code class="r">earnings_ordered &lt;- earnings[ord, ]
+</code></pre>
+
+<p>You could of course write your own <em>sort</em> function that uses <code>order()</code>. More in Module 6.</p>
+
+<h1>Merging Data</h1>
+
+<p>We often need to combine data across multiple data frames, merging on common fields (i.e., <em>keys</em>). In database terminology, this is a <em>join</em> operation.</p>
+
+<p>Here&#39;s an example using the voting data combined with a built-in R dataset on state information. Warning: the state dataset is <em>very</em> old; this is just a toy example. </p>
+
+<p>In this case (as often true) we need to do some machinations to get everything prepared for the merge. The <em>key</em> we use is the state name.</p>
+
+<pre><code class="r"># PRE-PROCESSING
+
+# a bit of querying indicates the state numbers are in alphabetical order,
+# so we can do this to get a &#39;name&#39; column in the &#39;vote&#39; dataframe:
+numToName &lt;- data.frame(stateNum = 1:50, stateName = row.names(state.x77))
+voteWithStateNames &lt;- merge(vote, numToName, by.x = &quot;state&quot;, by.y = &quot;stateNum&quot;, 
+    all.x = TRUE, all.y = FALSE)
+stateInfo &lt;- data.frame(state.x77)
+# need the names as column, not as the row names attribute:
+stateInfo$name &lt;- row.names(stateInfo)
+
+# ACTUAL DEMONSTRATION
+fullVote &lt;- merge(voteWithStateNames, stateInfo[, c(&quot;name&quot;, &quot;Population&quot;, &quot;Income&quot;, 
+    &quot;Illiteracy&quot;, &quot;Life.Exp&quot;)], by.x = &quot;stateName&quot;, by.y = &quot;name&quot;, all.x = TRUE, 
+    all.y = FALSE)
+dim(vote)
+</code></pre>
+
+<pre><code>## [1] 76205    18
+</code></pre>
+
+<pre><code class="r">dim(fullVote)
+</code></pre>
+
+<pre><code>## [1] 76205    23
+</code></pre>
+
+<pre><code class="r">fullVote[1:2, ]
+</code></pre>
+
+<pre><code>##   stateName state pres04    sex  race  age9    partyid          income
+## 1   Alabama     1      2 female white 50-59 republican $30,000-$49,999
+## 2   Alabama     1      2   male white 30-39 republican $15,000-$29,999
+##      relign8 age60 age65 geocode               sizeplac brnagain attend
+## 1 protestant 45-59 50-64       4 city: 10,000 to 49,999      yes   &lt;NA&gt;
+## 2 mormon/lds 30-44 30-39       2                  rural      yes   &lt;NA&gt;
+##   year region y ageMin Population Income Illiteracy Life.Exp
+## 1 2004      1 1     45       3615   3624        2.1    69.05
+## 2 2004      1 1     30       3615   3624        2.1    69.05
+</code></pre>
+
+<p>What&#39;s the deal with the <code>all.x</code> and <code>all.y</code> ?  We can tell R whether we want to keep all of the <code>x</code> observations, all the <code>y</code> observations, or neither, or both, when there may be rows in either of the datasets that don&#39;t match the other dataset.</p>
+
+<h1>Breakout</h1>
+
+<h2>Problem 1</h2>
+
+<p>Suppose we have two categorical variables and we conduct a hypothesis test of independence. The chi-square statistic is: </p>
+
+<p>\[
+\chi^2 = \sum_{i=1}^{n}\sum_{j=1}^{m} \frac{(y_{ij} - e_{ij})^2}{e_{ij}}, 
+\] </p>
+
+<p>where \(e_{ij} = \frac{y_{i\cdot} y_{\cdot j}}{y_{\cdot \cdot}}\), with \(y_{i\cdot}\) the sum of the values in the i&#39;th row, \(y_{\cdot j}\) the sum of values in the j&#39;th column, and \(y_{\cdot\cdot}\) the sum of all the values. Suppose I give you a matrix in R with the \(y_{ij}\) values. </p>
+
+<p>You can generate a test matrix as: <code>y &lt;- matrix(sample(1:10, 12, replace = TRUE), nrow = 3, ncol = 4)</code>.</p>
+
+<p>Compute the statistic without <em>any</em> loops as follows:</p>
+
+<ol>
+<li>First, assume you have the <em>e</em> matrix. How do you compute the statistic without loops as a function of <code>y</code> and <code>e</code>?</li>
+<li>How can you construct the <em>e</em> matrix? Hint: the numerator of <em>e</em> is just an <em>outer product</em> for which the <code>outer()</code> function can be used.</li>
+</ol>
+
+<h2>Problem 2</h2>
+
+<p>For each combination of sex and education level in the <em>earnings</em> dataset (<em>data/heights.dta</em>), find the <em>second</em> largest value of earnings amongst the people in the group without any looping.</p>
+
+</body>
+
+</html>
