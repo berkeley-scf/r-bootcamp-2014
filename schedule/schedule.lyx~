@@ -547,23 +547,9 @@ good coding practices
 reproducible research
 \end_layout
 
-\begin_layout Itemize
-breakout problems
-\begin_inset Note Note
-status open
-
-\begin_layout Plain Layout
- [assess timing and memory use for some code?]
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \end_deeper
 \begin_layout Itemize
-Break
+Break (fill out feedback forms) (20 minutes)
 \end_layout
 
 \begin_layout Itemize
@@ -610,10 +596,6 @@ status open
 \end_layout
 
 \end_deeper
-\begin_layout Itemize
-Fill out feedback forms (10 minutes)
-\end_layout
-
 \begin_layout Itemize
 Module 11: Wrapping up (Chris P.) (15 minutes)
 \end_layout
