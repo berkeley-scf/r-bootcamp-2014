@@ -44,14 +44,11 @@ as.logical(answers + update)
 ```
 
 # Problem 3
-
-Go back to slide 22 and figure out what is going on with that complicated last line of code.
+Go back to slide 9 and explain why `vote[c(3,5)]` and `vote[ , c(3,5)]` produce the same result.
 
 ```{r}
-table(vote$race, vote$pres04)
-xtab <- xtable(table(vote$race, vote$pres04))
-print.xtable
-?print.xtable
+class(vote)
+is.list(vote)
+identical(vote[1], vote[ , 1, drop = FALSE])
+class(vote[c(3,5)])
 ```
-
-So there is a special `print()` method associated with xtables and one of its options is to print out an HTML version of the table. 
