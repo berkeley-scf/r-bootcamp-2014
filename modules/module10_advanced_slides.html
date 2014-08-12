@@ -66,7 +66,7 @@ mod1 &lt;- <span class="kw">lm</span>(yc ~ x)
 mod2 &lt;- <span class="kw">glm</span>(yb ~ x, <span class="dt">family =</span> binomial)
 mod2$residuals  <span class="co"># access field with list-like syntax</span></code></pre>
 <pre><code>##      1      2      3      4      5      6      7      8      9     10 
-## -1.879  1.858 -1.444  2.893 -1.142 -1.857 -1.754 -1.807  3.470  1.695</code></pre>
+## -1.242 -3.244  3.292  2.200 -1.404  2.300 -1.415  1.627 -1.596 -1.541</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">class</span>(mod2)</code></pre>
 <pre><code>## [1] &quot;glm&quot; &quot;lm&quot;</code></pre>
@@ -113,7 +113,7 @@ mod2$residuals  <span class="co"># access field with list-like syntax</span></co
 predict</code></pre>
 <pre><code>## function (object, ...) 
 ## UseMethod(&quot;predict&quot;)
-## &lt;bytecode: 0x3b54d30&gt;
+## &lt;bytecode: 0x3118050&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># predict.glm</span></code></pre>
@@ -369,13 +369,13 @@ for (i in <span class="dv">1</span>:nVals) {
     results[i] &lt;- <span class="kw">mean</span>(tmp)
 }
 results</code></pre>
-<pre><code>## [1] 0.4172 0.8372 0.5596</code></pre>
+<pre><code>## [1] -0.8830  0.6403  0.5406</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">varName</code></pre>
 <pre><code>## [1] &quot;x3&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">tmp</code></pre>
-<pre><code>##  [1] 0.23015 0.79227 0.55864 0.41045 0.07487 0.36385 0.75568 0.81026
-##  [9] 0.48883 0.22526 0.85953 0.07562 0.40235 0.95509 0.37882 0.55526
-## [17] 0.88585 0.96733 0.77941 0.62197</code></pre>
+<pre><code>##  [1] 0.14458 0.45530 0.85538 0.96416 0.73218 0.44229 0.26100 0.13677
+##  [9] 0.63453 0.35612 0.85409 0.89871 0.47241 0.78678 0.06978 0.46787
+## [17] 0.71246 0.07653 0.55152 0.93857</code></pre>
 <p>Or suppose you needed to create &quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, automatically.</p>
 <pre class="sourceCode r"><code class="sourceCode r">nVals &lt;- <span class="dv">3</span>
 results &lt;- <span class="kw">rep</span>(<span class="dv">0</span>, nVals)
@@ -384,8 +384,8 @@ for (i in <span class="dv">1</span>:nVals) {
     <span class="kw">assign</span>(varName, <span class="kw">rnorm</span>(<span class="dv">10</span>))
 }
 x2</code></pre>
-<pre><code>##  [1] -0.4263 -1.2309  1.3057 -1.1462 -2.0144 -1.2416  0.5561 -0.3129
-##  [9]  0.7243 -2.5154</code></pre>
+<pre><code>##  [1]  0.6169  0.2225 -0.0941 -0.8801 -1.0721 -0.2794  1.4429  0.1134
+##  [9] -0.8905 -1.5417</code></pre>
 <p>Can you think of any uses of this ability for R to self-generate?</p>
 </div>
 <div class="section slide level1" id="file-encodings">

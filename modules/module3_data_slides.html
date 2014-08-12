@@ -47,49 +47,49 @@ August 2014, UC Berkeley
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">mat &lt;- <span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>), <span class="dt">nrow =</span> <span class="dv">3</span>, <span class="dt">ncol =</span> <span class="dv">4</span>)
 mat</code></pre>
-<pre><code>##         [,1]     [,2]    [,3]    [,4]
-## [1,] -1.0653 -0.17132  0.5625 -0.9063
-## [2,] -0.7549 -0.04352 -0.5724  1.8602
-## [3,] -2.5292 -1.04747 -0.6552  1.9792</code></pre>
+<pre><code>##          [,1]    [,2]    [,3]    [,4]
+## [1,] -0.38053 -0.4751  1.1769 0.92430
+## [2,] -0.31169 -1.6991 -0.4455 0.08685
+## [3,]  0.04972  1.2492  0.1175 0.47172</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># vectorized calcs work with matrices too</span>
 mat * <span class="dv">4</span></code></pre>
-<pre><code>##         [,1]    [,2]   [,3]   [,4]
-## [1,]  -4.261 -0.6853  2.250 -3.625
-## [2,]  -3.020 -0.1741 -2.290  7.441
-## [3,] -10.117 -4.1899 -2.621  7.917</code></pre>
+<pre><code>##         [,1]   [,2]   [,3]   [,4]
+## [1,] -1.5221 -1.900  4.708 3.6972
+## [2,] -1.2467 -6.796 -1.782 0.3474
+## [3,]  0.1989  4.997  0.470 1.8869</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">mat &lt;- <span class="kw">cbind</span>(mat, <span class="dv">1</span>:<span class="dv">3</span>)
 mat</code></pre>
-<pre><code>##         [,1]     [,2]    [,3]    [,4] [,5]
-## [1,] -1.0653 -0.17132  0.5625 -0.9063    1
-## [2,] -0.7549 -0.04352 -0.5724  1.8602    2
-## [3,] -2.5292 -1.04747 -0.6552  1.9792    3</code></pre>
+<pre><code>##          [,1]    [,2]    [,3]    [,4] [,5]
+## [1,] -0.38053 -0.4751  1.1769 0.92430    1
+## [2,] -0.31169 -1.6991 -0.4455 0.08685    2
+## [3,]  0.04972  1.2492  0.1175 0.47172    3</code></pre>
 <p>Arrays are like matrices but can have more or fewer than two dimensions.</p>
 <pre class="sourceCode r"><code class="sourceCode r">arr &lt;- <span class="kw">array</span>(<span class="kw">rnorm</span>(<span class="dv">12</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>))
 arr</code></pre>
 <pre><code>## , , 1
 ## 
-##         [,1]    [,2]     [,3]
-## [1,] -0.2970 0.98625 -1.12286
-## [2,]  0.9798 0.05594  0.08469
+##        [,1]   [,2]    [,3]
+## [1,] -1.384 0.6679 -1.5313
+## [2,]  1.264 0.6809 -0.7164
 ## 
 ## , , 2
 ## 
-##       [,1]    [,2]   [,3]
-## [1,] 1.233 -0.4767 -1.009
-## [2,] 2.481  1.0204  2.634
+##         [,1]    [,2]    [,3]
+## [1,] -1.1298  0.2613  0.7395
+## [2,] -0.6881 -2.4926 -1.6016
 ## 
 ## , , 3
 ## 
-##         [,1]    [,2]     [,3]
-## [1,] -0.2970 0.98625 -1.12286
-## [2,]  0.9798 0.05594  0.08469
+##        [,1]   [,2]    [,3]
+## [1,] -1.384 0.6679 -1.5313
+## [2,]  1.264 0.6809 -0.7164
 ## 
 ## , , 4
 ## 
-##       [,1]    [,2]   [,3]
-## [1,] 1.233 -0.4767 -1.009
-## [2,] 2.481  1.0204  2.634</code></pre>
+##         [,1]    [,2]    [,3]
+## [1,] -1.1298  0.2613  0.7395
+## [2,] -0.6881 -2.4926 -1.6016</code></pre>
 </div>
 <div class="section slide level1" id="attributes">
 <h1 id="attributes">Attributes</h1>
@@ -99,10 +99,10 @@ arr</code></pre>
 ## [1] 3 5</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rownames</span>(mat) &lt;- <span class="kw">c</span>(<span class="st">&quot;first&quot;</span>, <span class="st">&quot;middle&quot;</span>, <span class="st">&quot;last&quot;</span>)
 mat</code></pre>
-<pre><code>##           [,1]     [,2]    [,3]    [,4] [,5]
-## first  -1.0653 -0.17132  0.5625 -0.9063    1
-## middle -0.7549 -0.04352 -0.5724  1.8602    2
-## last   -2.5292 -1.04747 -0.6552  1.9792    3</code></pre>
+<pre><code>##            [,1]    [,2]    [,3]    [,4] [,5]
+## first  -0.38053 -0.4751  1.1769 0.92430    1
+## middle -0.31169 -1.6991 -0.4455 0.08685    2
+## last    0.04972  1.2492  0.1175 0.47172    3</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">attributes</span>(mat)</code></pre>
 <pre><code>## $dim
 ## [1] 3 5
@@ -148,17 +148,17 @@ mat</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">vec &lt;- <span class="kw">rnorm</span>(<span class="dv">12</span>)
 vec[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>)] &lt;- <span class="ot">NA</span>
 vec</code></pre>
-<pre><code>##  [1]  0.30454  0.38989       NA  1.60387       NA  2.46736 -0.89732
-##  [8] -0.02461 -1.38533  1.43158 -0.49646 -2.01833</code></pre>
+<pre><code>##  [1]  1.35802  0.02133       NA  1.28228       NA  0.76080 -1.66017
+##  [8]  0.75895 -1.92600  0.04379 -0.13202  0.08487</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(vec)</code></pre>
 <pre><code>## [1] 12</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(vec)</code></pre>
 <pre><code>## [1] NA</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sum</span>(vec, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## [1] 1.375</code></pre>
+<pre><code>## [1] 0.5919</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(vec)</code></pre>
 <div class="figure">
-<img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-5" /><p class="caption">plot of chunk unnamed-chunk-5</p>
+<img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-5" /><p class="caption">plot of chunk unnamed-chunk-5</p>
 </div>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">is.na</span>(vec)</code></pre>
 <pre><code>##  [1] FALSE FALSE  TRUE FALSE  TRUE FALSE FALSE FALSE FALSE FALSE FALSE
@@ -187,8 +187,8 @@ big</code></pre>
 </ul>
 <pre class="sourceCode r"><code class="sourceCode r">vec &lt;- <span class="kw">c</span>(vec, <span class="ot">NULL</span>)
 vec</code></pre>
-<pre><code>##  [1]  0.30454  0.38989       NA  1.60387       NA  2.46736 -0.89732
-##  [8] -0.02461 -1.38533  1.43158 -0.49646 -2.01833</code></pre>
+<pre><code>##  [1]  1.35802  0.02133       NA  1.28228       NA  0.76080 -1.66017
+##  [8]  0.75895 -1.92600  0.04379 -0.13202  0.08487</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">length</span>(vec)</code></pre>
 <pre><code>## [1] 12</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">a &lt;- <span class="ot">NULL</span>
@@ -475,50 +475,46 @@ score[<span class="st">&quot;advanced&quot;</span>]  <span class="co"># look up 
 mat &lt;- <span class="kw">matrix</span>(vec, <span class="dv">4</span>, <span class="dv">5</span>)
 <span class="kw">rownames</span>(mat) &lt;- letters[<span class="dv">1</span>:<span class="dv">4</span>]
 mat</code></pre>
-<pre><code>##     [,1]     [,2]    [,3]     [,4]    [,5]
-## a 1.4879 -0.03826 -1.1266  0.51627  0.9644
-## b 0.5036 -0.24066 -0.5956 -0.91323 -2.4674
-## c 0.7562  0.06331  1.1516 -0.14390 -0.9685
-## d 1.1934 -0.25028  0.3361  0.02149  1.1649</code></pre>
+<pre><code>##      [,1]    [,2]    [,3]   [,4]     [,5]
+## a -0.4332  0.9784  0.9078 0.8313  0.05037
+## b -2.6967  2.3567  0.4641 1.0202  0.09149
+## c  0.7214  0.6920 -2.0768 0.8711 -1.05044
+## d -0.2044 -0.4107 -0.0434 0.7419  0.67281</code></pre>
 <ol style="list-style-type: decimal">
 <li>by direct indexing</li>
 </ol>
 <pre class="sourceCode r"><code class="sourceCode r">vec[<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">12</span>:<span class="dv">14</span>)]</code></pre>
-<pre><code>## [1]  0.75624 -0.03826  0.33606  0.51627 -0.91323</code></pre>
+<pre><code>## [1]  0.7214  0.9784 -0.0434  0.8313  1.0202</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">vec[-<span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>)]</code></pre>
-<pre><code>##  [1]  1.48795  0.50360  1.19340 -0.24066  0.06331 -0.25028 -1.12657
-##  [8] -0.59560  1.15157  0.33606  0.51627 -0.91323 -0.14390  0.02149
-## [15]  0.96442 -2.46744 -0.96854  1.16495</code></pre>
+<pre><code>##  [1] -0.43325 -2.69671 -0.20443  2.35665  0.69204 -0.41074  0.90776
+##  [8]  0.46408 -2.07678 -0.04340  0.83127  1.02024  0.87114  0.74192
+## [15]  0.05037  0.09149 -1.05044  0.67281</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">mat[<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>), <span class="dv">5</span>]</code></pre>
-<pre><code>##      b      d 
-## -2.467  1.165</code></pre>
+<pre><code>##       b       d 
+## 0.09149 0.67281</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">rowInd &lt;- <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>)
 colInd &lt;- <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1</span>)
 mat[<span class="kw">cbind</span>(rowInd, colInd)]</code></pre>
-<pre><code>## [1] -0.03826  0.06331  1.19340</code></pre>
+<pre><code>## [1]  0.9784  0.6920 -0.2044</code></pre>
 <p>Note the last usage where we give it a 2-column matrix of indices</p>
 <ol start="2" style="list-style-type: decimal">
 <li>by a vector of logicals</li>
 </ol>
 <pre class="sourceCode r"><code class="sourceCode r">cond &lt;- vec &gt; <span class="dv">0</span>
 vec[cond]</code></pre>
-<pre><code>##  [1] 1.48795 0.50360 0.75624 1.19340 0.06331 1.15157 0.33606 0.51627
-##  [9] 0.02149 0.96442 1.16495</code></pre>
+<pre><code>##  [1] 0.72137 0.97839 2.35665 0.69204 0.90776 0.46408 0.83127 1.02024
+##  [9] 0.87114 0.74192 0.05037 0.09149 0.67281</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">mat[mat[, <span class="dv">1</span>] &gt; <span class="dv">0</span>, ]</code></pre>
-<pre><code>##     [,1]     [,2]    [,3]     [,4]    [,5]
-## a 1.4879 -0.03826 -1.1266  0.51627  0.9644
-## b 0.5036 -0.24066 -0.5956 -0.91323 -2.4674
-## c 0.7562  0.06331  1.1516 -0.14390 -0.9685
-## d 1.1934 -0.25028  0.3361  0.02149  1.1649</code></pre>
+<pre><code>## [1]  0.7214  0.6920 -2.0768  0.8711 -1.0504</code></pre>
 <p>What happened in the last subsetting operation?</p>
 <ol start="3" style="list-style-type: decimal">
 <li>by a vector of names</li>
 </ol>
 <pre class="sourceCode r"><code class="sourceCode r">mat[<span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;d&quot;</span>, <span class="st">&quot;a&quot;</span>), ]</code></pre>
-<pre><code>##    [,1]     [,2]    [,3]    [,4]   [,5]
-## a 1.488 -0.03826 -1.1266 0.51627 0.9644
-## d 1.193 -0.25028  0.3361 0.02149 1.1649
-## a 1.488 -0.03826 -1.1266 0.51627 0.9644</code></pre>
+<pre><code>##      [,1]    [,2]    [,3]   [,4]    [,5]
+## a -0.4332  0.9784  0.9078 0.8313 0.05037
+## d -0.2044 -0.4107 -0.0434 0.7419 0.67281
+## a -0.4332  0.9784  0.9078 0.8313 0.05037</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li>using <em>subset()</em></li>
 </ol>

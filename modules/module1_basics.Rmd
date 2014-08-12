@@ -367,6 +367,6 @@ plot(earnings$earn ~ earnings$height, xlab = 'height (cm)', ylab = 'earnings (lo
 
 2) For a random subset of 100 individuals from the earnings dataset, create a vector with their earnings.
 
-3) Make plots of earnings against height separately for males and females.
+3) Make a plot of earnings against height with males as one color and females as another. You'll want to use the `col` argument. Consider modifying the size of the points (see `pch`) and using jittering (see `jitter()`) to make the plot more interpretable.
 
 

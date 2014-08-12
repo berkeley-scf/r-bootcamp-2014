@@ -34,5 +34,16 @@ smp <- sample(1:nrow(earnings), 100)
 sub <- earnings$earn[smp]
 ```
 
+# Problem 3
+
+Make a plot of earnings against height with males as one color and females as another. You'll want to use the `col` argument. Modify the plot to make it more interpretable (e.g., consider modifying the size or style of the points (see `pch` and `cex`) and using jittering (see `jitter()`)).
+
+```{r}
+par(mfrow = c(1,2))
+plot(earnings$height, earnings$earn, col = earnings$sex)
+plot(jitter(earnings$height), earnings$earn, col = earnings$sex, pch = 16, cex = .5)
+
+
+```
 
 

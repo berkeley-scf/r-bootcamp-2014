@@ -44,7 +44,7 @@ August 2014, UC Berkeley
 <pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> * pi  <span class="co"># multiply by a constant</span></code></pre>
 <pre><code>## [1] 6.283</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="dv">7</span> + <span class="kw">runif</span>(<span class="dv">1</span>)  <span class="co"># add a random number</span></code></pre>
-<pre><code>## [1] 7.985</code></pre>
+<pre><code>## [1] 7.466</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span>^<span class="dv">4</span>  <span class="co"># powers</span></code></pre>
 <pre><code>## [1] 81</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="dv">4</span>^<span class="dv">4</span>)  <span class="co"># functions</span></code></pre>
@@ -122,7 +122,7 @@ depts</code></pre>
 nums &lt;- <span class="kw">c</span>(<span class="fl">1.1</span>, <span class="dv">3</span>, -<span class="fl">5.7</span>)
 devs &lt;- <span class="kw">rnorm</span>(<span class="dv">5</span>)
 devs</code></pre>
-<pre><code>## [1]  0.9880 -0.1707  0.8838 -1.1084 -0.5063</code></pre>
+<pre><code>## [1] -0.7711 -1.3673 -0.9245 -0.7671  0.7151</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># integer vector</span>
 ints &lt;- <span class="kw">c</span>(1L, 5L, -3L)  <span class="co"># force storage as integer not decimal number</span>
@@ -172,7 +172,7 @@ vals &lt;- <span class="kw">rnorm</span>(<span class="dv">100</span>)
 <span class="co"># How does R process these next subset operations?</span>
 vals[vals &lt; <span class="dv">0</span>] &lt;- <span class="dv">0</span>
 vals[<span class="dv">1</span>:<span class="dv">8</span>]</code></pre>
-<pre><code>## [1] 0.000 0.000 1.089 0.000 0.000 0.000 0.000 1.519</code></pre>
+<pre><code>## [1] 0.7111 0.0000 0.0000 1.8963 0.0000 0.0000 0.0000 0.1829</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">set.seed</span>(<span class="dv">0</span>)  <span class="co"># make random number generation repeatable</span>
 vals &lt;- <span class="kw">rnorm</span>(<span class="dv">100</span>)
