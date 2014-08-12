@@ -53,15 +53,26 @@ results <- by(earnings, list(earnings$sex, earnings$ed),
 )
 ```
 
-Hmm, that format is awkward. We can play around a bit and see what the underlying structure is...
+Hmm, that format is awkward. 
+
+Here's a bit of code to get it in a less awkward format.
 
 ```{r}
 dim(results)
 results[1, ]
-as.matrix(results)
-attributes(results)
-class(results) <- "matrix"
-results
+matrix(c(results), length(unique(earnings$sex)), length(unique(earnings$ed)))
 ```
 
 Are there other ways to go about this? 
+
+This is cleaner, but misrepresents the missing values. 
+
+```{r}
+agg <- aggregate(earn ~ sex + ed, data = earnings, FUN = function(x) {
+   sort(x, decreasing = TRUE)[2]
+})
+xtabs(earn ~ ., data = agg)
+
+```
+
+
