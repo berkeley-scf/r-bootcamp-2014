@@ -12,6 +12,9 @@
 R has functions for learning about the collection of objects in your workspace. Some of this is built in to RStudio.
 
 ```{r}
+x <- rnorm(5)
+y <- c(5L, 2L, 7L)
+z <- list(a = 3, b = c('sam', 'yang'))
 ls()  # search the user workspace (global environment)
 rm(x)    # delete a variable
 ls()
@@ -99,9 +102,9 @@ Can you explain what is going on? Consider the results of `search()`.
 
 Packages are available as "Package source", namely the raw code and help files, and "binaries", where stuff is packaged up for R to use efficiently. 
 
-To look at the raw R code (and possibly C/C++/Fortran code included in some packages), download and unzip the package source tarball. From the command line of a Linux/Mac terminal:
+To look at the raw R code (and possibly C/C++/Fortran code included in some packages), download and unzip the package source tarball. From the command line of a Linux/Mac terminal (note this won't look right in the slides version of the HTML):
 
-```{engine='bash', eval=FALSE}
+```{r source_code, engine='bash', eval=FALSE}
 curl http://www.cran.r-project.org/src/contrib/fields_6.8.tar.gz -o fields_6.8.tar.gz
 tar -xvzf fields_6.8.tar.gz
 cd fields
@@ -212,7 +215,7 @@ At a basic level, a simple principle is to have version numbers for all your wor
 However, this is a hassle to do manually. Instead of manually trying to keep track of what changes you've made to code, data, documents, you use software to help you manage the process. This has several benefits:
 
 * easily allowing you to go back to earlier versions
-* allowing you to have multiple version you can switch between
+* allowing you to have multiple versions you can switch between
 * allowing you to share work easily without worrying about conflicts
 * providing built-in backup
 
@@ -239,8 +242,8 @@ Here's a basic workflow:
 2. Commit the changes
 3. Push the changes to the remote version of the repository
 
-Here's how this would look from the command line:
-```{engine='bash', eval=FALSE}
+Here's how this would look from the command line (this won't look right in the slides version of the HTML):
+```{r engine='bash', eval=FALSE}
 git add myfile
 # make changes to mycode.R
 git commit -am'added myfile and fixed bug in mycode.R'

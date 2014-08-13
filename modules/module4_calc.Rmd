@@ -50,7 +50,7 @@ If you use a trick like this, having a comment in your code is a good idea.
 
 R can do essentially any linear algebra you need. It uses system-level packages called BLAS (basic linear algebra subroutines) and LAPACK (linear algebra package). Note that these calculations will be essentially as fast as if you wrote C code because R just calls C and Fortran routines to do the calculations.
 
-The BLAS that comes with R is fairly slow. It's possible to use a faster BLAS, as well as one that uses multiple cores automatically. This can in some cases give you an order of magnitude speedup if your work involves a lot of matrix manipulations/linear algebra. More details in Module 11.
+The BLAS that comes with R is fairly slow. It's possible to use a faster BLAS, as well as one that uses multiple cores automatically. This can in some cases give you an order of magnitude speedup if your work involves a lot of matrix manipulations/linear algebra. More details in Module 10.
 
 
 # Vectorized vector/matrix calculations
@@ -79,9 +79,11 @@ identical(t(A)%*%A, crossprod(A))
 Some decompositions
 
 ```{r cache=TRUE}
+## next 3 lines generate a positive definite matrix
 require(fields)
 times <- seq(0, 1, length = 100)
 R <- exp(-rdist(times) / 0.2) # a correlation matrix
+######################################################
 e <- eigen(R)
 range(e$values)
 e$vectors[ , 1]
@@ -198,7 +200,7 @@ test[[2]]
 There are a bunch of `apply()` variants, as well as parallelized versions of them:
 
 * `tapply()`, `vapply()`, `mapply()`, `rapply()`, `eapply()`
-* for parallelized versions see Module 11 or `?clusterApply`)
+* for parallelized versions see Module 10 or `?clusterApply`)
 
 # Tabulation 
 
@@ -250,7 +252,7 @@ Notice the 'long' vs. 'wide' formats. You'll see more about that sort of thing i
 
 # Discretization
 
-You may need to discretize a categorical variable, e.g., by education level:
+You may need to discretize a continuous variable [or a discrete variable with many levels], e.g., by education level:
 ```{r fig.width=9}
 earnings$edLevel <- cut(earnings$ed, breaks = c(0, 11, 12, 15, 16, 18, 99))
 levels(earnings$edLevel) <- c('no HS diploma', 'HS grad', 'some college', 

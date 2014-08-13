@@ -40,16 +40,22 @@ August 2014, UC Berkeley
 <div class="section slide level1" id="managing-and-saving-the-workspace">
 <h1 id="managing-and-saving-the-workspace">Managing and saving the workspace</h1>
 <p>R has functions for learning about the collection of objects in your workspace. Some of this is built in to RStudio.</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()  <span class="co"># search the user workspace (global environment)</span></code></pre>
-<pre><code>## character(0)</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(x)  <span class="co"># delete a variable</span></code></pre>
-<pre><code>## Warning: object 'x' not found</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre>
-<pre><code>## character(0)</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">x &lt;- <span class="kw">rnorm</span>(<span class="dv">5</span>)
+y &lt;- <span class="kw">c</span>(5L, 2L, 7L)
+z &lt;- <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv">3</span>, <span class="dt">b =</span> <span class="kw">c</span>(<span class="st">&quot;sam&quot;</span>, <span class="st">&quot;yang&quot;</span>))
+<span class="kw">ls</span>()  <span class="co"># search the user workspace (global environment)</span></code></pre>
+<pre><code>## [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(x)  <span class="co"># delete a variable</span>
+<span class="kw">ls</span>()</code></pre>
+<pre><code>## [1] &quot;y&quot; &quot;z&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls.str</span>()  <span class="co"># list and describe variables</span></code></pre>
+<pre><code>## y :  int [1:3] 5 2 7
+## z : List of 2
+##  $ a: num 3
+##  $ b: chr [1:2] &quot;sam&quot; &quot;yang&quot;</code></pre>
 <p>Finally we can save the objects in our R session:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ls</span>()</code></pre>
-<pre><code>## character(0)</code></pre>
+<pre><code>## [1] &quot;y&quot; &quot;z&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">save.image</span>(<span class="st">&quot;module1.Rda&quot;</span>)
 <span class="kw">rm</span>(<span class="dt">list =</span> <span class="kw">ls</span>())
 <span class="kw">ls</span>()</code></pre>
@@ -123,7 +129,7 @@ August 2014, UC Berkeley
 y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 <span class="kw">lm</span>(y ~ x)</code></pre>
 <pre><code>## y ~ x
-## &lt;environment: 0x17dd660&gt;</code></pre>
+## &lt;environment: 0x1275670&gt;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">stats::<span class="kw">lm</span>(y ~ x)</code></pre>
 <pre><code>## 
 ## Call:
@@ -131,12 +137,18 @@ y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##      -0.444        0.574</code></pre>
+##      0.0805      -0.4334</code></pre>
 <p>Can you explain what is going on? Consider the results of <code>search()</code>.</p>
 <h3 id="looking-inside-a-package">Looking inside a package</h3>
 <p>Packages are available as &quot;Package source&quot;, namely the raw code and help files, and &quot;binaries&quot;, where stuff is packaged up for R to use efficiently.</p>
 <p>To look at the raw R code (and possibly C/C++/Fortran code included in some packages), download and unzip the package source tarball. From the command line of a Linux/Mac terminal:</p>
-<p><code>{engine='bash', eval=FALSE} curl http://www.cran.r-project.org/src/contrib/fields_6.8.tar.gz -o fields_6.8.tar.gz tar -xvzf fields_6.8.tar.gz cd fields ls R ls src ls man ls data</code></p>
+<pre class="sourceCode bash"><code class="sourceCode bash">curl http://www.cran.r-project.org/src/contrib/fields_6.8.tar.gz -o fields_6.8.tar.gz
+<span class="kw">tar</span> -xvzf fields_6.8.tar.gz
+<span class="kw">cd</span> fields
+<span class="kw">ls</span> R
+<span class="kw">ls</span> src
+<span class="kw">ls</span> <span class="kw">man</span>
+<span class="kw">ls</span> data</code></pre>
 <h3 id="creating-your-own-r-package">Creating your own R package</h3>
 <p>R is do-it-yourself - you can write your own package. At its most basic this is just some R scripts that are packaged together in a convenient format. And if giving it to someone ele, it's best to have some documentation in the form of function help files.</p>
 <p>Why make a package?</p>
@@ -229,7 +241,7 @@ y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 <pre><code>## Loading required package: xtable</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">xtable</span>(<span class="kw">table</span>(vote$race, vote$pres04)), <span class="dt">type =</span> <span class="st">&quot;html&quot;</span>)</code></pre>
 <pre><code>## &lt;!-- html table generated in R 3.0.3 by xtable 1.7-1 package --&gt;
-## &lt;!-- Tue Aug 12 15:43:36 2014 --&gt;
+## &lt;!-- Wed Aug 13 13:21:21 2014 --&gt;
 ## &lt;TABLE border=1&gt;
 ## &lt;TR&gt; &lt;TH&gt;  &lt;/TH&gt; &lt;TH&gt; 0 &lt;/TH&gt; &lt;TH&gt; 1 &lt;/TH&gt; &lt;TH&gt; 2 &lt;/TH&gt; &lt;TH&gt; 3 &lt;/TH&gt; &lt;TH&gt; 4 &lt;/TH&gt; &lt;TH&gt; 9 &lt;/TH&gt;  &lt;/TR&gt;
 ##   &lt;TR&gt; &lt;TD align=&quot;right&quot;&gt; white &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 111 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 26184 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 33045 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 417 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt;  14 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 409 &lt;/TD&gt; &lt;/TR&gt;
@@ -247,7 +259,7 @@ y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 <p>However, this is a hassle to do manually. Instead of manually trying to keep track of what changes you've made to code, data, documents, you use software to help you manage the process. This has several benefits:</p>
 <ul>
 <li>easily allowing you to go back to earlier versions</li>
-<li>allowing you to have multiple version you can switch between</li>
+<li>allowing you to have multiple versions you can switch between</li>
 <li>allowing you to share work easily without worrying about conflicts</li>
 <li>providing built-in backup</li>
 </ul>
@@ -265,7 +277,7 @@ y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 <li>Commit the changes</li>
 <li>Push the changes to the remote version of the repository</li>
 </ol>
-<p>Here's how this would look from the command line: <code>{engine='bash', eval=FALSE} git add myfile # make changes to mycode.R git commit -am'added myfile and fixed bug in mycode.R' git push</code></p>
+<p>Here's how this would look from the command line: <code>git add myfile # make changes to mycode.R git commit -am'added myfile and fixed bug in mycode.R' git push</code></p>
 <p>The changes are then available to anyone to <em>pull</em> from the remote repository, using <code>git pull</code>.</p>
 </div>
 <div class="section slide level1" id="getting-r-help-online">

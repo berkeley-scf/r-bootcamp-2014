@@ -44,7 +44,7 @@ attributes(mat)
 
 Now let's do a bit of manipulation and see if you can infer how R represents matrices internally.
 
-```
+```{r what_is_a_matrix}
 mat[4]
 attributes(mat) <- NULL
 mat
@@ -190,7 +190,7 @@ In general the placement of commas in R is crucial, but here, two different oper
 ```{r fac}
 class(vote$sizeplac)
 head(vote$sizeplac) # What order are the factors in?
-levels(vote[["sizeplac"]])
+levels(vote[["sizeplac"]])  # note alternate way to get the variable
 summary(vote$sizeplac)
 ```
 
@@ -203,8 +203,8 @@ summary(vote$sizeplac)
 
 ```{r orderedfac}
 vote <- within(vote, 
-     sizeplac_ord <- ordered(sizeplac, levels = 
-     levels(sizeplac)[c(5,3,4,2,1)])
+     sizeplac_ord <- ordered(sizeplac, 
+     levels = levels(sizeplac)[c(5,3,4,2,1)])
 )
 head(vote$sizeplac_ord)
 levels(vote$sizeplac_ord)
@@ -235,7 +235,7 @@ score[students[3]]
 score[as.character(students[3])]
 ```
 
-What's going wrong?
+What went wrong and how did we fix it?  Notice how easily this could be a big bug in your code.
 
 # Subsetting
 
@@ -255,7 +255,9 @@ vec[-c(3,5)]
 mat[c(2,4), 5]
 rowInd <- c(1, 3, 4)
 colInd <- c(2, 2, 1)
-mat[cbind(rowInd, colInd)]
+elemInd <- cbind(rowInd, colInd)
+elemInd
+mat[elemInd]
 ```
 
 Note the last usage where we give it a 2-column matrix of indices
@@ -338,8 +340,8 @@ dim(rta)
 # Not so fast...
 unlist(lapply(rta, class))[1:5]
 # ?read.table
-rta2 <- read.table("../data/RTAData.csv", sep = ",", head = TRUE,
-       stringsAsFactors = FALSE)
+rta2 <- read.table("../data/RTAData.csv", sep = ",", 
+  head = TRUE, stringsAsFactors = FALSE)
 rta2[3,3]
 unlist(lapply(rta2, class))[1:5]
 # let's delve more deeply

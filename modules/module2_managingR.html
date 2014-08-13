@@ -193,25 +193,29 @@ hr {
 
 <p>R has functions for learning about the collection of objects in your workspace. Some of this is built in to RStudio.</p>
 
-<pre><code class="r">ls()  # search the user workspace (global environment)
+<pre><code class="r">x &lt;- rnorm(5)
+y &lt;- c(5L, 2L, 7L)
+z &lt;- list(a = 3, b = c(&quot;sam&quot;, &quot;yang&quot;))
+ls()  # search the user workspace (global environment)
 </code></pre>
 
-<pre><code>## character(0)
+<pre><code>## [1] &quot;x&quot; &quot;y&quot; &quot;z&quot;
 </code></pre>
 
 <pre><code class="r">rm(x)  # delete a variable
+ls()
 </code></pre>
 
-<pre><code>## Warning: object &#39;x&#39; not found
-</code></pre>
-
-<pre><code class="r">ls()
-</code></pre>
-
-<pre><code>## character(0)
+<pre><code>## [1] &quot;y&quot; &quot;z&quot;
 </code></pre>
 
 <pre><code class="r">ls.str()  # list and describe variables
+</code></pre>
+
+<pre><code>## y :  int [1:3] 5 2 7
+## z : List of 2
+##  $ a: num 3
+##  $ b: chr [1:2] &quot;sam&quot; &quot;yang&quot;
 </code></pre>
 
 <p>Finally we can save the objects in our R session:</p>
@@ -219,7 +223,7 @@ hr {
 <pre><code class="r">ls()
 </code></pre>
 
-<pre><code>## character(0)
+<pre><code>## [1] &quot;y&quot; &quot;z&quot;
 </code></pre>
 
 <pre><code class="r">save.image(&quot;module1.Rda&quot;)
@@ -338,7 +342,7 @@ lm(y ~ x)
 </code></pre>
 
 <pre><code>## y ~ x
-## &lt;environment: 0x18c7608&gt;
+## &lt;environment: 0x1d3f258&gt;
 </code></pre>
 
 <pre><code class="r">stats::lm(y ~ x)
@@ -350,7 +354,7 @@ lm(y ~ x)
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##     -0.1438       0.0643
+##     -0.0401       0.3086
 </code></pre>
 
 <p>Can you explain what is going on? Consider the results of <code>search()</code>.</p>
@@ -361,7 +365,7 @@ lm(y ~ x)
 
 <p>To look at the raw R code (and possibly C/C++/Fortran code included in some packages), download and unzip the package source tarball. From the command line of a Linux/Mac terminal:</p>
 
-<pre><code class="engine=&#39;bash&#39;, eval=FALSE">curl http://www.cran.r-project.org/src/contrib/fields_6.8.tar.gz -o fields_6.8.tar.gz
+<pre><code class="bash">curl http://www.cran.r-project.org/src/contrib/fields_6.8.tar.gz -o fields_6.8.tar.gz
 tar -xvzf fields_6.8.tar.gz
 cd fields
 ls R
@@ -490,7 +494,7 @@ print(xtable(table(vote$race, vote$pres04)), type = &quot;html&quot;)
 </code></pre>
 
 <pre><code>## &lt;!-- html table generated in R 3.0.3 by xtable 1.7-1 package --&gt;
-## &lt;!-- Tue Aug 12 15:43:36 2014 --&gt;
+## &lt;!-- Wed Aug 13 13:21:22 2014 --&gt;
 ## &lt;TABLE border=1&gt;
 ## &lt;TR&gt; &lt;TH&gt;  &lt;/TH&gt; &lt;TH&gt; 0 &lt;/TH&gt; &lt;TH&gt; 1 &lt;/TH&gt; &lt;TH&gt; 2 &lt;/TH&gt; &lt;TH&gt; 3 &lt;/TH&gt; &lt;TH&gt; 4 &lt;/TH&gt; &lt;TH&gt; 9 &lt;/TH&gt;  &lt;/TR&gt;
 ##   &lt;TR&gt; &lt;TD align=&quot;right&quot;&gt; white &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 111 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 26184 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 33045 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 417 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt;  14 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 409 &lt;/TD&gt; &lt;/TR&gt;
@@ -513,7 +517,7 @@ print(xtable(table(vote$race, vote$pres04)), type = &quot;html&quot;)
 
 <ul>
 <li>easily allowing you to go back to earlier versions</li>
-<li>allowing you to have multiple version you can switch between</li>
+<li>allowing you to have multiple versions you can switch between</li>
 <li>allowing you to share work easily without worrying about conflicts</li>
 <li>providing built-in backup</li>
 </ul>
@@ -544,7 +548,7 @@ print(xtable(table(vote$race, vote$pres04)), type = &quot;html&quot;)
 
 <p>Here&#39;s how this would look from the command line:</p>
 
-<pre><code class="engine=&#39;bash&#39;, eval=FALSE">git add myfile
+<pre><code>git add myfile
 # make changes to mycode.R
 git commit -am&#39;added myfile and fixed bug in mycode.R&#39;
 git push

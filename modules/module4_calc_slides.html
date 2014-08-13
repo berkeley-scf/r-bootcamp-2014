@@ -54,10 +54,10 @@ chi2_df1000 &lt;- <span class="kw">sum</span>(chi2vals)
 <pre class="sourceCode r"><code class="sourceCode r">vals &lt;- <span class="kw">rnorm</span>(<span class="fl">1e+06</span>)
 <span class="kw">system.time</span>(trunc &lt;- <span class="kw">ifelse</span>(vals &gt; <span class="dv">0</span>, vals, <span class="dv">0</span>))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.660   0.016   0.679</code></pre>
+##   0.640   0.016   0.655</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(vals &lt;- vals * (vals &gt; <span class="dv">0</span>))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.012   0.000   0.009</code></pre>
+##   0.008   0.000   0.010</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">tmp &lt;- <span class="kw">as.character</span>(vote$age60)
 vote$ageMin &lt;- <span class="kw">substring</span>(tmp, <span class="dv">1</span>, <span class="dv">2</span>)
 vote$ageMin[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre>
@@ -68,7 +68,7 @@ vote$ageMin[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre>
 <div class="section slide level1" id="linear-algebra">
 <h1 id="linear-algebra">Linear algebra</h1>
 <p>R can do essentially any linear algebra you need. It uses system-level packages called BLAS (basic linear algebra subroutines) and LAPACK (linear algebra package). Note that these calculations will be essentially as fast as if you wrote C code because R just calls C and Fortran routines to do the calculations.</p>
-<p>The BLAS that comes with R is fairly slow. It's possible to use a faster BLAS, as well as one that uses multiple cores automatically. This can in some cases give you an order of magnitude speedup if your work involves a lot of matrix manipulations/linear algebra. More details in Module 11.</p>
+<p>The BLAS that comes with R is fairly slow. It's possible to use a faster BLAS, as well as one that uses multiple cores automatically. This can in some cases give you an order of magnitude speedup if your work involves a lot of matrix manipulations/linear algebra. More details in Module 10.</p>
 </div>
 <div class="section slide level1" id="vectorized-vectormatrix-calculations">
 <h1 id="vectorized-vectormatrix-calculations">Vectorized vector/matrix calculations</h1>
@@ -111,9 +111,11 @@ A + B</code></pre>
 <span class="kw">identical</span>(<span class="kw">t</span>(A) %*% A, <span class="kw">crossprod</span>(A))</code></pre>
 <pre><code>## [1] TRUE</code></pre>
 <p>Some decompositions</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(fields)
+<pre class="sourceCode r"><code class="sourceCode r">## next 3 lines generate a positive definite matrix
+<span class="kw">require</span>(fields)
 times &lt;- <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dt">length =</span> <span class="dv">100</span>)
 R &lt;- <span class="kw">exp</span>(-<span class="kw">rdist</span>(times)/<span class="fl">0.2</span>)  <span class="co"># a correlation matrix</span>
+###################################################### 
 e &lt;- <span class="kw">eigen</span>(R)
 <span class="kw">range</span>(e$values)</code></pre>
 <pre><code>## [1]  0.02525 32.85537</code></pre>
@@ -148,7 +150,7 @@ n &lt;- <span class="dv">50000</span>
     for (i in <span class="dv">1</span>:n) vals &lt;- <span class="kw">c</span>(vals, i)
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   2.844   0.004   2.858</code></pre>
+##   3.168   0.080   3.264</code></pre>
 <p>The same holds for using <code>rbind()</code>, <code>cbind()</code>, or adding to a list, one element at a time.</p>
 <p>This is slow and unclear (in the sense that it appears the code has a bug, but it works):</p>
 <pre class="sourceCode r"><code class="sourceCode r">vals &lt;- <span class="dv">0</span>
@@ -170,7 +172,7 @@ n &lt;- <span class="dv">50000</span>
     for (i in <span class="dv">1</span>:n) vals[i] &lt;- i
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.064   0.000   0.065</code></pre>
+##   0.072   0.000   0.073</code></pre>
 <p>Here's how to pre-allocate an empty list:</p>
 <pre class="sourceCode r"><code class="sourceCode r">vals &lt;- <span class="kw">list</span>()
 <span class="kw">length</span>(vals) &lt;- n

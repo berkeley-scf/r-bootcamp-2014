@@ -214,14 +214,14 @@ system.time(trunc &lt;- ifelse(vals &gt; 0, vals, 0))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.344   0.016   0.359
+##   0.372   0.004   0.375
 </code></pre>
 
 <pre><code class="r">system.time(vals &lt;- vals * (vals &gt; 0))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.008   0.000   0.011
+##   0.008   0.000   0.009
 </code></pre>
 
 <pre><code class="r">tmp &lt;- as.character(vote$age60)
@@ -240,7 +240,7 @@ vote$ageMin[1:5]
 
 <p>R can do essentially any linear algebra you need. It uses system-level packages called BLAS (basic linear algebra subroutines) and LAPACK (linear algebra package). Note that these calculations will be essentially as fast as if you wrote C code because R just calls C and Fortran routines to do the calculations.</p>
 
-<p>The BLAS that comes with R is fairly slow. It&#39;s possible to use a faster BLAS, as well as one that uses multiple cores automatically. This can in some cases give you an order of magnitude speedup if your work involves a lot of matrix manipulations/linear algebra. More details in Module 11.</p>
+<p>The BLAS that comes with R is fairly slow. It&#39;s possible to use a faster BLAS, as well as one that uses multiple cores automatically. This can in some cases give you an order of magnitude speedup if your work involves a lot of matrix manipulations/linear algebra. More details in Module 10.</p>
 
 <h1>Vectorized vector/matrix calculations</h1>
 
@@ -314,9 +314,11 @@ identical(t(A) %*% A, crossprod(A))
 
 <p>Some decompositions</p>
 
-<pre><code class="r">require(fields)
+<pre><code class="r">## next 3 lines generate a positive definite matrix
+require(fields)
 times &lt;- seq(0, 1, length = 100)
 R &lt;- exp(-rdist(times)/0.2)  # a correlation matrix
+###################################################### 
 e &lt;- eigen(R)
 range(e$values)
 </code></pre>
@@ -363,7 +365,7 @@ system.time({
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   2.844   0.004   2.858
+##   3.168   0.080   3.264
 </code></pre>
 
 <p>The same holds for using <code>rbind()</code>, <code>cbind()</code>, or adding to a list, one element at a time.</p>
@@ -396,7 +398,7 @@ system.time({
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.072   0.000   0.071
+##   0.068   0.000   0.071
 </code></pre>
 
 <p>Here&#39;s how to pre-allocate an empty list: </p>
