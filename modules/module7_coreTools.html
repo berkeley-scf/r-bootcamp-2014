@@ -269,12 +269,7 @@ optim(c(-2, 0), banana)
 <p>Any hypotheses about the relationship of earnings with height and education?</p>
 
 <pre><code class="r">library(mgcv)
-</code></pre>
-
-<pre><code>## This is mgcv 1.7-22. For overview type &#39;help(&quot;mgcv-package&quot;)&#39;.
-</code></pre>
-
-<pre><code class="r">mod_male &lt;- gam(earn ~ s(height, k = 10) + s(ed, k = 10), data = earnings[earnings$sex == 
+mod_male &lt;- gam(earn ~ s(height, k = 10) + s(ed, k = 10), data = earnings[earnings$sex == 
     1, ])
 mod_female &lt;- gam(earn ~ s(height, k = 10) + s(ed, k = 10), data = earnings[earnings$sex == 
     2, ])
@@ -287,7 +282,7 @@ summary(mod_male)
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10)
-## &lt;environment: 0x2496660&gt;
+## &lt;environment: 0x15b5d90&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -315,7 +310,7 @@ summary(mod_male)
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10)
-## &lt;environment: 0x2496660&gt;
+## &lt;environment: 0x15b5d90&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -362,7 +357,7 @@ summary(mod_male_full)
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10) + race
-## &lt;environment: 0x2496660&gt;
+## &lt;environment: 0x15b5d90&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -391,7 +386,7 @@ summary(mod_male_full)
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10) + race
-## &lt;environment: 0x2496660&gt;
+## &lt;environment: 0x15b5d90&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -484,12 +479,12 @@ lines(x, dt(x, df = 1), col = &quot;red&quot;)
 </code></pre>
 
 <pre><code>##      [,1]
-## [1,]   14
-## [2,]    8
-## [3,]   18
-## [4,]   28
-## [5,]   23
-## [6,]    9
+## [1,]    8
+## [2,]    9
+## [3,]   21
+## [4,]   31
+## [5,]   28
+## [6,]    3
 </code></pre>
 
 <pre><code class="r">
@@ -507,8 +502,8 @@ lines(x, dchisq(x, df = 2), col = &quot;red&quot;)
 <pre><code class="r">sample(row.names(state.x77), 7, replace = FALSE)
 </code></pre>
 
-<pre><code>## [1] &quot;North Dakota&quot; &quot;New Mexico&quot;   &quot;Arizona&quot;      &quot;Georgia&quot;     
-## [5] &quot;Florida&quot;      &quot;Wisconsin&quot;    &quot;Kentucky&quot;
+<pre><code>## [1] &quot;Ohio&quot;         &quot;Maine&quot;        &quot;Oregon&quot;       &quot;Mississippi&quot; 
+## [5] &quot;North Dakota&quot; &quot;Vermont&quot;      &quot;Kentucky&quot;
 </code></pre>
 
 <p>Here&#39;s an example of some code that would be part of coding up a bootstrap.</p>
@@ -525,7 +520,7 @@ smp &lt;- sample(seq_len(nrow(earnings)), replace = TRUE)
 mean(earnings$earn[smp], na.rm = TRUE)
 </code></pre>
 
-<pre><code>## [1] 20282
+<pre><code>## [1] 20317
 </code></pre>
 
 <p>It&#39;s a good idea to use <code>seq_along()</code> and <code>seq_len()</code> and not syntax like <code>1:length(earnings)</code> in <code>sample()</code> because the outcome of <code>length()</code> might in some cases be unexpected (e.g., if you&#39;re taking subsets of a dataset). Similar reasoning holds when setting up for loops: e.g., </p>
@@ -673,11 +668,10 @@ class(d1)
 <h1>Breakout</h1>
 
 <ol>
+<li>Modify the GAMs of earnings fit to smooth functions of height and education to set <code>k</code> to a variety of values and see how the estimated relationships change.</li>
 <li>Suppose you wanted to do 10-fold cross-validation for some sort of regression model fit to the <em>earnings</em> dataset. Write some R code that produces a field in the dataset that indicates which fold each observation is in. Ensure each of the folds has an equal (or as nearly equal as possible if the number of observations is not divisible by 10) number of observations. Hint: consider the <em>times</em> argument to the <code>rep()</code> function.</li>
-<li>Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size <code>n</code> from a skewed or discrete distribution and show that if <code>n</code> is big enough, the distribution of the means (of each sample of size <code>n</code>) looks approximately normal in a histogram. Do it without any looping (using techniques from earlier modules)! </li>
+<li>Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size <code>n</code> from a skewed or discrete distribution and show that if <code>n</code> is big enough, the distribution of the means (of each sample of size <code>n</code>) looks approximately normal in a histogram. Do it without any looping (using techniques from earlier modules)! I.e., I want you to show that if you have a large number (say 10,000) of means, each mean being the mean of <code>n</code> values from a distribution, the distribution of the means looks approximately normal if <code>n</code> is sufficiently big.</li>
 </ol>
-
-<p>I.e., I want you to show that if you have a large number (say 10,000) of means, each mean being the mean of <code>n</code> values from a distribution, the distribution of the means looks approximately normal if <code>n</code> is sufficiently big.</p>
 
 </body>
 

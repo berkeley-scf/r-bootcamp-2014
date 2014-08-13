@@ -13,6 +13,18 @@ earnings <- read.dta('../data/heights.dta')
 
 # Problem 1
 
+Modify the GAMs of earnings fit to smooth functions of height and education to set `k` for education to a few values smaller than 10 and see how the estimated relationship changes.
+
+You should see the fit forced to be smoother than is estimated with larger `k`.
+
+```{r}
+mod_male <- gam(earn ~ s(height, k = 10) + s(ed, k = 3), 
+         data = earnings[earnings$sex == 1,])
+plot(mod_male)
+```
+
+# Problem 2
+
 Suppose you wanted to do 10-fold cross-validation for some sort of regression model fit to the *earnings* dataset. Write some R code that produces a field in the dataset that indicates which fold each observation is in. Ensure each of the folds has an equal (or as nearly equal as possible if the number of observations is not divisible by 10) number of observations. Hint: consider the *times* argument to the `rep()` function.
 
 ```{r}
@@ -28,7 +40,7 @@ earnings$fold <- sample(fold)
 ```
 
 
-# Problem 2
+# Problem 3
 
 Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size `n` from a skewed or discrete distribution and show that if `n` is big enough, the distribution of the means (of each sample of size `n`) looks approximately normal in a histogram. Do it without any looping! 
 
