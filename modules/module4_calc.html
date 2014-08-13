@@ -214,14 +214,14 @@ system.time(trunc &lt;- ifelse(vals &gt; 0, vals, 0))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.372   0.004   0.375
+##   0.348   0.008   0.360
 </code></pre>
 
 <pre><code class="r">system.time(vals &lt;- vals * (vals &gt; 0))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.008   0.000   0.009
+##   0.008   0.000   0.010
 </code></pre>
 
 <pre><code class="r">tmp &lt;- as.character(vote$age60)
@@ -398,7 +398,7 @@ system.time({
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.068   0.000   0.071
+##   0.072   0.000   0.073
 </code></pre>
 
 <p>Here&#39;s how to pre-allocate an empty list: </p>
@@ -509,7 +509,7 @@ test[[2]]
 
 <ul>
 <li><code>tapply()</code>, <code>vapply()</code>, <code>mapply()</code>, <code>rapply()</code>, <code>eapply()</code></li>
-<li>for parallelized versions see Module 11 or <code>?clusterApply</code>)</li>
+<li>for parallelized versions see Module 10 or <code>?clusterApply</code>)</li>
 </ul>
 
 <h1>Tabulation</h1>
@@ -735,7 +735,7 @@ xtabs(earn ~ ., data = agg)
 
 <h1>Discretization</h1>
 
-<p>You may need to discretize a categorical variable, e.g., by education level:</p>
+<p>You may need to discretize a continuous variable [or a discrete variable with many levels], e.g., by education level:</p>
 
 <pre><code class="r">earnings$edLevel &lt;- cut(earnings$ed, breaks = c(0, 11, 12, 15, 16, 18, 99))
 levels(earnings$edLevel) &lt;- c(&quot;no HS diploma&quot;, &quot;HS grad&quot;, &quot;some college&quot;, &quot;college grad&quot;, 

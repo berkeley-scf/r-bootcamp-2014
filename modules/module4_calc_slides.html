@@ -54,10 +54,10 @@ chi2_df1000 &lt;- <span class="kw">sum</span>(chi2vals)
 <pre class="sourceCode r"><code class="sourceCode r">vals &lt;- <span class="kw">rnorm</span>(<span class="fl">1e+06</span>)
 <span class="kw">system.time</span>(trunc &lt;- <span class="kw">ifelse</span>(vals &gt; <span class="dv">0</span>, vals, <span class="dv">0</span>))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.640   0.016   0.655</code></pre>
+##   0.700   0.016   0.721</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(vals &lt;- vals * (vals &gt; <span class="dv">0</span>))</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.008   0.000   0.010</code></pre>
+##   0.012   0.000   0.010</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">tmp &lt;- <span class="kw">as.character</span>(vote$age60)
 vote$ageMin &lt;- <span class="kw">substring</span>(tmp, <span class="dv">1</span>, <span class="dv">2</span>)
 vote$ageMin[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre>
@@ -172,7 +172,7 @@ n &lt;- <span class="dv">50000</span>
     for (i in <span class="dv">1</span>:n) vals[i] &lt;- i
 })</code></pre>
 <pre><code>##    user  system elapsed 
-##   0.072   0.000   0.073</code></pre>
+##   0.072   0.000   0.072</code></pre>
 <p>Here's how to pre-allocate an empty list:</p>
 <pre class="sourceCode r"><code class="sourceCode r">vals &lt;- <span class="kw">list</span>()
 <span class="kw">length</span>(vals) &lt;- n
@@ -244,7 +244,7 @@ test[[<span class="dv">2</span>]]</code></pre>
 <p>There are a bunch of <code>apply()</code> variants, as well as parallelized versions of them:</p>
 <ul>
 <li><code>tapply()</code>, <code>vapply()</code>, <code>mapply()</code>, <code>rapply()</code>, <code>eapply()</code></li>
-<li>for parallelized versions see Module 11 or <code>?clusterApply</code>)</li>
+<li>for parallelized versions see Module 10 or <code>?clusterApply</code>)</li>
 </ul>
 </div>
 <div class="section slide level1" id="tabulation">
@@ -420,7 +420,7 @@ tbl</code></pre>
 </div>
 <div class="section slide level1" id="discretization">
 <h1 id="discretization">Discretization</h1>
-<p>You may need to discretize a categorical variable, e.g., by education level:</p>
+<p>You may need to discretize a continuous variable [or a discrete variable with many levels], e.g., by education level:</p>
 <pre class="sourceCode r"><code class="sourceCode r">earnings$edLevel &lt;- <span class="kw">cut</span>(earnings$ed, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">11</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">16</span>, <span class="dv">18</span>, <span class="dv">99</span>))
 <span class="kw">levels</span>(earnings$edLevel) &lt;- <span class="kw">c</span>(<span class="st">&quot;no HS diploma&quot;</span>, <span class="st">&quot;HS grad&quot;</span>, <span class="st">&quot;some college&quot;</span>, <span class="st">&quot;college grad&quot;</span>, 
     <span class="st">&quot;grad study&quot;</span>, <span class="st">&quot;other&quot;</span>)
