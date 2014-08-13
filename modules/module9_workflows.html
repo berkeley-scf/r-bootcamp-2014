@@ -235,8 +235,7 @@ tricks and check that both produce the same output.</li>
 <li>Parenthesis mis-matches</li>
 <li><code>[...]</code> vs. <code>[[...]]</code>
 = <code>==</code> vs. <code>=</code> </li>
-<li>Comparing real numbers exactly using <code>==</code> is dangerous (more
-in a later Unit). Suppose you generate <code>x = 0.333333</code> in some
+<li>Comparing real numbers exactly using <code>==</code> is dangerous. Suppose you generate <code>x = 0.333333</code> in some
 fashion with some code and then check: <code>x == 1/3</code>. This will produce FALSE.</li>
 <li>Vectors vs. single values: 
 
@@ -315,8 +314,8 @@ colSums(mat)  # whoops
 But there is an official debugger and other tools that greatly help in figuring
 out problems.</p>
 
-<p>Let&#39;s briefly see these in action. I&#39;ll demo with a set of nested functions in
-which one has an error:</p>
+<p>Let&#39;s briefly see these in action. I&#39;ll demo this in a very basic way, but hopefully this
+will give you an idea of the power of these tools.</p>
 
 <pre><code class="r">buggyFun &lt;- function(myDF) {
     print(names(myDF))
@@ -336,16 +335,13 @@ buggyFun(vote)
 <pre><code>## Error: &#39;x&#39; must be numeric
 </code></pre>
 
-<pre><code class="r">traceback()
-</code></pre>
-
-<pre><code>## No traceback available
-</code></pre>
-
-<pre><code class="r">if (FALSE) {
+<pre><code class="r">
+if (FALSE) {
+    traceback()
     debug(buggyFun)
     buggyFun(vote)
 
+    undebug(buggyFun)
     options(error = recover)
     buggyFun(vote)
 }
@@ -367,7 +363,7 @@ buggyFun(vote)
 in the development process.  For programs that accept input either from a user
 or file, it is important that the code validates the input is what
 it expects to receive. Tests that ensure individual code elements (e.g., functions,
-classes, and class methods) behave correctly are called \emph{unit tests}.
+classes, and class methods) behave correctly are called <em>unit tests</em>.
 Writing unit tests early in the process of implementing new functionality
 helps you think about what you want a piece of code to do, rather than just how
 it does it. This practice improves code quality by focusing your attention
@@ -479,8 +475,8 @@ gc()
 </code></pre>
 
 <pre><code>##             used  (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells   1362523  72.8    2105982 112.5   2105982 112.5
-## Vcells 102622093 783.0  124503307 949.9 112629243 859.3
+## Ncells    251736  13.5     531268  28.4    531268  28.4
+## Vcells 101187179 772.0  122921293 937.9 111194307 848.4
 </code></pre>
 
 <pre><code class="r">rm(x)
@@ -488,8 +484,8 @@ gc()
 </code></pre>
 
 <pre><code>##           used (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells 1362540 72.8    2105982 112.5   2105982 112.5
-## Vcells 2622132 20.1   99602645 760.0 112629243 859.3
+## Ncells  251753 13.5     531268  28.4    531268  28.4
+## Vcells 1187218  9.1   98337034 750.3 111194307 848.4
 </code></pre>
 
 <h1>Scripting</h1>
@@ -528,7 +524,7 @@ you don&#39;t have to read through the code to figure out what it does.</p>
 
 <ul>
 <li>Write reusable code for core functionality and keep a single copy
-of the code (w/ backups of course) so you only need to change it once</li>
+of the code (w/ backups of course) so you only need to change it in one place</li>
 <li>Smaller functions are easier to debug, easier to understand, and can
 be combined in a modular fashion (like the UNIX utilities)</li>
 <li>Functions should: 

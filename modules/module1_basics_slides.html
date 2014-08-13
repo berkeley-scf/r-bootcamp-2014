@@ -44,7 +44,7 @@ August 2014, UC Berkeley
 <pre class="sourceCode r"><code class="sourceCode r"><span class="dv">2</span> * pi  <span class="co"># multiply by a constant</span></code></pre>
 <pre><code>## [1] 6.283</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="dv">7</span> + <span class="kw">runif</span>(<span class="dv">1</span>)  <span class="co"># add a random number</span></code></pre>
-<pre><code>## [1] 7.466</code></pre>
+<pre><code>## [1] 7.869</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="dv">3</span>^<span class="dv">4</span>  <span class="co"># powers</span></code></pre>
 <pre><code>## [1] 81</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sqrt</span>(<span class="dv">4</span>^<span class="dv">4</span>)  <span class="co"># functions</span></code></pre>
@@ -122,7 +122,7 @@ depts</code></pre>
 nums &lt;- <span class="kw">c</span>(<span class="fl">1.1</span>, <span class="dv">3</span>, -<span class="fl">5.7</span>)
 devs &lt;- <span class="kw">rnorm</span>(<span class="dv">5</span>)
 devs</code></pre>
-<pre><code>## [1] -0.7711 -1.3673 -0.9245 -0.7671  0.7151</code></pre>
+<pre><code>## [1] -2.16427  1.37249  0.01518  1.03253  1.05856</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># integer vector</span>
 ints &lt;- <span class="kw">c</span>(1L, 5L, -3L)  <span class="co"># force storage as integer not decimal number</span>
@@ -172,7 +172,7 @@ vals &lt;- <span class="kw">rnorm</span>(<span class="dv">100</span>)
 <span class="co"># How does R process these next subset operations?</span>
 vals[vals &lt; <span class="dv">0</span>] &lt;- <span class="dv">0</span>
 vals[<span class="dv">1</span>:<span class="dv">8</span>]</code></pre>
-<pre><code>## [1] 0.7111 0.0000 0.0000 1.8963 0.0000 0.0000 0.0000 0.1829</code></pre>
+<pre><code>## [1] 1.8630 0.5702 0.5312 0.0000 0.1658 0.3238 0.0000 0.0000</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">set.seed</span>(<span class="dv">0</span>)  <span class="co"># make random number generation repeatable</span>
 vals &lt;- <span class="kw">rnorm</span>(<span class="dv">100</span>)
@@ -498,7 +498,7 @@ vec2 &lt;- <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv"
 <li><p>What has been most confusing for you in this Module? Write it down on a piece of paper and leave it on the front desk, and we'll discuss it at the start of the next Module.</p></li>
 <li><p>Create a new R object that contains the heights in meters (<img src="data:image/png;base64,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" style="vertical-align:middle" alt="1 m \approx 39.4 in" title="1 m \approx 39.4 in" />) using the <em>height1</em> and <em>height2</em> variables in the <em>earnings</em> dataset. Make a histogram of the new variable with breakpoints between the bins every 10 cm.</p></li>
 <li><p>For a random subset of 100 individuals from the earnings dataset, create a vector with their earnings.</p></li>
-<li><p>Make plots of earnings against height separately for males and females.</p></li>
+<li><p>Make a plot of earnings against height with males as one color and females as another. You'll want to use the <code>col</code> argument. Consider modifying the size of the points (see <code>pch</code>) and using jittering (see <code>jitter()</code>) to make the plot more interpretable.</p></li>
 </ol>
 </div>
 </body>
