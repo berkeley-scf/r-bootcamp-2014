@@ -11,7 +11,7 @@ if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
 vote <- read.dta('../data/2004_labeled_processed_race.dta')
 ```
 
-# Problem
+# Problem 2
 
 Fit logistic regression models of preference for Bush/Kerry on income, stratified by state. Use `foreach` or a parallel version of one of the *apply* variants.  Collect the resulting coefficients (and standard errors, if you're feeling ambitious) in a clean format such as a matrix or data frame.  Check to see if multiple cores are being used in the execution.
 
@@ -20,6 +20,9 @@ Fit logistic regression models of preference for Bush/Kerry on income, stratifie
 require(parallel)
 nCores <- 4
 p <- sum(table(vote$income) != 0)
+vote <- vote[vote$pres04 == 1 | vote$pres04 == 2, ]
+vote$pres04[vote$pres04 == 2] <- 0 # 0=bush; 1=kerry
+
 
 spl <- split(vote, vote$state)
 system.time({out <- lapply(spl, 

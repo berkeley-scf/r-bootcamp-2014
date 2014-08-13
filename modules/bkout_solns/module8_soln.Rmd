@@ -10,7 +10,7 @@ library(reshape2)
 library(ggplot2)
 library(lattice)
 library(gridExtra)
-mydata<-read.csv("data/cpds.csv")
+mydata<-read.csv("../data/cpds.csv")
 ```
 
 Breakout Questions:

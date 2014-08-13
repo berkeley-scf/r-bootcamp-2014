@@ -51,8 +51,7 @@ tricks and check that both produce the same output.
 - Parenthesis mis-matches
 - `[...]` vs. `[[...]]`
 = `==` vs. `=` 
-- Comparing real numbers exactly using `==` is dangerous (more
-in a later Unit). Suppose you generate `x = 0.333333` in some
+- Comparing real numbers exactly using `==` is dangerous. Suppose you generate `x = 0.333333` in some
 fashion with some code and then check: `x == 1/3`. This will produce FALSE.
 - Vectors vs. single values: 
   + `||` vs. `|` and `&&` vs `&`
@@ -98,8 +97,8 @@ As a scripting language, R essentially has a debugger working automatically.
 But there is an official debugger and other tools that greatly help in figuring
 out problems.
 
-Let's briefly see these in action. I'll demo with a set of nested functions in
-which one has an error:
+Let's briefly see these in action. I'll demo this in a very basic way, but hopefully this
+will give you an idea of the power of these tools.
 
 ```{r}
 buggyFun <- function(myDF) {
@@ -110,11 +109,13 @@ buggyFun <- function(myDF) {
 }
 
 buggyFun(vote)
-traceback()
+
 if(FALSE) {
+  traceback()
   debug(buggyFun)
   buggyFun(vote)
 
+  undebug(buggyFun)
   options(error = recover)
   buggyFun(vote)
 }
@@ -136,7 +137,7 @@ Testing should be performed on multiple levels and begun as early as possible
 in the development process.  For programs that accept input either from a user
 or file, it is important that the code validates the input is what
 it expects to receive. Tests that ensure individual code elements (e.g., functions,
-classes, and class methods) behave correctly are called \emph{unit tests}.
+classes, and class methods) behave correctly are called *unit tests*.
 Writing unit tests early in the process of implementing new functionality
 helps you think about what you want a piece of code to do, rather than just how
 it does it. This practice improves code quality by focusing your attention
@@ -263,7 +264,7 @@ you don't have to read through the code to figure out what it does.
 Good use of functions includes:
 
 - Write reusable code for core functionality and keep a single copy
-of the code (w/ backups of course) so you only need to change it once
+of the code (w/ backups of course) so you only need to change it in one place
 - Smaller functions are easier to debug, easier to understand, and can
 be combined in a modular fashion (like the UNIX utilities)
 - Functions should: 
