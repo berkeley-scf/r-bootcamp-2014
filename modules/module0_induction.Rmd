@@ -1,4 +1,4 @@
-% R bootcamp, Module 0: Recruit processing
+B1;2c% R bootcamp, Module 0: Recruit processing
 % August 2014, UC Berkeley
 % Chris Paciorek
 
@@ -53,7 +53,7 @@ This is a bootcamp. So there may be some pain involved! If you find yourself not
 
 # RStudio and R Markdown
 
-We'll present most of the material from within RStudio, using R Markdown documents with embedded R code. R Markdown is an extension to the Markdown markup language which makes it easy to write HTML in a simple plain text format.  This allows us to both run the R code directly as well as compile on-the-fly to an HTML file that can be used for presentation. All files will be available on [as a zip file on Piazza](https://piazza.com/berkeley/summer2014/rbootcamp2014/home) and [Github](https://github.com/berkeley-scf/r-bootcamp-2014).  Note that Github is likely to have the most up-to-date documents while the zip file will only be updated periodically.
+We'll present most of the material from within RStudio, using R Markdown documents with embedded R code. R Markdown is an extension to the Markdown markup language that makes it easy to write HTML in a simple plain text format.  This allows us to both run the R code directly as well as compile on-the-fly to an HTML file that can be used for presentation. All files will be available on [as a zip file on Piazza](https://piazza.com/berkeley/summer2014/rbootcamp2014/home) and [Github](https://github.com/berkeley-scf/r-bootcamp-2014).  Note that Github is likely to have the most up-to-date documents while the zip file will only be updated periodically.
 
 Note: The files named *moduleX_blah_slides.html* have individual slides, while the files named *moduleX_blah.html* have the same content but all on one page.
 
@@ -88,7 +88,7 @@ Run the following commands:
 
 Then to update from the repository to get any changes we've made:
 
-- `cd /directory/where/you/want/to/put/the/repository/r-bootcamp-2014`
+- `cd /directory/where/you/put/the/repository/r-bootcamp-2014`
 - `git pull`
 
 
