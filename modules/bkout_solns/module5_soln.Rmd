@@ -32,20 +32,25 @@ mod_black <- glm(pres04 ~ income + sex, data = ca[ca$race == 'black', ],
 How do you predict the probability of voting for Kerry for a given set of covariate values? Consider the `predict.glm()` function and what its help page says. Or write code that converts from the model coefficients to the probability scale. Compare the predicted probability of voting for Kerry for a white male of high income with a white male of low income. Do the same for white females. 
 
 ```{r}
-predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', race = 'white'))
-predict(mod1, newdata = data.frame(income = "$15,000-$29,999", sex = 'female', race = 'white'))
-predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', race = 'black'))
+predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', 
+race = 'white'), type = 'response')
+predict(mod1, newdata = data.frame(income = "$15,000-$29,999", sex = 'female', 
+race = 'white'), type = 'response')
+predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', 
+race = 'black'), type = 'response')
 ```
 
 
 # Ambitious solutions
 
-Using the tools for stratified analyses we have seen today, fit separate models of voting preference as a function of (personal) income and sex (and potentially additional covariates) for each state (or a collection of states of interest to you). How do the effect of income and sex vary by state? The file stateIncome.txt is a tab-delimited file of mean income by state. See if the effects of income and sex are correlated with the state-level mean income. 
+Using the tools for stratified analyses we have seen today, fit separate models of voting preference as a function of (personal) income and sex (and potentially additional covariates) for each state (or a collection of states of interest to you). How do the effect of income and sex vary by state? The file *stateIncome.txt* is a tab-delimited file of mean income by state. See if the effects of income and sex are correlated with the state-level mean income. 
 
 The following only barely scratches the surface of what one could/should do.
 
 ```{r}
 vote_white <- vote[vote$race == "white", ]
+vote_white <- vote_white[vote_white$pres04 == 1 | vote_white$pres04 == 2, ]
+vote_white$pres04[vote_white$pres04 == 2] <- 0 # 0=bush; 1=kerry
 spl <- split(vote_white, vote_white$state)
 out <- sapply(spl, function(x) {
   mod <- glm(pres04 ~ income + sex, data = x, family = binomial)
