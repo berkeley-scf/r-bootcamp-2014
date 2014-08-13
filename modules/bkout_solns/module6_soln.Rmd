@@ -53,8 +53,8 @@ nUntilFluctuation <- function(N) {
   i
 }
 
-nUntilFluctuation(1.0)
-nUntilFluctuation(2.0)
-nUntilFluctuation(3.0)
-nUntilFluctuation(4.0)
+nUntilFluctuation(1)
+nUntilFluctuation(2)
+nUntilFluctuation(3)
+nUntilFluctuation(4)
 ```
