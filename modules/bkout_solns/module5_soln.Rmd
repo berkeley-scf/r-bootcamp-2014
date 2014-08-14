@@ -7,9 +7,8 @@
 # e.g. package and dataset loading
 require(foreign)
 require(fields)
-if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
-vote <- read.dta('../data/2004_labeled_processed_race.dta')
-earnings <- read.dta('../data/heights.dta')
+vote <- read.dta('../../data/2004_labeled_processed_race.dta')
+earnings <- read.dta('../../data/heights.dta')
 ```
 
 # Breakout
@@ -57,7 +56,7 @@ out <- sapply(spl, function(x) {
   mod$coef
 })
 
-stateIncome <- read.table('../data/stateIncome.txt', sep = '\t', stringsAsFactors = FALSE)
+stateIncome <- read.table('../../data/stateIncome.txt', sep = '\t', stringsAsFactors = FALSE)
 names(stateIncome) <- c('state', 'avgIncome')
 stateIncome <- stateIncome[-9, ] # remove DC
 identical(stateIncome[ , 1], row.names(state.x77)) # check ordering

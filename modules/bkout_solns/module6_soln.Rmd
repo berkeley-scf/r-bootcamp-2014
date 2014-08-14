@@ -3,9 +3,9 @@
 % Chris Paciorek
 ========================================================
 
-# Solutions to breakout problems: problem #1
+# Problem 1
 
-1) Write a function that returns the mean of N normally distributed random numbers.
+Write a function that returns the mean of N normally distributed random numbers.
 
 ```{r}
 meanOfNormals <- function(N) {
@@ -19,9 +19,9 @@ meanOfNormals(1000)
 meanOfNormals(10000)
 ```
 
-# Solutions to breakout problems: problem #2
+# Problem 2
 
-2) Extend exercise #1: allow the user to pass parameters for the normal distribution, and return both mean and median.
+Extend Problem 1: allow the user to pass parameters for the normal distribution, and return both mean and median.
 
 ```{r}
 statsOfNormals <- function(N, mean=0, sd=1) {
@@ -38,9 +38,9 @@ statsOfNormals(1000, 3)
 statsOfNormals(10000, 3)
 ```
 
-# Solutions to breakout problems: problem #3
+# Problem 3
 
-3) Write a function that repeatedly generates random normal variables until it generates a random number more than N standard deviations from the mean. Return the number of samples performed up to that point.
+Write a function that repeatedly generates random normal variables until it generates a random number more than N standard deviations from the mean. Return the number of samples performed up to that point.
 
 ```{r}
 nUntilFluctuation <- function(N) {

@@ -7,9 +7,8 @@
 # e.g. package and dataset loading
 require(foreign)
 require(fields)
-if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
-vote <- read.dta('../data/2004_labeled_processed_race.dta')
-earnings <- read.dta('../data/heights.dta')
+vote <- read.dta('../../data/2004_labeled_processed_race.dta')
+earnings <- read.dta('../../data/heights.dta')
 answers <- c(TRUE, TRUE, FALSE, FALSE)
 update <- c(TRUE, FALSE, TRUE, FALSE)
 ```

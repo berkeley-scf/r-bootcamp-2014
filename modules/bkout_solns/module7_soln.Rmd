@@ -7,15 +7,15 @@
 # e.g. package and dataset loading
 require(foreign)
 require(fields)
-if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
-earnings <- read.dta('../data/heights.dta')
+require(mgcv)
+earnings <- read.dta('../../data/heights.dta')
 ```
 
 # Problem 1
 
 Modify the GAMs of earnings fit to smooth functions of height and education to set `k` for education to a few values smaller than 10 and see how the estimated relationship changes.
 
-You should see the fit forced to be smoother than is estimated with larger `k`.
+You should see the fit forced to be smoother than is estimated with smaller `k`.
 
 ```{r}
 mod_male <- gam(earn ~ s(height, k = 10) + s(ed, k = 3), 
@@ -44,13 +44,14 @@ earnings$fold <- sample(fold)
 
 Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size `n` from a skewed or discrete distribution and show that if `n` is big enough, the distribution of the means (of each sample of size `n`) looks approximately normal in a histogram. Do it without any looping! 
 
-```{r}
+```{r fig.width=11}
 sampleSizes <- c(10, 50, 300)
 
 plotFun <- function(n, numReps = 10000) {
-   devs <- matrix(rchisq(n*numReps, df = 2), nrow = 10000)
+   devs <- matrix(rchisq(n*numReps, df = 1), nrow = numReps)
    hist(rowMeans(devs), xlab = 'mean of sample', 
    main = paste("n = ", n, sep = ''))
+   invisible(NULL)
 }
 
 par(mfrow = c(1, length(sampleSizes)), mai = c(.5, .5, .3, .1))

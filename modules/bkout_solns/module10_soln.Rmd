@@ -7,8 +7,7 @@
 # e.g. package and dataset loading
 require(foreign)
 require(fields)
-if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
-vote <- read.dta('../data/2004_labeled_processed_race.dta')
+vote <- read.dta('../../data/2004_labeled_processed_race.dta')
 ```
 
 # Problem 2

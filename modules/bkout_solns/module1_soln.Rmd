@@ -7,9 +7,8 @@
 # e.g. package and dataset loading
 require(foreign)
 require(fields)
-if(!('modules' %in% unlist(strsplit(getwd(), split = '/')))) setwd('modules')
-vote <- read.dta('../data/2004_labeled_processed_race.dta')
-earnings <- read.dta('../data/heights.dta')
+vote <- read.dta('../../data/2004_labeled_processed_race.dta')
+earnings <- read.dta('../../data/heights.dta')
 ```
 
 # Problem 1
@@ -38,7 +37,7 @@ sub <- earnings$earn[smp]
 
 Make a plot of earnings against height with males as one color and females as another. You'll want to use the `col` argument. Modify the plot to make it more interpretable (e.g., consider modifying the size or style of the points (see `pch` and `cex`) and using jittering (see `jitter()`)).
 
-```{r}
+```{r prob3, fig.width=11}
 par(mfrow = c(1,2))
 plot(earnings$height, earnings$earn, col = earnings$sex)
 plot(jitter(earnings$height), earnings$earn, col = earnings$sex, pch = 16, cex = .5)
