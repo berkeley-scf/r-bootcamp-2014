@@ -282,27 +282,23 @@ methods(predict)
 
 <pre><code>##  [1] predict.ar*                predict.Arima*            
 ##  [3] predict.arima0*            predict.bs*               
-##  [5] predict.bSpline*           predict.gam               
-##  [7] predict.glm                predict.glmmPQL*          
-##  [9] predict.gls*               predict.gnls*             
-## [11] predict.HoltWinters*       predict.interp.surface    
-## [13] predict.Krig               predict.lda*              
-## [15] predict.lm                 predict.lme*              
-## [17] predict.lmList*            predict.loess*            
-## [19] predict.lqs*               predict.mca*              
-## [21] predict.merMod*            predict.mKrig             
-## [23] predict.mlm                predict.nbSpline*         
-## [25] predict.nlme*              predict.nls*              
-## [27] predict.npolySpline*       predict.ns*               
-## [29] predict.pbSpline*          predict.polr*             
-## [31] predict.poly               predict.polySpline*       
-## [33] predict.ppolySpline*       predict.ppr*              
-## [35] predict.prcomp*            predict.princomp*         
-## [37] predict.qda*               predict.qsreg             
-## [39] predict.rlm*               predict.smooth.spline*    
-## [41] predict.smooth.spline.fit* predict.sreg              
-## [43] predict.StructTS*          predict.surface           
-## [45] predict.surface.default   
+##  [5] predict.bSpline*           predict.glm               
+##  [7] predict.glmmPQL*           predict.gls*              
+##  [9] predict.gnls*              predict.HoltWinters*      
+## [11] predict.lda*               predict.lm                
+## [13] predict.lme*               predict.lmList*           
+## [15] predict.loess*             predict.lqs*              
+## [17] predict.mca*               predict.merMod*           
+## [19] predict.mlm                predict.nbSpline*         
+## [21] predict.nlme*              predict.nls*              
+## [23] predict.npolySpline*       predict.ns*               
+## [25] predict.pbSpline*          predict.polr*             
+## [27] predict.poly               predict.polySpline*       
+## [29] predict.ppolySpline*       predict.ppr*              
+## [31] predict.prcomp*            predict.princomp*         
+## [33] predict.qda*               predict.rlm*              
+## [35] predict.smooth.spline*     predict.smooth.spline.fit*
+## [37] predict.StructTS*         
 ## 
 ##    Non-visible functions are asterisked
 </code></pre>
@@ -313,7 +309,7 @@ predict
 
 <pre><code>## function (object, ...) 
 ## UseMethod(&quot;predict&quot;)
-## &lt;bytecode: 0x3118050&gt;
+## &lt;bytecode: 0x2e7ce88&gt;
 ## &lt;environment: namespace:stats&gt;
 </code></pre>
 
@@ -368,7 +364,7 @@ print.workshop &lt;- function(x) {
     invisible(x)
 }
 
-# doesn&#39;t execute correctly in the slide creation, do comment our here:
+# doesn&#39;t execute correctly in the slide creation, so comment out here:
 # rboot2014
 </code></pre>
 
@@ -540,9 +536,12 @@ for (edLevel in unique(earnings$ed)) {
 <pre><code>## Error: 0 (non-NA) cases
 </code></pre>
 
-<p><strong>Questions</strong>:
-1. What happened?
-2. Why did it go through the education levels in that order? (12, 16, 17, &hellip;)</p>
+<p><strong>Questions</strong>:</p>
+
+<ol>
+<li>What happened?</li>
+<li>Why did it go through the education levels in that order? (12, 16, 17, &hellip;)</li>
+</ol>
 
 <h1>How we can <code>try()</code> harder</h1>
 
@@ -584,7 +583,7 @@ mod[[2]]
 <pre><code>## [1] NA
 </code></pre>
 
-<pre><code class="r">mod[[3]]
+<pre><code class="r">mod[[5]]
 </code></pre>
 
 <pre><code>## 
@@ -593,7 +592,7 @@ mod[[2]]
 ## 
 ## Coefficients:
 ## (Intercept)       height  
-##        1400           NA
+##       48791         -752
 </code></pre>
 
 <h1>Computing on the language</h1>

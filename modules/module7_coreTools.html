@@ -668,7 +668,7 @@ class(d1)
 <h1>Breakout</h1>
 
 <ol>
-<li>Modify the GAMs of earnings fit to smooth functions of height and education to set <code>k</code> to a variety of values and see how the estimated relationships change.</li>
+<li>Modify the GAMs of earnings on height and education to set <code>k</code> to a variety of values and see how the estimated relationships change. Change the GAM to use height as a linear predictor and see if the results change.</li>
 <li>Suppose you wanted to do 10-fold cross-validation for some sort of regression model fit to the <em>earnings</em> dataset. Write some R code that produces a field in the dataset that indicates which fold each observation is in. Ensure each of the folds has an equal (or as nearly equal as possible if the number of observations is not divisible by 10) number of observations. Hint: consider the <em>times</em> argument to the <code>rep()</code> function.</li>
 <li>Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size <code>n</code> from a skewed or discrete distribution and show that if <code>n</code> is big enough, the distribution of the means (of each sample of size <code>n</code>) looks approximately normal in a histogram. Do it without any looping (using techniques from earlier modules)! I.e., I want you to show that if you have a large number (say 10,000) of means, each mean being the mean of <code>n</code> values from a distribution, the distribution of the means looks approximately normal if <code>n</code> is sufficiently big.</li>
 </ol>

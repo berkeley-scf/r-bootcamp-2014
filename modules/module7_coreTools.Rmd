@@ -217,7 +217,7 @@ There's lots more packages/functionality for dates/times: see *lubridate* and `?
  
 # Breakout 
 
-1. Modify the GAMs of earnings fit to smooth functions of height and education to set `k` to a variety of values and see how the estimated relationships change.
+1. Modify the GAMs of earnings on height and education to set `k` to a variety of values and see how the estimated relationships change. Change the GAM to use height as a linear predictor and see if the results change.
 2. Suppose you wanted to do 10-fold cross-validation for some sort of regression model fit to the *earnings* dataset. Write some R code that produces a field in the dataset that indicates which fold each observation is in. Ensure each of the folds has an equal (or as nearly equal as possible if the number of observations is not divisible by 10) number of observations. Hint: consider the *times* argument to the `rep()` function.
 3. Write some code to demonstrate the central limit theorem. Generate many different replicates of samples of size `n` from a skewed or discrete distribution and show that if `n` is big enough, the distribution of the means (of each sample of size `n`) looks approximately normal in a histogram. Do it without any looping (using techniques from earlier modules)! I.e., I want you to show that if you have a large number (say 10,000) of means, each mean being the mean of `n` values from a distribution, the distribution of the means looks approximately normal if `n` is sufficiently big.
 

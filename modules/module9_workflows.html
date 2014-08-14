@@ -405,7 +405,7 @@ benchmark(ifelse(x &lt; 0, x, 0), x[x &lt; 0] &lt;- 0, replications = 5, columns
 
 <h1>Profiling your code</h1>
 
-<p>For more advanced assessment of bottlenecks in your code, consider <code>Rprof()</code>.</p>
+<p>For more advanced assessment of bottlenecks in your code, consider <code>Rprof()</code>. The following two functions both remove rows from a dataset when any value in the row is missing. </p>
 
 <pre><code>fun1 &lt;- function(x) {
   res &lt;- NULL
@@ -475,8 +475,8 @@ gc()
 </code></pre>
 
 <pre><code>##             used  (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells    251736  13.5     531268  28.4    531268  28.4
-## Vcells 101187179 772.0  122921293 937.9 111194307 848.4
+## Ncells    252020  13.5     531268  28.4    531268  28.4
+## Vcells 101187741 772.1  122921923 937.9 111194879 848.4
 </code></pre>
 
 <pre><code class="r">rm(x)
@@ -484,8 +484,8 @@ gc()
 </code></pre>
 
 <pre><code>##           used (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells  251753 13.5     531268  28.4    531268  28.4
-## Vcells 1187218  9.1   98337034 750.3 111194307 848.4
+## Ncells  252037 13.5     531268  28.4    531268  28.4
+## Vcells 1187780  9.1   98337538 750.3 111194879 848.4
 </code></pre>
 
 <h1>Scripting</h1>
@@ -505,8 +505,10 @@ gc()
 
 <h1>Batch jobs / background execution</h1>
 
-<p>To run code as a background job in a Linux/Mac context:
-<code>R CMD BATCH --no-save myCodeFile.R myOutput.Rout &amp;</code></p>
+<p>To run code as a background job in a Linux/Mac context:</p>
+
+<pre><code class="r">R CMD BATCH --no-save myCodeFile.R myOutput.Rout &amp;
+</code></pre>
 
 <p>Then you don&#39;t need to leave RStudio or R or a terminal window open. Your job will run by itself. If you are logged into a remote machine, you can log out and come back later.</p>
 
@@ -527,14 +529,15 @@ you don&#39;t have to read through the code to figure out what it does.</p>
 of the code (w/ backups of course) so you only need to change it in one place</li>
 <li>Smaller functions are easier to debug, easier to understand, and can
 be combined in a modular fashion (like the UNIX utilities)</li>
-<li>Functions should: 
+</ul>
+
+<p>Functions should: </p>
 
 <ul>
 <li>be modular (having a single task); </li>
 <li>have meaningful name; and</li>
 <li>have a comment describing their purpose, inputs and outputs (see the
 help file for any standard R function for how this is done in that context).</li>
-</ul></li>
 </ul>
 
 <h1>Good coding practices: syntax</h1>
@@ -599,7 +602,7 @@ c
 </code></pre>
 
 <ul>
-<li>Use active names for functions (e.g., \emph{calc_loglik}, \emph{calcLogLik})</li>
+<li>Use active names for functions (e.g., <em>calc_loglik</em>, <em>calcLogLik</em>)</li>
 </ul>
 
 <h1>Reproducible research</h1>
@@ -625,12 +628,12 @@ complete set of instructions which generated the figures.</p>
 
 <ul>
 <li>Never change a dataset manually, including in pre-processing and post-processing. Always have a script that operates on the data (or results/output). </li>
-<li>Always have version numbers for datasets </li>
-<li>Note when and where you download, and ideally download via a script as well (e.g., <em>wget</em> and <em>curl</em> are UNIX tools for automated downloading.</li>
-<li>Produce figures (e.g., from R) via a script and not by point-and-click</li>
-<li>When making figures, use <code>save()</code> or <code>save.image()</code> to save all the inputs needed to recreate a figure, with the code for making the figure in a script file</li>
+<li>Always have version numbers for datasets.</li>
+<li>Note when and where you download, and ideally download via a script as well (e.g., <em>wget</em> and <em>curl</em> are UNIX tools for automated downloading).</li>
+<li>Produce figures (e.g., from R) via a script and not by point-and-click.</li>
+<li>When making figures, use <code>save()</code> or <code>save.image()</code> to save all the inputs needed to recreate a figure, with the code for making the figure in a script file.</li>
 <li>If feasible, include your code for doing analyses and making figures in the relevant document reporting the work by using R Markdown or <em>Latex</em> with <em>knitr</em> or <em>Sweave</em>. </li>
-<li>Always set the random number seed so someone else can duplicate your exact numbers</li>
+<li>Always set the random number seed so someone else can duplicate your exact numbers.</li>
 <li>Use version control tools such as Git! </li>
 </ul>
 

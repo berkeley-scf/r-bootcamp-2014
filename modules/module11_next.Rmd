@@ -18,8 +18,7 @@ Base packages, widely-used packages and packages by frequent R contributors are 
 
 # Some of the 'features' of R
 
-* R is inconsistent in its naming conventions
-    - Some functions are 'camelCase'; others are 'dot.separated'; others 'use_underscores'. For programmers used to OOP, the use of dots is maddening.
+* R is inconsistent in its naming conventions: Some functions are *camelCase*; others are *dot.separated*; others *use_underscores*. For programmers used to OOP, the use of dots is maddening.
 * Multiple OOP paradigms and OOP is not as clean or full-featured as other languages
 * R has multiple graphics packages that different functions use for default plot construction (`base`, `grid`, `lattice`, and `ggplot2`)
 * R has multiple packages and functions to do the same analysis

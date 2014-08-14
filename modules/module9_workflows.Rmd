@@ -168,7 +168,7 @@ benchmark(ifelse(x < 0, x, 0),
 
 # Profiling your code
 
-For more advanced assessment of bottlenecks in your code, consider `Rprof()`.
+For more advanced assessment of bottlenecks in your code, consider `Rprof()`. The following two functions both remove rows from a dataset when any value in the row is missing. 
 
 
 ```
@@ -246,7 +246,9 @@ To run all the code in an entire file, do `source('myCodeFile.R')`.
 # Batch jobs / background execution
 
 To run code as a background job in a Linux/Mac context:
-`R CMD BATCH --no-save myCodeFile.R myOutput.Rout &`
+```{r eval=FALSE}
+R CMD BATCH --no-save myCodeFile.R myOutput.Rout &
+```
 
 Then you don't need to leave RStudio or R or a terminal window open. Your job will run by itself. If you are logged into a remote machine, you can log out and come back later.
 
@@ -267,10 +269,12 @@ Good use of functions includes:
 of the code (w/ backups of course) so you only need to change it in one place
 - Smaller functions are easier to debug, easier to understand, and can
 be combined in a modular fashion (like the UNIX utilities)
-- Functions should: 
-  + be modular (having a single task); 
-  + have meaningful name; and
-  + have a comment describing their purpose, inputs and outputs (see the
+
+Functions should: 
+
+ - be modular (having a single task); 
+ - have meaningful name; and
+ - have a comment describing their purpose, inputs and outputs (see the
 help file for any standard R function for how this is done in that context).
 
 # Good coding practices: syntax
@@ -312,7 +316,7 @@ c
 rm(c)
 c
 ```
-- Use active names for functions (e.g., \emph{calc_loglik}, \emph{calcLogLik})
+- Use active names for functions (e.g., *calc_loglik*, *calcLogLik*)
 
 # Reproducible research
 
@@ -333,10 +337,10 @@ Here are some useful articles talking about reproducibility.
 # Some ideas for improving reproducibility
 
 * Never change a dataset manually, including in pre-processing and post-processing. Always have a script that operates on the data (or results/output). 
-* Always have version numbers for datasets 
-* Note when and where you download, and ideally download via a script as well (e.g., *wget* and *curl* are UNIX tools for automated downloading.
-* Produce figures (e.g., from R) via a script and not by point-and-click
-* When making figures, use `save()` or `save.image()` to save all the inputs needed to recreate a figure, with the code for making the figure in a script file
+* Always have version numbers for datasets.
+* Note when and where you download, and ideally download via a script as well (e.g., *wget* and *curl* are UNIX tools for automated downloading).
+* Produce figures (e.g., from R) via a script and not by point-and-click.
+* When making figures, use `save()` or `save.image()` to save all the inputs needed to recreate a figure, with the code for making the figure in a script file.
 * If feasible, include your code for doing analyses and making figures in the relevant document reporting the work by using R Markdown or *Latex* with *knitr* or *Sweave*. 
-* Always set the random number seed so someone else can duplicate your exact numbers
+* Always set the random number seed so someone else can duplicate your exact numbers.
 * Use version control tools such as Git! 

@@ -66,7 +66,7 @@ mod1 &lt;- <span class="kw">lm</span>(yc ~ x)
 mod2 &lt;- <span class="kw">glm</span>(yb ~ x, <span class="dt">family =</span> binomial)
 mod2$residuals  <span class="co"># access field with list-like syntax</span></code></pre>
 <pre><code>##      1      2      3      4      5      6      7      8      9     10 
-## -1.242 -3.244  3.292  2.200 -1.404  2.300 -1.415  1.627 -1.596 -1.541</code></pre>
+##  1.383  2.746 -1.839  1.284 -3.317  1.363  1.792 -2.012 -2.425  1.675</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">class</span>(mod2)</code></pre>
 <pre><code>## [1] &quot;glm&quot; &quot;lm&quot;</code></pre>
@@ -113,7 +113,7 @@ mod2$residuals  <span class="co"># access field with list-like syntax</span></co
 predict</code></pre>
 <pre><code>## function (object, ...) 
 ## UseMethod(&quot;predict&quot;)
-## &lt;bytecode: 0x3118050&gt;
+## &lt;bytecode: 0x2e7ce88&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># predict.glm</span></code></pre>
@@ -151,7 +151,7 @@ print.workshop &lt;- function(x) {
     <span class="kw">invisible</span>(x)
 }
 
-<span class="co"># doesn't execute correctly in the slide creation, do comment our here:</span>
+<span class="co"># doesn't execute correctly in the slide creation, so comment out here:</span>
 <span class="co"># rboot2014</span></code></pre>
 <p>Note that we rely on the generic <code>print()</code> already existing in R. Otherwise we'd need to create it.</p>
 <p>So what is happening behind the scenes here?</p>
@@ -253,7 +253,11 @@ for (edLevel in <span class="kw">unique</span>(earnings$ed)) {
 ## [1] 15
 ## [1] 99</code></pre>
 <pre><code>## Error: 0 (non-NA) cases</code></pre>
-<p><strong>Questions</strong>: 1. What happened? 2. Why did it go through the education levels in that order? (12, 16, 17, ...)</p>
+<p><strong>Questions</strong>:</p>
+<ol style="list-style-type: decimal">
+<li>What happened?</li>
+<li>Why did it go through the education levels in that order? (12, 16, 17, ...)</li>
+</ol>
 </div>
 <div class="section slide level1" id="how-we-can-try-harder">
 <h1 id="how-we-can-try-harder">How we can <code>try()</code> harder</h1>
@@ -287,14 +291,14 @@ for (edLevel in <span class="kw">unique</span>(earnings$ed)) {
 <pre class="sourceCode r"><code class="sourceCode r">
 mod[[<span class="dv">2</span>]]</code></pre>
 <pre><code>## [1] NA</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r">mod[[<span class="dv">3</span>]]</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mod[[<span class="dv">5</span>]]</code></pre>
 <pre><code>## 
 ## Call:
 ## lm(formula = earn ~ height, data = sub)
 ## 
 ## Coefficients:
 ## (Intercept)       height  
-##        1400           NA</code></pre>
+##       48791         -752</code></pre>
 </div>
 <div class="section slide level1" id="computing-on-the-language">
 <h1 id="computing-on-the-language">Computing on the language</h1>
@@ -369,13 +373,13 @@ for (i in <span class="dv">1</span>:nVals) {
     results[i] &lt;- <span class="kw">mean</span>(tmp)
 }
 results</code></pre>
-<pre><code>## [1] -0.8830  0.6403  0.5406</code></pre>
+<pre><code>## [1] 0.01714 1.45942 0.57049</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">varName</code></pre>
 <pre><code>## [1] &quot;x3&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">tmp</code></pre>
-<pre><code>##  [1] 0.14458 0.45530 0.85538 0.96416 0.73218 0.44229 0.26100 0.13677
-##  [9] 0.63453 0.35612 0.85409 0.89871 0.47241 0.78678 0.06978 0.46787
-## [17] 0.71246 0.07653 0.55152 0.93857</code></pre>
+<pre><code>##  [1] 0.51848 0.92448 0.97144 0.68128 0.62092 0.47182 0.16178 0.77517
+##  [9] 0.08038 0.17747 0.99355 0.64242 0.96764 0.96558 0.42405 0.29440
+## [17] 0.36135 0.64028 0.18423 0.55307</code></pre>
 <p>Or suppose you needed to create &quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, automatically.</p>
 <pre class="sourceCode r"><code class="sourceCode r">nVals &lt;- <span class="dv">3</span>
 results &lt;- <span class="kw">rep</span>(<span class="dv">0</span>, nVals)
@@ -384,8 +388,8 @@ for (i in <span class="dv">1</span>:nVals) {
     <span class="kw">assign</span>(varName, <span class="kw">rnorm</span>(<span class="dv">10</span>))
 }
 x2</code></pre>
-<pre><code>##  [1]  0.6169  0.2225 -0.0941 -0.8801 -1.0721 -0.2794  1.4429  0.1134
-##  [9] -0.8905 -1.5417</code></pre>
+<pre><code>##  [1]  0.89785  0.17682  0.65694 -0.10115 -0.15638  1.19206  2.08961
+##  [8]  0.77743 -0.82522 -0.02275</code></pre>
 <p>Can you think of any uses of this ability for R to self-generate?</p>
 </div>
 <div class="section slide level1" id="file-encodings">

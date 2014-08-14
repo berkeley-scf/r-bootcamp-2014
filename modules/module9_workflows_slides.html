@@ -153,7 +153,7 @@ x &lt;- <span class="kw">rnorm</span>(<span class="fl">1e+07</span>)
 </div>
 <div class="section slide level1" id="profiling-your-code">
 <h1 id="profiling-your-code">Profiling your code</h1>
-<p>For more advanced assessment of bottlenecks in your code, consider <code>Rprof()</code>.</p>
+<p>For more advanced assessment of bottlenecks in your code, consider <code>Rprof()</code>. The following two functions both remove rows from a dataset when any value in the row is missing.</p>
 <pre><code>fun1 &lt;- function(x) {
   res &lt;- NULL
   n &lt;- nrow(x)
@@ -201,13 +201,13 @@ summaryRprof(&quot;profile2.out&quot;)</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;- <span class="kw">rnorm</span>(<span class="fl">1e+08</span>)
 <span class="kw">gc</span>()</code></pre>
 <pre><code>##             used  (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells    249780  13.4     531268  28.4    467875  25.0
-## Vcells 101185891 772.0  122919845 937.9 111192994 848.4</code></pre>
+## Ncells    249810  13.4     531268  28.4    467875  25.0
+## Vcells 101185970 772.0  122919932 937.9 111193073 848.4</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rm</span>(x)
 <span class="kw">gc</span>()</code></pre>
 <pre><code>##           used (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells  249801 13.4     531268  28.4    467875  25.0
-## Vcells 1185932  9.1   98335876 750.3 111192994 848.4</code></pre>
+## Ncells  249831 13.4     531268  28.4    467875  25.0
+## Vcells 1186011  9.1   98335945 750.3 111193073 848.4</code></pre>
 </div>
 <div class="section slide level1" id="scripting">
 <h1 id="scripting">Scripting</h1>
@@ -223,7 +223,8 @@ summaryRprof(&quot;profile2.out&quot;)</code></pre>
 </div>
 <div class="section slide level1" id="batch-jobs-background-execution">
 <h1 id="batch-jobs-background-execution">Batch jobs / background execution</h1>
-<p>To run code as a background job in a Linux/Mac context: <code>R CMD BATCH --no-save myCodeFile.R myOutput.Rout &amp;</code></p>
+<p>To run code as a background job in a Linux/Mac context:</p>
+<pre class="sourceCode r"><code class="sourceCode r">R CMD BATCH <span class="er">--</span>no-save myCodeFile.R myOutput.Rout &amp;</code></pre>
 <p>Then you don't need to leave RStudio or R or a terminal window open. Your job will run by itself. If you are logged into a remote machine, you can log out and come back later.</p>
 <p>IMPORTANT: make sure to write any needed output to a file (e.g. .Rda files, CSV files, text output from print() or cat()).</p>
 </div>
@@ -234,7 +235,9 @@ summaryRprof(&quot;profile2.out&quot;)</code></pre>
 <ul>
 <li>Write reusable code for core functionality and keep a single copy of the code (w/ backups of course) so you only need to change it in one place</li>
 <li>Smaller functions are easier to debug, easier to understand, and can be combined in a modular fashion (like the UNIX utilities)</li>
-<li>Functions should:</li>
+</ul>
+<p>Functions should:</p>
+<ul>
 <li>be modular (having a single task);</li>
 <li>have meaningful name; and</li>
 <li>have a comment describing their purpose, inputs and outputs (see the help file for any standard R function for how this is done in that context).</li>
@@ -268,7 +271,7 @@ summaryRprof(&quot;profile2.out&quot;)</code></pre>
 c</code></pre>
 <pre><code>## function (..., recursive = FALSE)  .Primitive(&quot;c&quot;)</code></pre>
 <ul>
-<li>Use active names for functions (e.g., , )</li>
+<li>Use active names for functions (e.g., <em>calc_loglik</em>, <em>calcLogLik</em>)</li>
 </ul>
 </div>
 <div class="section slide level1" id="reproducible-research">
@@ -289,12 +292,12 @@ c</code></pre>
 <h1 id="some-ideas-for-improving-reproducibility">Some ideas for improving reproducibility</h1>
 <ul>
 <li>Never change a dataset manually, including in pre-processing and post-processing. Always have a script that operates on the data (or results/output).</li>
-<li>Always have version numbers for datasets</li>
-<li>Note when and where you download, and ideally download via a script as well (e.g., <em>wget</em> and <em>curl</em> are UNIX tools for automated downloading.</li>
-<li>Produce figures (e.g., from R) via a script and not by point-and-click</li>
-<li>When making figures, use <code>save()</code> or <code>save.image()</code> to save all the inputs needed to recreate a figure, with the code for making the figure in a script file</li>
+<li>Always have version numbers for datasets.</li>
+<li>Note when and where you download, and ideally download via a script as well (e.g., <em>wget</em> and <em>curl</em> are UNIX tools for automated downloading).</li>
+<li>Produce figures (e.g., from R) via a script and not by point-and-click.</li>
+<li>When making figures, use <code>save()</code> or <code>save.image()</code> to save all the inputs needed to recreate a figure, with the code for making the figure in a script file.</li>
 <li>If feasible, include your code for doing analyses and making figures in the relevant document reporting the work by using R Markdown or <em>Latex</em> with <em>knitr</em> or <em>Sweave</em>.</li>
-<li>Always set the random number seed so someone else can duplicate your exact numbers</li>
+<li>Always set the random number seed so someone else can duplicate your exact numbers.</li>
 <li>Use version control tools such as Git!</li>
 </ul>
 </div>
