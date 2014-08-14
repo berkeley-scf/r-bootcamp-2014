@@ -60,6 +60,15 @@ If you're on a network and are not the administrator of the machine, you may nee
 install.packages('fields', lib = file.path('~', 'R'))
 ```
 
+If you're not using the VM, now (or at the break) would be a good point to install the various packages we need for the bootcamp, which can be done easily with the following command:
+
+```{r eval=FALSE}
+install.packages(c('RSQLite', 'plyr', 'reshape2', 'ggplot2', 'chron',
+                              'gridExtra', 'codetools', 'rbenchmark',
+                              'lme4', 'doParallel', 'foreach', 'xtable',
+                              'fields'),  repos = "http://cran.cnr.berkeley.edu")
+```
+
 Note that packages often are dependent on other packages so these dependencies may be installed and loaded automatically. E.g., *fields* depends on *maps* and on *spam*.
 
 You can also install directly from a package zip/tarball rather than from CRAN by giving a filename instead of a package name.
@@ -284,4 +293,4 @@ You also want to include a short, focused, [reproducible](https://github.com/had
 # Breakout
 
 
-Nothing very formal here, but make sure you're able to install a package from CRAN and that you're able to read/write files from an arbitrary directory on your computer's filesystem. Grab one of us if you have any problems.
+Nothing very formal here, but make sure you're able to install the packages from CRAN (if you're not using the VM) and that you're able to read/write files from an arbitrary directory on your computer's filesystem. Grab one of us if you have any problems.
