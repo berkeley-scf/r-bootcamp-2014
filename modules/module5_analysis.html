@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 
-<title>Now you&#39;ve got all the basic pieces</title>
+<title>What exactly is &ldquo;useful stuff&rdquo; in R?</title>
 
 <!-- Styles for R syntax highlighter -->
 <style type="text/css">
@@ -60,6 +60,7 @@ body, td {
 body {
   max-width: 800px;
   margin: auto;
+  padding: 1em;
   line-height: 20px;
 }
 
@@ -67,28 +68,28 @@ tt, code, pre {
    font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
 }
 
-h1 { 
-   font-size:2.2em; 
+h1 {
+   font-size:2.2em;
 }
 
-h2 { 
-   font-size:1.8em; 
+h2 {
+   font-size:1.8em;
 }
 
-h3 { 
-   font-size:1.4em; 
+h3 {
+   font-size:1.4em;
 }
 
-h4 { 
-   font-size:1.0em; 
+h4 {
+   font-size:1.0em;
 }
 
-h5 { 
-   font-size:0.9em; 
+h5 {
+   font-size:0.9em;
 }
 
-h6 { 
-   font-size:0.8em; 
+h6 {
+   font-size:0.8em;
 }
 
 a:visited {
@@ -132,54 +133,54 @@ hr {
 }
 
 @media print {
-   * { 
-      background: transparent !important; 
-      color: black !important; 
-      filter:none !important; 
-      -ms-filter: none !important; 
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
    }
 
-   body { 
-      font-size:12pt; 
-      max-width:100%; 
-   }
-       
-   a, a:visited { 
-      text-decoration: underline; 
+   body {
+      font-size:12pt;
+      max-width:100%;
    }
 
-   hr { 
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
       visibility: hidden;
       page-break-before: always;
    }
 
-   pre, blockquote { 
-      padding-right: 1em; 
-      page-break-inside: avoid; 
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
    }
 
-   tr, img { 
-      page-break-inside: avoid; 
+   tr, img {
+      page-break-inside: avoid;
    }
 
-   img { 
-      max-width: 100% !important; 
+   img {
+      max-width: 100% !important;
    }
 
-   @page :left { 
-      margin: 15mm 20mm 15mm 10mm; 
-   }
-     
-   @page :right { 
-      margin: 15mm 10mm 15mm 20mm; 
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
    }
 
-   p, h2, h3 { 
-      orphans: 3; widows: 3; 
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
    }
 
-   h2, h3 { 
-      page-break-after: avoid; 
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
    }
 }
 </style>
@@ -189,413 +190,372 @@ hr {
 </head>
 
 <body>
-<h1>Now you&#39;ve got all the basic pieces</h1>
+<h1>What exactly is &ldquo;useful stuff&rdquo; in R?</h1>
 
 <ul>
-<li>You know about objects in R, how to deal with them, basic calculations, working with data, and how to build your own functions </li>
-<li>That&#39;s great and everything, but by now you&#39;re probably wondering&hellip;</li>
-<li>Why all that?
-
-<ul>
-<li>If I wanted to calculate 439/0.834, I could just use&hellip; a calculator</li>
-<li>If I wanted to merge/subset/plot data, I could just use&hellip; (shudder) Excel or Stata</li>
-</ul></li>
-<li>Why learn (or create) a new language like R just to do stuff we could already do reasonably well?</li>
+<li>For some, it might just be basic calculations</li>
 </ul>
 
-<h1>The Answer</h1>
+<pre><code class="r">63.24*pi # Multiply 63.24 by pi
+</code></pre>
 
-<p>R is great at doing <strong>useful stuff</strong> and making it very, very easy</p>
+<pre><code>## [1] 198.7
+</code></pre>
 
-<h1>Useful Stuff (abridged, obviously)</h1>
+<pre><code class="r">exp(x=4.39) # Raise e to the power of 4.39
+</code></pre>
+
+<pre><code>## [1] 80.64
+</code></pre>
+
+<pre><code class="r">log(x=1.7) # Take the log of 1.7
+</code></pre>
+
+<pre><code>## [1] 0.5306
+</code></pre>
+
+<pre><code class="r">tan(x=58) # Compute the tangent of 58
+</code></pre>
+
+<pre><code>## [1] 8.331
+</code></pre>
 
 <ul>
-<li><p>Not enough time to cover all the very useful things R can do, so we&#39;ll have to focus on four of them:</p>
-
-<ul>
-<li>Stratified Analyses/Group-wise Operations (plyr)</li>
-<li>Data Manipulation (reshape2) </li>
-<li>Regression (lm, glm, plm, lmtest)</li>
-<li>Advanced/Fancy graphics (lattice/ggplot2 graphics)</li>
-</ul></li>
-<li><p>We&#39;ll get to this last one tomorrow</p></li>
+<li>For others, it might be large or complex mathematical operations</li>
 </ul>
 
-<h1>An Example Dataset</h1>
+<pre><code class="r"># Take one million samples from the standard normal distribution
+data.sample&lt;-rnorm(n=1000000, mean=0, sd=1) 
 
-<p>Replication data from Gelman et al., &ldquo;Rich State, Poor State, Red State, Blue State: What’s the Matter with Connecticut?&rdquo;, <em>Quarterly Journal of Political Science</em>, 2007, 2: 345-367</p>
+# Build a 1000 x 1000 matrix from the sample data
+big.matrix&lt;-matrix(data=data.sample, ncol=1000) 
 
-<blockquote>
-<p>For decades, the Democrats have been viewed as the party of the poor, with the Republicans representing the rich. Recent presidential elections, however, have shown a reverse pattern, with Democrats performing well in the richer blue states in the northeast and coasts, and Republicans dominating in the red states in the middle of the country and the south. Through multilevel modeling of individual- level survey data and county- and state-level demographic and electoral data, we reconcile these patterns.
-Furthermore, we find that income matters more in red America than in blue America. In poor states, rich people are much more likely than poor people to vote for the Republican presidential candidate, but in rich states (such as Connecticut), income has a very low correlation with vote preference.</p>
-</blockquote>
-
-<h1>First Steps</h1>
-
-<p>Let&#39;s see what we&#39;re dealing with here.</p>
-
-<pre><code class="r">str(mydata)
+dim(x=big.matrix) # Confirm that &quot;big.matrix&quot; is 1000 x 1000
 </code></pre>
 
-<pre><code>## &#39;data.frame&#39;:    76205 obs. of  17 variables:
-##  $ state   : int  2 2 2 2 2 2 2 2 2 2 ...
-##  $ pres04  : int  1 2 1 1 1 1 1 2 2 2 ...
-##  $ sex     : Factor w/ 2 levels &quot;male&quot;,&quot;female&quot;: 2 1 2 2 2 2 1 2 2 2 ...
-##  $ race    : Factor w/ 5 levels &quot;white&quot;,&quot;black&quot;,..: 1 1 2 2 1 1 1 1 1 1 ...
-##  $ age9    : Factor w/ 9 levels &quot;18-24&quot;,&quot;25-29&quot;,..: 2 1 3 3 4 3 4 1 2 1 ...
-##  $ partyid : Factor w/ 4 levels &quot;democrat&quot;,&quot;republican&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
-##  $ income  : Factor w/ 8 levels &quot;under $15,000&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
-##  $ relign8 : Factor w/ 8 levels &quot;protestant&quot;,&quot;catholic&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
-##  $ age60   : Factor w/ 4 levels &quot;18-29&quot;,&quot;30-44&quot;,..: 1 1 2 2 2 2 2 1 1 1 ...
-##  $ age65   : Factor w/ 6 levels &quot;18-24&quot;,&quot;25-29&quot;,..: 2 1 3 3 4 3 4 1 2 1 ...
-##  $ geocode : int  3 3 3 3 3 3 3 3 3 3 ...
-##  $ sizeplac: Factor w/ 5 levels &quot;city over 500,000&quot;,..: 5 5 5 5 5 5 5 5 5 5 ...
-##  $ brnagain: Factor w/ 2 levels &quot;yes&quot;,&quot;no&quot;: NA NA NA NA NA NA NA NA NA NA ...
-##  $ attend  : Factor w/ 6 levels &quot;more than once a week&quot;,..: NA NA NA NA NA NA NA NA NA NA ...
-##  $ year    : num  2004 2004 2004 2004 2004 ...
-##  $ region  : num  4 4 4 4 4 4 4 4 4 4 ...
-##  $ y       : num  0 1 0 0 0 0 0 1 1 1 ...
-##  - attr(*, &quot;datalabel&quot;)= chr &quot;&quot;
-##  - attr(*, &quot;time.stamp&quot;)= chr &quot; 6 Jun 2007 14:53&quot;
-##  - attr(*, &quot;formats&quot;)= chr  &quot;%8.0g&quot; &quot;%8.0g&quot; &quot;%8.0g&quot; &quot;%8.0g&quot; ...
-##  - attr(*, &quot;types&quot;)= int  251 251 251 251 251 251 251 251 251 251 ...
-##  - attr(*, &quot;val.labels&quot;)= chr  &quot;stanum&quot; &quot;presak04&quot; &quot;sex&quot; &quot;race&quot; ...
-##  - attr(*, &quot;var.labels&quot;)= chr  &quot;state id&quot; &quot;in today&#39;s election for president, did you just vote for:&quot; &quot;are you:&quot; &quot;are you:&quot; ...
-##  - attr(*, &quot;version&quot;)= int 8
-##  - attr(*, &quot;label.table&quot;)=List of 14
-##   ..$ stanum  : Named num 2
-##   .. ..- attr(*, &quot;names&quot;)= chr &quot;alaska&quot;
-##   ..$ presak04: Named num  0 1 2 3 9
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;did not vote&quot; &quot;kerry&quot; &quot;bush&quot; &quot;nader&quot; ...
-##   ..$ sex     : Named num  1 2
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;male&quot; &quot;female&quot;
-##   ..$ race    : Named num  1 2 3 4 5
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;white&quot; &quot;black&quot; &quot;hispanic/latino&quot; &quot;asian&quot; ...
-##   ..$ age9    : Named num  1 2 3 4 5 6 7 8 9
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;18-24&quot; &quot;25-29&quot; &quot;30-39&quot; &quot;40-44&quot; ...
-##   ..$ partyid : Named num  1 2 3 4
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;democrat&quot; &quot;republican&quot; &quot;independent&quot; &quot;something else&quot;
-##   ..$ income  : Named num  1 2 3 4 5 6 7 8
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;under $15,000&quot; &quot;$15,000-$29,999&quot; &quot;$30,000-$49,999&quot; &quot;$50,000-$74,999&quot; ...
-##   ..$ relign8 : Named num  1 2 3 4 5 6 7 8
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;protestant&quot; &quot;catholic&quot; &quot;mormon/lds&quot; &quot;other christian&quot; ...
-##   ..$ age60   : Named num  1 2 3 4
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;18-29&quot; &quot;30-44&quot; &quot;45-59&quot; &quot;60 or over&quot;
-##   ..$ age65   : Named num  1 2 3 4 5 6
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;18-24&quot; &quot;25-29&quot; &quot;30-39&quot; &quot;40-49&quot; ...
-##   ..$ geocode : Named num  1 2 3
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;juneau/fairbanks/rural&quot; &quot;anchorage&quot; &quot;anchorage-fairbanks corridor&quot;
-##   ..$ sizeplac: Named num  1 2 3 4 5
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;city over 500,000&quot; &quot;city: 50,000 to 500,000&quot; &quot;suburbs&quot; &quot;city: 10,000 to 49,999&quot; ...
-##   ..$ brnagain: Named num  1 2
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;yes&quot; &quot;no&quot;
-##   ..$ attend  : Named num  1 2 3 4 5 9
-##   .. ..- attr(*, &quot;names&quot;)= chr  &quot;more than once a week&quot; &quot;once a week&quot; &quot;a few times a month&quot; &quot;a few times a year&quot; ...
+<pre><code>## [1] 1000 1000
 </code></pre>
 
-<p>This is a bit messy, but it&#39;s a decently comprehensive overview.</p>
+<pre><code class="r">big.matrix.inverse&lt;-solve(a=big.matrix) # Compute the inverse of &quot;big.matrix&quot;
+system.time(expr=solve(a=big.matrix)) # Compute time required to invert &quot;big.matrix&quot;
+</code></pre>
 
-<h1>First Steps</h1>
+<pre><code>##    user  system elapsed 
+##   1.433   0.007   1.453
+</code></pre>
+
+<h1>Useful Stuff: Applied Research Edition</h1>
 
 <ul>
-<li>A good place to start with our data is to calculate summary statistics</li>
-<li><strong><em>Caution</em></strong>: Although we have some inherently ratio (continuous) variables, the authors binned the data to create ordinal variables (e.g.: Age and Income).  <em>Bonus</em>: the bins have differing widths.</li>
+<li>For most applied researchers, &ldquo;useful stuff&rdquo; that can be done in R boils down to a few core items: </li>
 </ul>
 
-<h1>First Steps</h1>
+<p>a) Carrying out operations and calculations across <strong><em>groups</em></strong> 
+b) <strong><em>Reshaping</em></strong> data to and from various formats
+c) Attempting to <strong><em>describe relationships</em></strong> or conduct <strong><em>causal inference</em></strong> </p>
 
-<p>Take a look at the variable &ldquo;age9&rdquo;</p>
-
-<pre><code class="r">unique(mydata$age9)
-</code></pre>
-
-<pre><code>##  [1] 25-29      18-24      30-39      40-44      45-49      65-74     
-##  [7] 75 or over 50-59      &lt;NA&gt;       60-64     
-## Levels: 18-24 25-29 30-39 40-44 45-49 50-59 60-64 65-74 75 or over
-</code></pre>
-
-<table><thead>
-<tr>
-<th>Binned Age</th>
-<th>True Age</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>1</td>
-<td>18-24</td>
-</tr>
-<tr>
-<td>2</td>
-<td>25-29</td>
-</tr>
-<tr>
-<td>3</td>
-<td>30-39</td>
-</tr>
-<tr>
-<td>4</td>
-<td>40-44</td>
-</tr>
-<tr>
-<td>5</td>
-<td>45-49</td>
-</tr>
-<tr>
-<td>6</td>
-<td>50-59</td>
-</tr>
-<tr>
-<td>7</td>
-<td>60-64</td>
-</tr>
-<tr>
-<td>8</td>
-<td>65-74</td>
-</tr>
-<tr>
-<td>9</td>
-<td>75+</td>
-</tr>
-</tbody></table>
-
-<p>Let&#39;s look at the mean, standard deviation, median, and quintiles for &ldquo;age9&rdquo;</p>
-
-<pre><code class="r">mean(x = as.numeric(mydata$age9), na.rm = T)
-</code></pre>
-
-<pre><code>## [1] 4.544
-</code></pre>
-
-<pre><code class="r">sd(x = as.numeric(mydata$age9), na.rm = T)
-</code></pre>
-
-<pre><code>## [1] 2.238
-</code></pre>
-
-<pre><code class="r">median(x = as.numeric(mydata$age9), na.rm = T)
-</code></pre>
-
-<pre><code>## [1] 4
-</code></pre>
-
-<pre><code class="r">quantile(x = as.numeric(mydata$age9), na.rm = T, probs = seq(from = 0, to = 1, 
-    by = 0.2))
-</code></pre>
-
-<pre><code>##   0%  20%  40%  60%  80% 100% 
-##    1    3    4    5    6    9
-</code></pre>
-
-<h1>First Steps</h1>
-
-<p>We could do the same thing for &ldquo;income&rdquo;</p>
-
-<pre><code class="r">unique(mydata$income)
-</code></pre>
-
-<pre><code>## [1] &lt;NA&gt;            $30,000-$49,999 $15,000-$29,999 $50,000-$74,999
-## [5] under $15,000   $75,000-$99,999
-## 8 Levels: under $15,000 $15,000-$29,999 ... $200,000 or more
-</code></pre>
-
-<table><thead>
-<tr>
-<th>Binned Income</th>
-<th>True Income</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>1</td>
-<td>$0-$14,999</td>
-</tr>
-<tr>
-<td>2</td>
-<td>$15,000-$29,999</td>
-</tr>
-<tr>
-<td>3</td>
-<td>$30,000-$49,999</td>
-</tr>
-<tr>
-<td>4</td>
-<td>$50,000-$74,999</td>
-</tr>
-<tr>
-<td>5</td>
-<td>$75,000-$99,999</td>
-</tr>
-<tr>
-<td>6</td>
-<td>$100,000-$149,999</td>
-</tr>
-<tr>
-<td>7</td>
-<td>$150,000-$199,999</td>
-</tr>
-<tr>
-<td>8</td>
-<td>$200,000- ∞</td>
-</tr>
-</tbody></table>
-
-<pre><code class="r">mean(x = as.numeric(mydata$income), na.rm = T)
-</code></pre>
-
-<pre><code>## [1] 2.637
-</code></pre>
-
-<pre><code class="r">sd(x = as.numeric(mydata$income), na.rm = T)
-</code></pre>
-
-<pre><code>## [1] 1.206
-</code></pre>
-
-<pre><code class="r">median(x = as.numeric(mydata$income), na.rm = T)
-</code></pre>
-
-<pre><code>## [1] 3
-</code></pre>
-
-<pre><code class="r">quantile(x = as.numeric(mydata$income), na.rm = T, probs = seq(from = 0, to = 1, 
-    by = 0.2))
-</code></pre>
-
-<pre><code>##   0%  20%  40%  60%  80% 100% 
-##    1    1    2    3    4    5
-</code></pre>
-
-<h1>First Steps</h1>
+<h1>Group-wise Operations/example dataset</h1>
 
 <ul>
-<li>Of course, we&#39;re not limited to looking ordinal or ratio variables for our summary statistics</li>
-<li>In fact, some of the most interesting statistics take the form of frequencies</li>
+<li><p>The &ldquo;tips&rdquo; dataset was originally constructed by a waiter who recorded information about the tips he received over a period of several months</p></li>
+<li><p>The dataset can be found in the <em>reshape2</em> package and originally appeared in:</p></li>
 </ul>
 
-<h1>For example&hellip;</h1>
+<p>Bryant, P. G. and Smith, M (1995), <em>Practical Data Analysis: Case Studies in Business Statistics.</em> Homewood, IL: Richard D. Irwin Publishing</p>
 
-<p>Gender balance?</p>
-
-<pre><code class="r">gender &lt;- mydata$sex
-gender &lt;- gender[!is.na(gender)]
-unique(gender)
+<pre><code class="r">library(reshape2)
+data(&quot;tips&quot;, package = &quot;reshape2&quot;)
+# Get the object class
+class(x = tips)
 </code></pre>
 
-<pre><code>## [1] female male  
-## Levels: male female
+<pre><code>## [1] &quot;data.frame&quot;
 </code></pre>
 
-<pre><code class="r">males &lt;- length(gender[gender == &quot;male&quot;])/length(gender) * 100
-cat(males, &quot;%&quot;, sep = &quot;&quot;)
+<pre><code class="r"># Get the object dimensionality 
+dim(x = tips) # Note this is rows by columns
 </code></pre>
 
-<pre><code>## 45.13%
+<pre><code>## [1] 244   7
 </code></pre>
 
-<pre><code class="r">females &lt;- length(gender[gender == &quot;female&quot;])/length(gender) * 100
-cat(females, &quot;%&quot;, sep = &quot;&quot;)
+<pre><code class="r"># Get the column names
+colnames(x = tips)
 </code></pre>
 
-<pre><code>## 54.87%
+<pre><code>## [1] &quot;total_bill&quot; &quot;tip&quot;        &quot;sex&quot;        &quot;smoker&quot;     &quot;day&quot;       
+## [6] &quot;time&quot;       &quot;size&quot;
 </code></pre>
 
-<h1>For example&hellip;</h1>
-
-<p>Political balance?</p>
-
-<pre><code class="r">partyid &lt;- mydata$partyid
-partyid &lt;- partyid[!is.na(partyid)]
-unique(partyid)
+<pre><code class="r"># View first six rows and all columns
+head(x = tips)
 </code></pre>
 
-<pre><code>## [1] republican     democrat       independent    something else
-## Levels: democrat republican independent something else
+<pre><code>##   total_bill  tip    sex smoker day   time size
+## 1      16.99 1.01 Female     No Sun Dinner    2
+## 2      10.34 1.66   Male     No Sun Dinner    3
+## 3      21.01 3.50   Male     No Sun Dinner    3
+## 4      23.68 3.31   Male     No Sun Dinner    2
+## 5      24.59 3.61 Female     No Sun Dinner    4
+## 6      25.29 4.71   Male     No Sun Dinner    4
 </code></pre>
 
-<pre><code class="r">dem &lt;- length(partyid[partyid == &quot;democrat&quot;])/length(partyid) * 100
-cat(dem, &quot;%&quot;, sep = &quot;&quot;)
+<pre><code class="r"># Get detailed column-by-column information
+str(object = tips)
 </code></pre>
 
-<pre><code>## 37.11%
+<pre><code>## &#39;data.frame&#39;:    244 obs. of  7 variables:
+##  $ total_bill: num  17 10.3 21 23.7 24.6 ...
+##  $ tip       : num  1.01 1.66 3.5 3.31 3.61 4.71 2 3.12 1.96 3.23 ...
+##  $ sex       : Factor w/ 2 levels &quot;Female&quot;,&quot;Male&quot;: 1 2 2 2 1 2 2 2 2 2 ...
+##  $ smoker    : Factor w/ 2 levels &quot;No&quot;,&quot;Yes&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ day       : Factor w/ 4 levels &quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ time      : Factor w/ 2 levels &quot;Dinner&quot;,&quot;Lunch&quot;: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ size      : int  2 3 3 2 4 4 2 4 2 2 ...
 </code></pre>
 
-<pre><code class="r">rep &lt;- length(partyid[partyid == &quot;republican&quot;])/length(partyid) * 100
-cat(rep, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 35.57%
-</code></pre>
-
-<pre><code class="r">ind &lt;- length(partyid[partyid == &quot;independent&quot;])/length(partyid) * 100
-cat(ind, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 22.64%
-</code></pre>
-
-<pre><code class="r">other &lt;- length(partyid[partyid == &quot;something else&quot;])/length(partyid) * 100
-cat(other, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 4.675%
-</code></pre>
-
-<h1>For example&hellip;</h1>
-
-<p>Racial balance?</p>
-
-<pre><code class="r">race &lt;- mydata$race
-race &lt;- race[!is.na(race)]
-unique(race)
-</code></pre>
-
-<pre><code>## [1] white           black           other           asian          
-## [5] hispanic/latino
-## Levels: white black hispanic/latino asian other
-</code></pre>
-
-<pre><code class="r">white &lt;- length(race[race == &quot;white&quot;])/length(race) * 100
-cat(white, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 80.79%
-</code></pre>
-
-<pre><code class="r">black &lt;- length(race[race == &quot;black&quot;])/length(race) * 100
-cat(black, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 9.558%
-</code></pre>
-
-<pre><code class="r">hispanic &lt;- length(race[race == &quot;hispanic/latino&quot;])/length(race) * 100
-cat(hispanic, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 5.909%
-</code></pre>
-
-<pre><code class="r">asian &lt;- length(race[race == &quot;asian&quot;])/length(race) * 100
-cat(asian, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 1.371%
-</code></pre>
-
-<pre><code class="r">other &lt;- length(race[race == &quot;other&quot;])/length(race) * 100
-cat(other, &quot;%&quot;, sep = &quot;&quot;)
-</code></pre>
-
-<pre><code>## 2.376%
-</code></pre>
-
-<h1>This can get really complicated really quickly</h1>
+<h1>Group-wise Operations/Common Calculations</h1>
 
 <ul>
-<li>Suppose we wanted to know how voting behavior in the 2004 Presidential Election varies by race</li>
-<li>That means we have to calculate frequencies as above for each race in {White, Black, Hispanic/Latino, Asian, Other} and each vote choice in {Bush, Kerry, Nader, Other, No Vote}.</li>
+<li><p>A good place to start with our data is to calculate summary statistics</p></li>
+<li><p>Some notes on computing summary statistics:
+1) Note that these functions are sensitive to missing values (NA); you should be sure to specify na.rm=T to avoid errors </p></li>
 </ul>
 
-<h1>How to tackle these tabulations?</h1>
+<pre><code class="r"># Sample 100 times from the standard normal distribution 
+sample.data&lt;-rnorm(n=100, mean=0, sd=1)
+
+# Attempt to calculate the sample mean (absence of NAs)
+mean(x=sample.data)
+</code></pre>
+
+<pre><code>## [1] 0.1554
+</code></pre>
+
+<pre><code class="r"># Add some missing values to the sample
+sample.data[c(1,4,16,64)]&lt;-NA
+
+# Attempt to calculate the sample mean (presence of NAs)
+mean(x=sample.data) # Action for NAs is not specified
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+<pre><code class="r">mean(x=sample.data, na.rm = TRUE) # Action for NAs is not specified
+</code></pre>
+
+<pre><code>## [1] 0.1434
+</code></pre>
+
+<p>2) These functions are also sensitive to the presence of factor variables; remove the factor levels to avoid errors (usually use one of as.vector(), as.character(), or as.numeric())</p>
+
+<pre><code class="r"># Get a random sample of zeroes and ones 
+sample.data&lt;-sample(x = c(0,1), size = 100, replace = T)
+
+# Add factor levels to the sample
+sample.data&lt;-factor(x = sample.data)
+
+# Attempt to calculate the sample mean (with factor levels)
+mean(x = sample.data)
+</code></pre>
+
+<pre><code>## Warning: argument is not numeric or logical: returning NA
+</code></pre>
+
+<pre><code>## [1] NA
+</code></pre>
+
+<pre><code class="r"># Remove factor levels
+sample.data&lt;-as.numeric(x = sample.data)
+
+# Check that there are no more factor levels in the sample data
+is.factor(x=sample.data)
+</code></pre>
+
+<pre><code>## [1] FALSE
+</code></pre>
+
+<pre><code class="r"># Attempt to calculate the sample mean (without factor levels)
+mean(x=sample.data, na.rm = T)
+</code></pre>
+
+<pre><code>## [1] 1.44
+</code></pre>
+
+<ul>
+<li>Computing some typical summary statistics:</li>
+</ul>
+
+<pre><code class="r"># Mean
+mean(x=tips$tip, na.rm=T)
+</code></pre>
+
+<pre><code>## [1] 2.998
+</code></pre>
+
+<pre><code class="r"># Median
+median(x=tips$tip, na.rm=T)
+</code></pre>
+
+<pre><code>## [1] 2.9
+</code></pre>
+
+<pre><code class="r"># Standard Deviation
+sd(x=tips$tip, na.rm=T)
+</code></pre>
+
+<pre><code>## [1] 1.384
+</code></pre>
+
+<pre><code class="r"># Quartiles
+quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.25))
+</code></pre>
+
+<pre><code>##     0%    25%    50%    75%   100% 
+##  1.000  2.000  2.900  3.562 10.000
+</code></pre>
+
+<pre><code class="r"># Quintiles
+quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.2))
+</code></pre>
+
+<pre><code>##     0%    20%    40%    60%    80%   100% 
+##  1.000  2.000  2.476  3.016  4.000 10.000
+</code></pre>
+
+<pre><code class="r"># Deciles
+quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.1))
+</code></pre>
+
+<pre><code>##     0%    10%    20%    30%    40%    50%    60%    70%    80%    90% 
+##  1.000  1.500  2.000  2.000  2.476  2.900  3.016  3.480  4.000  5.000 
+##   100% 
+## 10.000
+</code></pre>
+
+<pre><code class="r"># Percentiles
+quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.01))
+</code></pre>
+
+<pre><code>##     0%     1%     2%     3%     4%     5%     6%     7%     8%     9% 
+##  1.000  1.000  1.087  1.250  1.300  1.440  1.462  1.500  1.500  1.500 
+##    10%    11%    12%    13%    14%    15%    16%    17%    18%    19% 
+##  1.500  1.567  1.613  1.652  1.681  1.739  1.795  1.932  1.977  2.000 
+##    20%    21%    22%    23%    24%    25%    26%    27%    28%    29% 
+##  2.000  2.000  2.000  2.000  2.000  2.000  2.000  2.000  2.000  2.000 
+##    30%    31%    32%    33%    34%    35%    36%    37%    38%    39% 
+##  2.000  2.000  2.008  2.022  2.042  2.181  2.214  2.239  2.303  2.333 
+##    40%    41%    42%    43%    44%    45%    46%    47%    48%    49% 
+##  2.476  2.500  2.500  2.500  2.500  2.543  2.591  2.655  2.733  2.756 
+##    50%    51%    52%    53%    54%    55%    56%    57%    58%    59% 
+##  2.900  3.000  3.000  3.000  3.000  3.000  3.000  3.000  3.000  3.000 
+##    60%    61%    62%    63%    64%    65%    66%    67%    68%    69% 
+##  3.016  3.072  3.103  3.141  3.170  3.209  3.238  3.266  3.360  3.407 
+##    70%    71%    72%    73%    74%    75%    76%    77%    78%    79% 
+##  3.480  3.500  3.500  3.500  3.500  3.562  3.658  3.751  3.846  4.000 
+##    80%    81%    82%    83%    84%    85%    86%    87%    88%    89% 
+##  4.000  4.000  4.000  4.000  4.080  4.196  4.300  4.406  4.704  5.000 
+##    90%    91%    92%    93%    94%    95%    96%    97%    98%    99% 
+##  5.000  5.000  5.000  5.069  5.154  5.196  5.706  5.977  6.528  7.214 
+##   100% 
+## 10.000
+</code></pre>
+
+<ul>
+<li>We could do the same thing for lots of variables, but there is an easier way!</li>
+</ul>
+
+<pre><code class="r"># Compute standard summary statistics for object &quot;red.blue&quot;
+summary(object=tips)
+</code></pre>
+
+<pre><code>##    total_bill         tip            sex      smoker      day    
+##  Min.   : 3.07   Min.   : 1.00   Female: 87   No :151   Fri :19  
+##  1st Qu.:13.35   1st Qu.: 2.00   Male  :157   Yes: 93   Sat :87  
+##  Median :17.80   Median : 2.90                          Sun :76  
+##  Mean   :19.79   Mean   : 3.00                          Thur:62  
+##  3rd Qu.:24.13   3rd Qu.: 3.56                                   
+##  Max.   :50.81   Max.   :10.00                                   
+##      time          size     
+##  Dinner:176   Min.   :1.00  
+##  Lunch : 68   1st Qu.:2.00  
+##               Median :2.00  
+##               Mean   :2.57  
+##               3rd Qu.:3.00  
+##               Max.   :6.00
+</code></pre>
+
+<ul>
+<li>Unfortunately, the built-in summary methods don&#39;t always pickup every statistic of interest (for example, certain frequencies)</li>
+<li>For this, the table function is very helpful</li>
+</ul>
+
+<pre><code class="r"># Isolate the gender column
+gender&lt;-tips$sex
+
+# Get a vector of counts for unique values, divide by total count
+table(gender)
+</code></pre>
+
+<pre><code>## gender
+## Female   Male 
+##     87    157
+</code></pre>
+
+<pre><code class="r">table(gender)/length(gender)
+</code></pre>
+
+<pre><code>## gender
+## Female   Male 
+## 0.3566 0.6434
+</code></pre>
+
+<pre><code class="r">table(gender)/length(gender)*100
+</code></pre>
+
+<pre><code>## gender
+## Female   Male 
+##  35.66  64.34
+</code></pre>
+
+<pre><code class="r"># Isolate the gender and smoker columns
+gender.smoker&lt;-tips[,c(&quot;sex&quot;, &quot;smoker&quot;)]
+
+# Get a vector of counts for unique values, divide by total count
+table(gender.smoker)
+</code></pre>
+
+<pre><code>##         smoker
+## sex      No Yes
+##   Female 54  33
+##   Male   97  60
+</code></pre>
+
+<pre><code class="r">table(gender.smoker)/nrow(gender.smoker)
+</code></pre>
+
+<pre><code>##         smoker
+## sex          No    Yes
+##   Female 0.2213 0.1352
+##   Male   0.3975 0.2459
+</code></pre>
+
+<pre><code class="r">table(gender.smoker)/nrow(gender.smoker)*100
+</code></pre>
+
+<pre><code>##         smoker
+## sex         No   Yes
+##   Female 22.13 13.52
+##   Male   39.75 24.59
+</code></pre>
+
+<ul>
+<li><p>But it isn&#39;t always the case that a) R has a built-in method suting our needs, or b) the number of groups is small and the operations very simple.  Things can get really complicated really quickly.</p></li>
+<li><p>How to tackle these tabulations?</p></li>
+</ul>
+
+<h1>Group-wise Operations</h1>
 
 <p>All techniques for this problem rely on the <strong><em>split-apply-combine</em></strong> strategy</p>
 
@@ -700,8 +660,6 @@ cat(other, &quot;%&quot;, sep = &quot;&quot;)
 </tr>
 </tbody></table>
 
-<h1>How to tackle these tabulations?</h1>
-
 <p><strong>Second,</strong> apply some function to each one of the smaller datasets/objects </p>
 
 <p>Example function: <em>mean</em> of variables &ldquo;x&rdquo; and &ldquo;y&rdquo;</p>
@@ -737,8 +695,6 @@ cat(other, &quot;%&quot;, sep = &quot;&quot;)
 <td>2</td>
 </tr>
 </tbody></table>
-
-<h1>How to tackle these tabulations?</h1>
 
 <p><strong>Third,</strong> combine the results into a larger dataset/object</p>
 
@@ -795,789 +751,635 @@ cat(other, &quot;%&quot;, sep = &quot;&quot;)
 </tr>
 </tbody></table>
 
-<h1>Tabulating the hard way</h1>
-
-<p><strong>Split</strong></p>
-
-<pre><code class="r">white.sub &lt;- mydata[which(mydata$race == &quot;white&quot; &amp; is.na(mydata$race) == F), 
-    ]
-
-black.sub &lt;- mydata[which(mydata$race == &quot;black&quot; &amp; is.na(mydata$race) == F), 
-    ]
-
-hispanic.sub &lt;- mydata[which(mydata$race == &quot;hispanic/latino&quot; &amp; is.na(mydata$race) == 
-    F), ]
-</code></pre>
-
-<p><strong>Apply</strong></p>
-
-<pre><code class="r">white.pres04 &lt;- white.sub$pres04
-white.pres04 &lt;- white.pres04[is.element(white.pres04, c(1:3, 9)) == T]
-
-white.k &lt;- length(white.pres04[white.pres04 == 1])/length(white.pres04) * 100
-white.b &lt;- length(white.pres04[white.pres04 == 2])/length(white.pres04) * 100
-white.n &lt;- length(white.pres04[white.pres04 == 3])/length(white.pres04) * 100
-white.o &lt;- length(white.pres04[white.pres04 == 9])/length(white.pres04) * 100
-
-black.pres04 &lt;- black.sub$pres04
-black.pres04 &lt;- black.pres04[is.element(black.pres04, c(1:3, 9)) == T]
-
-black.k &lt;- length(black.pres04[black.pres04 == 1])/length(black.pres04) * 100
-black.b &lt;- length(black.pres04[black.pres04 == 2])/length(black.pres04) * 100
-black.n &lt;- length(black.pres04[black.pres04 == 3])/length(black.pres04) * 100
-black.o &lt;- length(black.pres04[black.pres04 == 9])/length(black.pres04) * 100
-</code></pre>
-
-<p>.
-.
-.</p>
-
-<p><strong>Combine</strong></p>
-
-<pre><code class="r">percent &lt;- as.vector(c(white.k, white.b, white.n, white.o, black.k, black.b, 
-    black.n, black.o))
-vote &lt;- rep(c(&quot;kerry&quot;, &quot;bush&quot;, &quot;nader&quot;, &quot;other&quot;), 2)
-race &lt;- c(rep(&quot;white&quot;, 4), rep(&quot;black&quot;, 4))
-newdata &lt;- data.frame(race, vote, percent)
-print(newdata)
-</code></pre>
-
-<pre><code>##    race  vote percent
-## 1 white kerry 43.6000
-## 2 white  bush 55.0246
-## 3 white nader  0.6944
-## 4 white other  0.6810
-## 5 black kerry 87.2812
-## 6 black  bush 11.6318
-## 7 black nader  0.7905
-## 8 black other  0.2964
-</code></pre>
-
-<p>.
-.
-.</p>
-
-<h1>Tabulating the less-hard way</h1>
-
-<p><strong>Split</strong></p>
-
-<pre><code class="r">races = split(mydata$pres04, mydata$race)
-</code></pre>
-
-<p><strong>Apply/Combine</strong></p>
-
-<pre><code class="r">results &lt;- matrix(NA, nrow = length(races), ncol = length(c(1:3, 9)))
-rownames(results) &lt;- objects(races)
-colnames(results) &lt;- c(&quot;kerry&quot;, &quot;bush&quot;, &quot;nader&quot;, &quot;other&quot;)
-print(results)
-</code></pre>
-
-<pre><code>##                 kerry bush nader other
-## asian              NA   NA    NA    NA
-## black              NA   NA    NA    NA
-## hispanic/latino    NA   NA    NA    NA
-## other              NA   NA    NA    NA
-## white              NA   NA    NA    NA
-</code></pre>
-
-<pre><code class="r">for (i in 1:length(races)) {
-    race.subset &lt;- races[[i]]
-    race.subset &lt;- race.subset[is.element(race.subset, c(1:3, 9)) == T]
-    results[i, &quot;kerry&quot;] &lt;- length(race.subset[race.subset == 1])/length(race.subset) * 
-        100
-    results[i, &quot;bush&quot;] &lt;- length(race.subset[race.subset == 2])/length(race.subset) * 
-        100
-    results[i, &quot;nader&quot;] &lt;- length(race.subset[race.subset == 3])/length(race.subset) * 
-        100
-    results[i, &quot;other&quot;] &lt;- length(race.subset[race.subset == 9])/length(race.subset) * 
-        100
-}
-print(results)
-</code></pre>
-
-<pre><code>##                 kerry  bush  nader  other
-## asian           43.60 55.02 0.6944 0.6810
-## black           87.28 11.63 0.7905 0.2964
-## hispanic/latino 60.75 37.36 0.7750 1.1169
-## other           61.43 37.68 0.6869 0.1963
-## white           59.44 37.46 1.2622 1.8359
-</code></pre>
-
-<h1>Tabulating the easy way</h1>
-
-<pre><code class="r">cleandat &lt;- mydata[which(is.element(mydata$pres04, c(1:3, 9)) == T &amp; is.na(mydata$race) == 
-    F), ]
-
-vote.by.race &lt;- ddply(.data = cleandat, .variables = .(race), summarize, kerry = length(pres04[pres04 == 
-    1])/length(pres04) * 100, bush = length(pres04[pres04 == 2])/length(pres04) * 
-    100, nader = length(pres04[pres04 == 3])/length(pres04) * 100, other = length(pres04[pres04 == 
-    9])/length(pres04) * 100)
-
-print(vote.by.race)
-</code></pre>
-
-<pre><code>##              race kerry  bush  nader  other
-## 1           white 43.60 55.02 0.6944 0.6810
-## 2           black 87.28 11.63 0.7905 0.2964
-## 3 hispanic/latino 60.75 37.36 0.7750 1.1169
-## 4           asian 61.43 37.68 0.6869 0.1963
-## 5           other 59.44 37.46 1.2622 1.8359
-</code></pre>
-
-<h1>plyr</h1>
-
-<p><em>plyr</em> (Hadley Wickham, Rice) is the go-to package for all your splitting-applying-combining needs</p>
-
-<p>Among its many benefits (above base R capabilities):</p>
+<h1>Group-wise Operations/plyr</h1>
 
 <ul>
-<li>Don&#39;t have to worry about different name, argument, or output consistencies</li>
-<li>Easily parallelized </li>
-<li>Input from, and output to, data frames, matricies, and lists</li>
-<li>Progress bars for lengthy computation</li>
-<li>Informative error messages</li>
+<li><em>plyr</em> is the go-to package for all your splitting-applying-combining needs</li>
+<li>Among its many benefits (above base R capabilities):
+a) Don&#39;t have to worry about different name, argument, or output consistencies
+b) Can be parallelized 
+c) Input from, and output to, data frames, matricies, and lists
+d) Progress bars for lengthy computation
+e) Informative error messages</li>
 </ul>
 
-<h1>Using plyr: how to select functions</h1>
+<pre><code class="r"># Install the &quot;plyr&quot; package (only necessary one time)
+# install.packages(&quot;plyr&quot;) # Not Run
 
-<p>Two questions:</p>
+# Load the &quot;plyr&quot; package (necessary every new R session)
+library(plyr)
+</code></pre>
 
-<p>1) What is the class of your input object?</p>
-
-<p>2) What is the class of your desired output object?</p>
+<h1>Group-wise Operations/plyr/selecting functions</h1>
 
 <ul>
-<li><p>If you want to split a <strong>d</strong>ata frame, and return results as a <strong>d</strong>ata frame, you use <strong>dd</strong>ply</p></li>
-<li><p>If you want to split a <strong>d</strong>ata frame, and return results as a <strong>l</strong>ist, you use <strong>dl</strong>ply</p></li>
-<li><p>If you want to split a <strong>l</strong>ist, and return results as a <strong>d</strong>ata frame, you use <strong>ld</strong>ply</p></li>
+<li>Two essential questions:
+1) What is the class of your input object?
+2) What is the class of your desired output object?</li>
+<li>If you want to split a <strong>d</strong>ata frame, and return results as a <strong>d</strong>ata frame, you use <strong>dd</strong>ply</li>
+<li>If you want to split a <strong>d</strong>ata frame, and return results as a <strong>l</strong>ist, you use <strong>dl</strong>ply</li>
+<li>If you want to split a <strong>l</strong>ist, and return results as a <strong>d</strong>ata frame, you use <strong>ld</strong>ply</li>
 </ul>
 
-<h1>Using plyr: how to write commands</h1>
+<h1>Group-wise Operations/plyr/writing commands</h1>
 
 <p>All of the major plyr functions have the same basic syntax</p>
 
-<pre><code class="r">xxply(.data = , .variables = .(, , , ...), .fun = )
+<pre><code class="r">xxply(.data=, .variables=, .fun=, ...)
 </code></pre>
 
-<p>Consider the previous example using ddply:</p>
+<p>Consider the case where we want to calculate tipping behavior across gender, smoking status, and day-of-the-week from a data.frame, then return them as a data.frame:</p>
 
-<pre><code class="r">vote.by.race &lt;- ddply(.data = cleandat, .variables = .(race), summarize, kerry = length(pres04[pres04 == 
-    1])/length(pres04) * 100, bush = length(pres04[pres04 == 2])/length(pres04) * 
-    100, nader = length(pres04[pres04 == 3])/length(pres04) * 100, other = length(pres04[pres04 == 
-    9])/length(pres04) * 100)
+<pre><code class="r"># Calculate tip amount as percent of total bill
+tips$tip.pct&lt;-tips$tip/tips$total_bill*100
+
+# Using the appropriate plyr function (ddply), compute average tip percentages
+ddply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pct=mean(x = tip.pct))
 </code></pre>
 
-<h1>Using plyr: dlply</h1>
-
-<pre><code class="r">vote.by.race.dl &lt;- dlply(.data = cleandat, .variables = .(race), summarize, 
-    kerry = length(pres04[pres04 == 1])/length(pres04) * 100, bush = length(pres04[pres04 == 
-        2])/length(pres04) * 100, nader = length(pres04[pres04 == 3])/length(pres04) * 
-        100, other = length(pres04[pres04 == 9])/length(pres04) * 100)
-
-print(vote.by.race.dl)
+<pre><code>##    gender smoker  day mean.tip.pct
+## 1  Female     No  Fri        16.53
+## 2  Female     No  Sat        14.80
+## 3  Female     No  Sun        16.57
+## 4  Female     No Thur        15.60
+## 5  Female    Yes  Fri        20.91
+## 6  Female    Yes  Sat        16.38
+## 7  Female    Yes  Sun        23.71
+## 8  Female    Yes Thur        16.31
+## 9    Male     No  Fri        13.80
+## 10   Male     No  Sat        16.21
+## 11   Male     No  Sun        15.83
+## 12   Male     No Thur        16.57
+## 13   Male    Yes  Fri        14.47
+## 14   Male    Yes  Sat        13.91
+## 15   Male    Yes  Sun        17.40
+## 16   Male    Yes Thur        16.44
 </code></pre>
 
-<pre><code>## $white
-##   kerry  bush  nader other
-## 1  43.6 55.02 0.6944 0.681
+<p>Consider the case where we want to calculate tipping behavior across gender, smoking status, and day-of-the-week from a data.frame, then return them as a list:</p>
+
+<pre><code class="r">dlply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+</code></pre>
+
+<pre><code>## $Female.No.Fri
+##   mean.tip.pct
+## 1        16.53
 ## 
-## $black
-##   kerry  bush  nader  other
-## 1 87.28 11.63 0.7905 0.2964
+## $Female.No.Sat
+##   mean.tip.pct
+## 1         14.8
 ## 
-## $`hispanic/latino`
-##   kerry  bush nader other
-## 1 60.75 37.36 0.775 1.117
+## $Female.No.Sun
+##   mean.tip.pct
+## 1        16.57
 ## 
-## $asian
-##   kerry  bush  nader  other
-## 1 61.43 37.68 0.6869 0.1963
+## $Female.No.Thur
+##   mean.tip.pct
+## 1         15.6
 ## 
-## $other
-##   kerry  bush nader other
-## 1 59.44 37.46 1.262 1.836
+## $Female.Yes.Fri
+##   mean.tip.pct
+## 1        20.91
+## 
+## $Female.Yes.Sat
+##   mean.tip.pct
+## 1        16.38
+## 
+## $Female.Yes.Sun
+##   mean.tip.pct
+## 1        23.71
+## 
+## $Female.Yes.Thur
+##   mean.tip.pct
+## 1        16.31
+## 
+## $Male.No.Fri
+##   mean.tip.pct
+## 1         13.8
+## 
+## $Male.No.Sat
+##   mean.tip.pct
+## 1        16.21
+## 
+## $Male.No.Sun
+##   mean.tip.pct
+## 1        15.83
+## 
+## $Male.No.Thur
+##   mean.tip.pct
+## 1        16.57
+## 
+## $Male.Yes.Fri
+##   mean.tip.pct
+## 1        14.47
+## 
+## $Male.Yes.Sat
+##   mean.tip.pct
+## 1        13.91
+## 
+## $Male.Yes.Sun
+##   mean.tip.pct
+## 1         17.4
+## 
+## $Male.Yes.Thur
+##   mean.tip.pct
+## 1        16.44
 ## 
 ## attr(,&quot;split_type&quot;)
 ## [1] &quot;data.frame&quot;
 ## attr(,&quot;split_labels&quot;)
-##              race
-## 1           white
-## 2           black
-## 3 hispanic/latino
-## 4           asian
-## 5           other
+##    gender smoker  day
+## 1  Female     No  Fri
+## 2  Female     No  Sat
+## 3  Female     No  Sun
+## 4  Female     No Thur
+## 5  Female    Yes  Fri
+## 6  Female    Yes  Sat
+## 7  Female    Yes  Sun
+## 8  Female    Yes Thur
+## 9    Male     No  Fri
+## 10   Male     No  Sat
+## 11   Male     No  Sun
+## 12   Male     No Thur
+## 13   Male    Yes  Fri
+## 14   Male    Yes  Sat
+## 15   Male    Yes  Sun
+## 16   Male    Yes Thur
 </code></pre>
 
-<h1>Using plyr: ldply</h1>
+<p>Consider the case where we want to calculate vote choice statistics across race from a list, and return them as a data.frame:</p>
 
-<pre><code class="r">races = split(cleandat, cleandat$race)
-
-objects(races)
+<pre><code class="r"># Split the data.frame into a list on the basis of gender, smoker status, and day-of-the-week
+tips.split&lt;-split(x=tips, f = list(tips$sex, tips$smoker, tips$day))
+head(x = tips.split, n = 3)
 </code></pre>
 
-<pre><code>## [1] &quot;asian&quot;           &quot;black&quot;           &quot;hispanic/latino&quot; &quot;other&quot;          
-## [5] &quot;white&quot;
-</code></pre>
-
-<pre><code class="r">vote.by.race.ld &lt;- ldply(.data = races, summarize, kerry = length(pres04[pres04 == 
-    1])/length(pres04) * 100, bush = length(pres04[pres04 == 2])/length(pres04) * 
-    100, nader = length(pres04[pres04 == 3])/length(pres04) * 100, other = length(pres04[pres04 == 
-    9])/length(pres04) * 100)
-
-print(vote.by.race.ld)
-</code></pre>
-
-<pre><code>##               .id kerry  bush  nader  other
-## 1           white 43.60 55.02 0.6944 0.6810
-## 2           black 87.28 11.63 0.7905 0.2964
-## 3 hispanic/latino 60.75 37.36 0.7750 1.1169
-## 4           asian 61.43 37.68 0.6869 0.1963
-## 5           other 59.44 37.46 1.2622 1.8359
-</code></pre>
-
-<h1>Using plyr: llply</h1>
-
-<pre><code class="r">vote.by.race.ll &lt;- llply(.data = races, summarize, kerry = length(pres04[pres04 == 
-    1])/length(pres04) * 100, bush = length(pres04[pres04 == 2])/length(pres04) * 
-    100, nader = length(pres04[pres04 == 3])/length(pres04) * 100, other = length(pres04[pres04 == 
-    9])/length(pres04) * 100)
-
-print(vote.by.race.ll)
-</code></pre>
-
-<pre><code>## $white
-##   kerry  bush  nader other
-## 1  43.6 55.02 0.6944 0.681
+<pre><code>## $Female.No.Fri
+##     total_bill  tip    sex smoker day   time size tip.pct
+## 95       22.75 3.25 Female     No Fri Dinner    2   14.29
+## 224      15.98 3.00 Female     No Fri  Lunch    3   18.77
 ## 
-## $black
-##   kerry  bush  nader  other
-## 1 87.28 11.63 0.7905 0.2964
+## $Male.No.Fri
+##     total_bill tip  sex smoker day   time size tip.pct
+## 92       22.49 3.5 Male     No Fri Dinner    2   15.56
+## 100      12.46 1.5 Male     No Fri Dinner    2   12.04
 ## 
-## $`hispanic/latino`
-##   kerry  bush nader other
-## 1 60.75 37.36 0.775 1.117
+## $Female.Yes.Fri
+##     total_bill  tip    sex smoker day   time size tip.pct
+## 93        5.75 1.00 Female    Yes Fri Dinner    2   17.39
+## 94       16.32 4.30 Female    Yes Fri Dinner    2   26.35
+## 101      11.35 2.50 Female    Yes Fri Dinner    2   22.03
+## 102      15.38 3.00 Female    Yes Fri Dinner    2   19.51
+## 222      13.42 3.48 Female    Yes Fri  Lunch    2   25.93
+## 226      16.27 2.50 Female    Yes Fri  Lunch    2   15.37
+## 227      10.09 2.00 Female    Yes Fri  Lunch    2   19.82
+</code></pre>
+
+<pre><code class="r"># Compute summary statistics (note: no .variables argument)
+ldply(.data=tips.split, .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+</code></pre>
+
+<pre><code>##                .id mean.tip.pct
+## 1    Female.No.Fri        16.53
+## 2      Male.No.Fri        13.80
+## 3   Female.Yes.Fri        20.91
+## 4     Male.Yes.Fri        14.47
+## 5    Female.No.Sat        14.80
+## 6      Male.No.Sat        16.21
+## 7   Female.Yes.Sat        16.38
+## 8     Male.Yes.Sat        13.91
+## 9    Female.No.Sun        16.57
+## 10     Male.No.Sun        15.83
+## 11  Female.Yes.Sun        23.71
+## 12    Male.Yes.Sun        17.40
+## 13  Female.No.Thur        15.60
+## 14    Male.No.Thur        16.57
+## 15 Female.Yes.Thur        16.31
+## 16   Male.Yes.Thur        16.44
+</code></pre>
+
+<p>Consider the case where we want to calculate vote choice statistics across race from a list, and return them as a list:</p>
+
+<pre><code class="r">llply(.data=tips.split, .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+</code></pre>
+
+<pre><code>## $Female.No.Fri
+##   mean.tip.pct
+## 1        16.53
 ## 
-## $asian
-##   kerry  bush  nader  other
-## 1 61.43 37.68 0.6869 0.1963
+## $Male.No.Fri
+##   mean.tip.pct
+## 1         13.8
 ## 
-## $other
-##   kerry  bush nader other
-## 1 59.44 37.46 1.262 1.836
+## $Female.Yes.Fri
+##   mean.tip.pct
+## 1        20.91
+## 
+## $Male.Yes.Fri
+##   mean.tip.pct
+## 1        14.47
+## 
+## $Female.No.Sat
+##   mean.tip.pct
+## 1         14.8
+## 
+## $Male.No.Sat
+##   mean.tip.pct
+## 1        16.21
+## 
+## $Female.Yes.Sat
+##   mean.tip.pct
+## 1        16.38
+## 
+## $Male.Yes.Sat
+##   mean.tip.pct
+## 1        13.91
+## 
+## $Female.No.Sun
+##   mean.tip.pct
+## 1        16.57
+## 
+## $Male.No.Sun
+##   mean.tip.pct
+## 1        15.83
+## 
+## $Female.Yes.Sun
+##   mean.tip.pct
+## 1        23.71
+## 
+## $Male.Yes.Sun
+##   mean.tip.pct
+## 1         17.4
+## 
+## $Female.No.Thur
+##   mean.tip.pct
+## 1         15.6
+## 
+## $Male.No.Thur
+##   mean.tip.pct
+## 1        16.57
+## 
+## $Female.Yes.Thur
+##   mean.tip.pct
+## 1        16.31
+## 
+## $Male.Yes.Thur
+##   mean.tip.pct
+## 1        16.44
 </code></pre>
 
-<h1>Common functions used with plyr: transform</h1>
-
-<p><em>transform</em>: applies a function to a data frame and returns the altered version of that data frame</p>
-
-<pre><code class="r">olddat &lt;- ddply(.data = cleandat, .variables = .(race), transform, old = ifelse(age65 == 
-    &quot;65 or over&quot;, 1, 0))
-
-print(olddat[20:40, c(&quot;sex&quot;, &quot;race&quot;, &quot;age65&quot;, &quot;old&quot;)])
-</code></pre>
-
-<pre><code>##       sex  race      age65 old
-## 20   male white      30-39   0
-## 21   male white      40-49   0
-## 22 female white      40-49   0
-## 23   male white      30-39   0
-## 24   male white      40-49   0
-## 25   male white 65 or over   1
-## 26 female white      30-39   0
-## 27   male white      25-29   0
-## 28   male white      30-39   0
-## 29 female white      40-49   0
-## 30   male white      50-64   0
-## 31   male white      50-64   0
-## 32 female white      40-49   0
-## 33 female white      40-49   0
-## 34   male white      40-49   0
-## 35 female white      50-64   0
-## 36   male white      40-49   0
-## 37 female white      50-64   0
-## 38   male white 65 or over   1
-## 39   male white      18-24   0
-## 40 female white      30-39   0
-</code></pre>
-
-<p>Note that <em>transform</em> can&#39;t do transformations that involve the results of other transformations from the same call</p>
-
-<pre><code class="r">oldmendat &lt;- ddply(.data = cleandat, .variables = .(race), transform, old = ifelse(age65 == 
-    &quot;65 or over&quot;, 1, 0), old.man = ifelse(old == 1 &amp; sex == &quot;male&quot;, 1, 0))
-</code></pre>
-
-<pre><code>## Error: object &#39;old&#39; not found
-</code></pre>
-
-<p>For this, we need&hellip;</p>
-
-<h1>Common functions used with plyr: mutate</h1>
-
-<p><em>mutate</em>: just like transform, but it executes the commands iteratively so that transformations can be carried out that rely on previous transformations from the same call</p>
-
-<pre><code class="r">oldmendat &lt;- ddply(.data = cleandat, .variables = .(race), mutate, old = ifelse(age65 == 
-    &quot;65 or over&quot;, 1, 0), old.man = ifelse(old == 1 &amp; sex == &quot;male&quot;, 1, 0))
-
-print(oldmendat[40:80, c(&quot;sex&quot;, &quot;race&quot;, &quot;age65&quot;, &quot;old&quot;, &quot;old.man&quot;)])
-</code></pre>
-
-<pre><code>##       sex  race      age65 old old.man
-## 40 female white      30-39   0       0
-## 41 female white      50-64   0       0
-## 42   male white      30-39   0       0
-## 43 female white      30-39   0       0
-## 44 female white      40-49   0       0
-## 45   male white      30-39   0       0
-## 46 female white      30-39   0       0
-## 47   male white      50-64   0       0
-## 48 female white      25-29   0       0
-## 49 female white      40-49   0       0
-## 50 female white      30-39   0       0
-## 51   male white      25-29   0       0
-## 52   male white      30-39   0       0
-## 53 female white      40-49   0       0
-## 54   male white      30-39   0       0
-## 55   male white      30-39   0       0
-## 56   male white      40-49   0       0
-## 57   male white      40-49   0       0
-## 58   male white      18-24   0       0
-## 59 female white      40-49   0       0
-## 60 female white 65 or over   1       0
-## 61 female white      50-64   0       0
-## 62 female white      30-39   0       0
-## 63   male white      50-64   0       0
-## 64   male white      40-49   0       0
-## 65   male white 65 or over   1       1
-## 66   male white      30-39   0       0
-## 67 female white      50-64   0       0
-## 68 female white 65 or over   1       0
-## 69   male white      30-39   0       0
-## 70 female white      50-64   0       0
-## 71 female white      30-39   0       0
-## 72   male white      18-24   0       0
-## 73 female white      50-64   0       0
-## 74 female white      25-29   0       0
-## 75   male white      40-49   0       0
-## 76   male white      18-24   0       0
-## 77   male white      40-49   0       0
-## 78 female white      40-49   0       0
-## 79 female white 65 or over   1       0
-## 80   male white      40-49   0       0
-</code></pre>
-
-<h1>Common functions used with plyr: arrange</h1>
-
-<p><em>arrange</em>: orders a data frame on the basis of column contents</p>
-
-<pre><code class="r">snippet &lt;- oldmendat[1:50, c(&quot;sex&quot;, &quot;race&quot;, &quot;age65&quot;, &quot;old&quot;, &quot;old.man&quot;)]
-print(snippet)
-</code></pre>
-
-<pre><code>##       sex  race      age65 old old.man
-## 1  female white      25-29   0       0
-## 2    male white      18-24   0       0
-## 3  female white      40-49   0       0
-## 4  female white      30-39   0       0
-## 5    male white      40-49   0       0
-## 6  female white      18-24   0       0
-## 7  female white      25-29   0       0
-## 8  female white      18-24   0       0
-## 9  female white      25-29   0       0
-## 10 female white      40-49   0       0
-## 11 female white      40-49   0       0
-## 12   male white      40-49   0       0
-## 13   male white      30-39   0       0
-## 14   male white      40-49   0       0
-## 15   male white      25-29   0       0
-## 16 female white      25-29   0       0
-## 17 female white      30-39   0       0
-## 18   male white      25-29   0       0
-## 19 female white      25-29   0       0
-## 20   male white      30-39   0       0
-## 21   male white      40-49   0       0
-## 22 female white      40-49   0       0
-## 23   male white      30-39   0       0
-## 24   male white      40-49   0       0
-## 25   male white 65 or over   1       1
-## 26 female white      30-39   0       0
-## 27   male white      25-29   0       0
-## 28   male white      30-39   0       0
-## 29 female white      40-49   0       0
-## 30   male white      50-64   0       0
-## 31   male white      50-64   0       0
-## 32 female white      40-49   0       0
-## 33 female white      40-49   0       0
-## 34   male white      40-49   0       0
-## 35 female white      50-64   0       0
-## 36   male white      40-49   0       0
-## 37 female white      50-64   0       0
-## 38   male white 65 or over   1       1
-## 39   male white      18-24   0       0
-## 40 female white      30-39   0       0
-## 41 female white      50-64   0       0
-## 42   male white      30-39   0       0
-## 43 female white      30-39   0       0
-## 44 female white      40-49   0       0
-## 45   male white      30-39   0       0
-## 46 female white      30-39   0       0
-## 47   male white      50-64   0       0
-## 48 female white      25-29   0       0
-## 49 female white      40-49   0       0
-## 50 female white      30-39   0       0
-</code></pre>
-
-<pre><code class="r">arrange(df = snippet, sex, desc(age65))
-</code></pre>
-
-<pre><code>##       sex  race      age65 old old.man
-## 1    male white 65 or over   1       1
-## 2    male white 65 or over   1       1
-## 3    male white      50-64   0       0
-## 4    male white      50-64   0       0
-## 5    male white      50-64   0       0
-## 6    male white      40-49   0       0
-## 7    male white      40-49   0       0
-## 8    male white      40-49   0       0
-## 9    male white      40-49   0       0
-## 10   male white      40-49   0       0
-## 11   male white      40-49   0       0
-## 12   male white      40-49   0       0
-## 13   male white      30-39   0       0
-## 14   male white      30-39   0       0
-## 15   male white      30-39   0       0
-## 16   male white      30-39   0       0
-## 17   male white      30-39   0       0
-## 18   male white      30-39   0       0
-## 19   male white      25-29   0       0
-## 20   male white      25-29   0       0
-## 21   male white      25-29   0       0
-## 22   male white      18-24   0       0
-## 23   male white      18-24   0       0
-## 24 female white      50-64   0       0
-## 25 female white      50-64   0       0
-## 26 female white      50-64   0       0
-## 27 female white      40-49   0       0
-## 28 female white      40-49   0       0
-## 29 female white      40-49   0       0
-## 30 female white      40-49   0       0
-## 31 female white      40-49   0       0
-## 32 female white      40-49   0       0
-## 33 female white      40-49   0       0
-## 34 female white      40-49   0       0
-## 35 female white      40-49   0       0
-## 36 female white      30-39   0       0
-## 37 female white      30-39   0       0
-## 38 female white      30-39   0       0
-## 39 female white      30-39   0       0
-## 40 female white      30-39   0       0
-## 41 female white      30-39   0       0
-## 42 female white      30-39   0       0
-## 43 female white      25-29   0       0
-## 44 female white      25-29   0       0
-## 45 female white      25-29   0       0
-## 46 female white      25-29   0       0
-## 47 female white      25-29   0       0
-## 48 female white      25-29   0       0
-## 49 female white      18-24   0       0
-## 50 female white      18-24   0       0
-</code></pre>
-
-<pre><code class="r">arrange(df = snippet, desc(sex), age65)
-</code></pre>
-
-<pre><code>##       sex  race      age65 old old.man
-## 1  female white      18-24   0       0
-## 2  female white      18-24   0       0
-## 3  female white      25-29   0       0
-## 4  female white      25-29   0       0
-## 5  female white      25-29   0       0
-## 6  female white      25-29   0       0
-## 7  female white      25-29   0       0
-## 8  female white      25-29   0       0
-## 9  female white      30-39   0       0
-## 10 female white      30-39   0       0
-## 11 female white      30-39   0       0
-## 12 female white      30-39   0       0
-## 13 female white      30-39   0       0
-## 14 female white      30-39   0       0
-## 15 female white      30-39   0       0
-## 16 female white      40-49   0       0
-## 17 female white      40-49   0       0
-## 18 female white      40-49   0       0
-## 19 female white      40-49   0       0
-## 20 female white      40-49   0       0
-## 21 female white      40-49   0       0
-## 22 female white      40-49   0       0
-## 23 female white      40-49   0       0
-## 24 female white      40-49   0       0
-## 25 female white      50-64   0       0
-## 26 female white      50-64   0       0
-## 27 female white      50-64   0       0
-## 28   male white      18-24   0       0
-## 29   male white      18-24   0       0
-## 30   male white      25-29   0       0
-## 31   male white      25-29   0       0
-## 32   male white      25-29   0       0
-## 33   male white      30-39   0       0
-## 34   male white      30-39   0       0
-## 35   male white      30-39   0       0
-## 36   male white      30-39   0       0
-## 37   male white      30-39   0       0
-## 38   male white      30-39   0       0
-## 39   male white      40-49   0       0
-## 40   male white      40-49   0       0
-## 41   male white      40-49   0       0
-## 42   male white      40-49   0       0
-## 43   male white      40-49   0       0
-## 44   male white      40-49   0       0
-## 45   male white      40-49   0       0
-## 46   male white      50-64   0       0
-## 47   male white      50-64   0       0
-## 48   male white      50-64   0       0
-## 49   male white 65 or over   1       1
-## 50   male white 65 or over   1       1
-</code></pre>
-
-<h1>Last note on functions</h1>
-
-<p>Any function will work, just remember that when writing <em>function(x)</em>, the <em>x</em> that you&#39;re getting is one slice of your input object with a single value for your chosen splitting variable.  Is the same class as your original object, and all functions you could apply to the original object can be applied its subsets (this may be important in the very near future, hint hint&hellip;)</p>
-
-<h1>Reshaping Data</h1>
+<h1>Group-wise Operations/plyr/functions</h1>
 
 <ul>
-<li><p>Often times, even before we&#39;re interested in doing all this group-wise stuff, we need to reshape our data</p></li>
-<li><p>For instance, say you download a huge dataset from the World Bank, IMF, OECD, etc.</p></li>
-<li><p>There&#39;s a good chance your data will look something like this:</p></li>
+<li>plyr can accomodate any user-defined function, but it also comes with some pre-defined functions that assist with the most common split-apply-combine tasks</li>
+<li>We&#39;ve already seen <strong>summarize</strong>, which creates user-specified vectors and combines them into a data.frame.  Here are some other helpful functions:</li>
 </ul>
 
-<h1>Reshaping Data</h1>
+<p><strong>transform</strong>: applies a function to a data.frame and adds new vectors (columns) to it</p>
 
-<pre><code>##     country var_1995 var_1996 var_1997 var_1998 var_1999 var_2000 var_2001
-## 1 Australia   49.418    46.62   11.192   14.921    39.93    83.83   44.253
-## 2   Austria    6.586    83.00   18.427   30.395    57.91    97.84    7.357
-## 3   Belgium   53.053    59.85    2.963   27.947    97.76    60.57   54.922
-## 4    Canada   42.387    85.45   86.633   30.181    30.04    67.27   81.840
-## 5   Denmark   67.560    43.49   54.378    8.413    45.76    23.00   30.750
-## 6    France   60.228    63.66   41.852   36.720    68.57    89.39    4.088
+<pre><code class="r"># Add a column containing the average tip of the gender of the individual on that day
+tips.transformed&lt;-ddply(.data=tips, .variables=.(sex, day), .fun=transform, sex.day.avg=mean(x=tip.pct))
+head(x = tips.transformed, n = 15)
 </code></pre>
 
-<h1>Reshaping Data</h1>
+<pre><code>##    total_bill  tip    sex smoker day   time size tip.pct sex.day.avg
+## 1        5.75 1.00 Female    Yes Fri Dinner    2   17.39       19.94
+## 2       16.32 4.30 Female    Yes Fri Dinner    2   26.35       19.94
+## 3       22.75 3.25 Female     No Fri Dinner    2   14.29       19.94
+## 4       11.35 2.50 Female    Yes Fri Dinner    2   22.03       19.94
+## 5       15.38 3.00 Female    Yes Fri Dinner    2   19.51       19.94
+## 6       13.42 3.48 Female    Yes Fri  Lunch    2   25.93       19.94
+## 7       15.98 3.00 Female     No Fri  Lunch    3   18.77       19.94
+## 8       16.27 2.50 Female    Yes Fri  Lunch    2   15.37       19.94
+## 9       10.09 2.00 Female    Yes Fri  Lunch    2   19.82       19.94
+## 10      20.29 2.75 Female     No Sat Dinner    2   13.55       15.65
+## 11      15.77 2.23 Female     No Sat Dinner    2   14.14       15.65
+## 12      19.65 3.00 Female     No Sat Dinner    2   15.27       15.65
+## 13      15.06 3.00 Female     No Sat Dinner    2   19.92       15.65
+## 14      20.69 2.45 Female     No Sat Dinner    4   11.84       15.65
+## 15      16.93 3.07 Female     No Sat Dinner    3   18.13       15.65
+</code></pre>
+
+<p>Note that <strong>transform</strong> can&#39;t do transformations that involve the results of <em>other</em> transformations from the same call</p>
+
+<pre><code class="r"># Attempt to add new columns that draw on other (but still new) columns
+tips.transformed&lt;-ddply(.data=tips, .variables=.(sex, day), .fun=transform, 
+                        sex.day.avg=mean(x=tip.pct),
+                        sex.day.avg.deviation=tip.pct-sex.day.avg)
+</code></pre>
+
+<pre><code>## Error: object &#39;sex.day.avg&#39; not found
+</code></pre>
+
+<p>For this, we need <strong>mutate</strong>: just like transform, but it executes the commands iteratively so transformations can be carried out that rely on previous transformations from the same call</p>
+
+<pre><code class="r"># Attempt to add new columns that draw on other (but still new) columns
+tips.transformed&lt;-ddply(.data=tips, .variables=.(sex, day), .fun=mutate, 
+                        sex.day.avg=mean(x=tip.pct),
+                        sex.day.avg.deviation=tip.pct-sex.day.avg)
+head(x = tips.transformed, n = 15)
+</code></pre>
+
+<pre><code>##    total_bill  tip    sex smoker day   time size tip.pct sex.day.avg
+## 1        5.75 1.00 Female    Yes Fri Dinner    2   17.39       19.94
+## 2       16.32 4.30 Female    Yes Fri Dinner    2   26.35       19.94
+## 3       22.75 3.25 Female     No Fri Dinner    2   14.29       19.94
+## 4       11.35 2.50 Female    Yes Fri Dinner    2   22.03       19.94
+## 5       15.38 3.00 Female    Yes Fri Dinner    2   19.51       19.94
+## 6       13.42 3.48 Female    Yes Fri  Lunch    2   25.93       19.94
+## 7       15.98 3.00 Female     No Fri  Lunch    3   18.77       19.94
+## 8       16.27 2.50 Female    Yes Fri  Lunch    2   15.37       19.94
+## 9       10.09 2.00 Female    Yes Fri  Lunch    2   19.82       19.94
+## 10      20.29 2.75 Female     No Sat Dinner    2   13.55       15.65
+## 11      15.77 2.23 Female     No Sat Dinner    2   14.14       15.65
+## 12      19.65 3.00 Female     No Sat Dinner    2   15.27       15.65
+## 13      15.06 3.00 Female     No Sat Dinner    2   19.92       15.65
+## 14      20.69 2.45 Female     No Sat Dinner    4   11.84       15.65
+## 15      16.93 3.07 Female     No Sat Dinner    3   18.13       15.65
+##    sex.day.avg.deviation
+## 1                -2.5475
+## 2                 6.4092
+## 3                -5.6531
+## 4                 2.0876
+## 5                -0.4330
+## 6                 5.9926
+## 7                -1.1654
+## 8                -4.5731
+## 9                -0.1172
+## 10               -2.0935
+## 11               -1.5062
+## 12               -0.3798
+## 13                4.2733
+## 14               -3.8056
+## 15                2.4865
+</code></pre>
+
+<p>Another very useful function is <strong>arrange</strong>, which orders a data frame on the basis of column contents</p>
+
+<pre><code class="r"># Compute average tips across gender, smoker status, and day of the week
+tips.summary&lt;-ddply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+
+# Arrange summarized data from highest average tip to lowest average tip
+arrange(df = tips.summary, mean.tip.pct)
+</code></pre>
+
+<pre><code>##    gender smoker  day mean.tip.pct
+## 1    Male     No  Fri        13.80
+## 2    Male    Yes  Sat        13.91
+## 3    Male    Yes  Fri        14.47
+## 4  Female     No  Sat        14.80
+## 5  Female     No Thur        15.60
+## 6    Male     No  Sun        15.83
+## 7    Male     No  Sat        16.21
+## 8  Female    Yes Thur        16.31
+## 9  Female    Yes  Sat        16.38
+## 10   Male    Yes Thur        16.44
+## 11 Female     No  Fri        16.53
+## 12   Male     No Thur        16.57
+## 13 Female     No  Sun        16.57
+## 14   Male    Yes  Sun        17.40
+## 15 Female    Yes  Fri        20.91
+## 16 Female    Yes  Sun        23.71
+</code></pre>
+
+<pre><code class="r"># Arrange summarized data from lowest average tip to highest average tip
+arrange(df = tips.summary, desc(mean.tip.pct))
+</code></pre>
+
+<pre><code>##    gender smoker  day mean.tip.pct
+## 1  Female    Yes  Sun        23.71
+## 2  Female    Yes  Fri        20.91
+## 3    Male    Yes  Sun        17.40
+## 4  Female     No  Sun        16.57
+## 5    Male     No Thur        16.57
+## 6  Female     No  Fri        16.53
+## 7    Male    Yes Thur        16.44
+## 8  Female    Yes  Sat        16.38
+## 9  Female    Yes Thur        16.31
+## 10   Male     No  Sat        16.21
+## 11   Male     No  Sun        15.83
+## 12 Female     No Thur        15.60
+## 13 Female     No  Sat        14.80
+## 14   Male    Yes  Fri        14.47
+## 15   Male    Yes  Sat        13.91
+## 16   Male     No  Fri        13.80
+</code></pre>
+
+<h1>Reshaping Data/reshape2</h1>
 
 <ul>
-<li><p>If you&#39;ve ever tried to make a time series graph of any kind, you know this can be really annoying</p></li>
-<li><p>But fear not&hellip;</p></li>
+<li><p>Often times, even before we&#39;re interested in doing all this group-wise stuff, we need to reshape our data.  For instance, datasets often arrive at your desk in wide (long) form and you need to convert them to long (wide) form.</p></li>
+<li><p>Though base R does have commands for reshaping data (including <strong>aggregate</strong>, <strong>by</strong>, <strong>tapply</strong>, etc.), each of their input commands are slightly different and are only suited for specific reshaping tasks.</p></li>
+<li><p>The <strong>reshape2</strong> package overcomes these argument and task inconsistencies to provide a simple, relatively fast way to alter the form of a data.frame.  The package contains effectively two commands, and their functions are in their names: <strong>melt</strong> and <strong>cast</strong></p></li>
 </ul>
 
-<h1>reshape2</h1>
+<pre><code class="r"># Install the &quot;reshape2&quot; package (only necessary one time)
+# install.packages(&quot;reshape2&quot;) # Not Run
+
+# Load the &quot;reshape2&quot; package (necessary every new R session)
+library(reshape2)
+</code></pre>
+
+<h1>Reshaping Data/reshape2/melt</h1>
 
 <ul>
-<li><p>Once again, Hadley Wickham has made all our lives easier, this time with <em>reshape2</em></p></li>
-<li><p>Though base R does have commands for reshaping data (<em>aggregate</em>, <em>by</em>, <em>tapply</em>, etc.), each of their input commands are slightly different and are only suited for specific reshaping tasks</p></li>
-<li><p><em>reshape2</em> really only has two commands, and their functions are in their names: <em>melt</em> and <em>cast</em></p></li>
+<li>melt() is used to convert wide-form data to long-form.  The basic idea is to take your data.frame and melt it down to a minimal number of columns using two essential pieces of information:
+1) <strong>Unit-of-Analysis identifiers</strong>, or columns you <em>don&#39;t</em> want to melt down
+2) <strong>Characteristic variables</strong>, or columns you <em>do</em> want to melt down</li>
 </ul>
 
-<h1>Using reshape2: melt</h1>
-
-<p>Basic idea is to take your data frame and melt it into three essential components</p>
-
-<p>1) Case identifiers (e.g.: an individual, a country)</p>
-
-<p>2) Characteristic variables (e.g.: age, race, gender)</p>
-
-<p>3) Variable values (e.g.: {White, Black, Hispanic/Latino, Asian, Other} for race)</p>
-
-<h1>Using reshape2: melt</h1>
-
-<p>In the example from before, our only case identifier is <em>country</em>, and our only characteristic variable is <em>var</em> (with observations from 1995-2001)</p>
-
-<pre><code>##     country var_1995 var_1996 var_1997 var_1998 var_1999 var_2000 var_2001
-## 1 Australia   49.418    46.62   11.192   14.921    39.93    83.83   44.253
-## 2   Austria    6.586    83.00   18.427   30.395    57.91    97.84    7.357
-## 3   Belgium   53.053    59.85    2.963   27.947    97.76    60.57   54.922
-## 4    Canada   42.387    85.45   86.633   30.181    30.04    67.27   81.840
-## 5   Denmark   67.560    43.49   54.378    8.413    45.76    23.00   30.750
-## 6    France   60.228    63.66   41.852   36.720    68.57    89.39    4.088
+<pre><code class="r"># Basic Call
+melt(data=, id.vars=, measure.vars=, variable.name=, value.name=)
 </code></pre>
 
-<h1>Using reshape2: melt</h1>
+<p>To see how this works in practice, suppose we wanted to convert this data from its current wide format to an entirely long format.  How to proceed?</p>
 
-<p>The generic call for melt looks like this:</p>
+<p><strong>First</strong>, select which columns you want to keep (i.e. not melt).  In this case, we&#39;re interested in having individual tips as the unit of analysis.  Unfortunately, there is no column containing an individual identification number in this data, so we&#39;ll just add one as &ldquo;id&rdquo;:</p>
 
-<pre><code class="r">melt(data = , id.vars = c(&quot;    &quot;, &quot;     &quot;, &quot;    &quot;, ...))
+<pre><code class="r">tips$id&lt;-1:nrow(tips)
+head(tips)
 </code></pre>
 
-<p>Note that you can also customize the names of the columns that store the variable names and values</p>
-
-<p>We can melt the previous example to a nice time series by the call</p>
-
-<pre><code class="r">wb.melted &lt;- melt(data = wb, id.vars = &quot;country&quot;)
-print(wb.melted)
+<pre><code>##   total_bill  tip    sex smoker day   time size tip.pct id
+## 1      16.99 1.01 Female     No Sun Dinner    2   5.945  1
+## 2      10.34 1.66   Male     No Sun Dinner    3  16.054  2
+## 3      21.01 3.50   Male     No Sun Dinner    3  16.659  3
+## 4      23.68 3.31   Male     No Sun Dinner    2  13.978  4
+## 5      24.59 3.61 Female     No Sun Dinner    4  14.681  5
+## 6      25.29 4.71   Male     No Sun Dinner    4  18.624  6
 </code></pre>
 
-<pre><code>##      country variable  value
-## 1  Australia var_1995 49.418
-## 2    Austria var_1995  6.586
-## 3    Belgium var_1995 53.053
-## 4     Canada var_1995 42.387
-## 5    Denmark var_1995 67.560
-## 6     France var_1995 60.228
-## 7  Australia var_1996 46.617
-## 8    Austria var_1996 83.002
-## 9    Belgium var_1996 59.849
-## 10    Canada var_1996 85.449
-## 11   Denmark var_1996 43.489
-## 12    France var_1996 63.655
-## 13 Australia var_1997 11.192
-## 14   Austria var_1997 18.427
-## 15   Belgium var_1997  2.963
-## 16    Canada var_1997 86.633
-## 17   Denmark var_1997 54.378
-## 18    France var_1997 41.852
-## 19 Australia var_1998 14.921
-## 20   Austria var_1998 30.395
-## 21   Belgium var_1998 27.947
-## 22    Canada var_1998 30.181
-## 23   Denmark var_1998  8.413
-## 24    France var_1998 36.720
-## 25 Australia var_1999 39.933
-## 26   Austria var_1999 57.908
-## 27   Belgium var_1999 97.763
-## 28    Canada var_1999 30.041
-## 29   Denmark var_1999 45.765
-## 30    France var_1999 68.567
-## 31 Australia var_2000 83.826
-## 32   Austria var_2000 97.835
-## 33   Belgium var_2000 60.572
-## 34    Canada var_2000 67.266
-## 35   Denmark var_2000 23.005
-## 36    France var_2000 89.393
-## 37 Australia var_2001 44.253
-## 38   Austria var_2001  7.357
-## 39   Belgium var_2001 54.922
-## 40    Canada var_2001 81.840
-## 41   Denmark var_2001 30.750
-## 42    France var_2001  4.088
+<p><strong>Second</strong>, select which columns we want to melt.  In this case, we&#39;d like to melt every column except &ldquo;id&rdquo;.</p>
+
+<p>With these two pieces of information, we&#39;re ready to melt down the data.frame:</p>
+
+<pre><code class="r">tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;, 
+     measure.vars=c(&quot;total_bill&quot;, &quot;tip&quot;, &quot;sex&quot;, &quot;smoker&quot;, &quot;day&quot;, &quot;time&quot;, &quot;size&quot;, &quot;tip.pct&quot;))
+head(x = tips.melted)
 </code></pre>
 
-<pre><code class="r">wb.melted$variable &lt;- as.numeric(gsub(pattern = &quot;var_&quot;, replacement = &quot;&quot;, x = wb.melted$variable))
-print(wb.melted)
+<pre><code>##   id   variable value
+## 1  1 total_bill 16.99
+## 2  2 total_bill 10.34
+## 3  3 total_bill 21.01
+## 4  4 total_bill 23.68
+## 5  5 total_bill 24.59
+## 6  6 total_bill 25.29
 </code></pre>
 
-<pre><code>##      country variable  value
-## 1  Australia     1995 49.418
-## 2    Austria     1995  6.586
-## 3    Belgium     1995 53.053
-## 4     Canada     1995 42.387
-## 5    Denmark     1995 67.560
-## 6     France     1995 60.228
-## 7  Australia     1996 46.617
-## 8    Austria     1996 83.002
-## 9    Belgium     1996 59.849
-## 10    Canada     1996 85.449
-## 11   Denmark     1996 43.489
-## 12    France     1996 63.655
-## 13 Australia     1997 11.192
-## 14   Austria     1997 18.427
-## 15   Belgium     1997  2.963
-## 16    Canada     1997 86.633
-## 17   Denmark     1997 54.378
-## 18    France     1997 41.852
-## 19 Australia     1998 14.921
-## 20   Austria     1998 30.395
-## 21   Belgium     1998 27.947
-## 22    Canada     1998 30.181
-## 23   Denmark     1998  8.413
-## 24    France     1998 36.720
-## 25 Australia     1999 39.933
-## 26   Austria     1999 57.908
-## 27   Belgium     1999 97.763
-## 28    Canada     1999 30.041
-## 29   Denmark     1999 45.765
-## 30    France     1999 68.567
-## 31 Australia     2000 83.826
-## 32   Austria     2000 97.835
-## 33   Belgium     2000 60.572
-## 34    Canada     2000 67.266
-## 35   Denmark     2000 23.005
-## 36    France     2000 89.393
-## 37 Australia     2001 44.253
-## 38   Austria     2001  7.357
-## 39   Belgium     2001 54.922
-## 40    Canada     2001 81.840
-## 41   Denmark     2001 30.750
-## 42    France     2001  4.088
+<pre><code class="r"># If you want to melt ALL columns that aren&#39;t ID variables, you can also omit the &quot;measure.vars&quot; argument
+tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;)
+head(x = tips.melted)
 </code></pre>
 
-<p>This comes in really handy when we want to make, say, panel data graphs (though random variabes aren&#39;t that great to look at)
-<img src="data:image/png;base64,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" alt="plot of chunk unnamed-chunk-32"/> </p>
+<pre><code>##   id   variable value
+## 1  1 total_bill 16.99
+## 2  2 total_bill 10.34
+## 3  3 total_bill 21.01
+## 4  4 total_bill 23.68
+## 5  5 total_bill 24.59
+## 6  6 total_bill 25.29
+</code></pre>
 
-<h1>Using reshape2: cast (acast, dcast)</h1>
+<p>Note that melt collapses all of the measure variables into two columns: one containing the column/measurement name, the other containing the column/measurement value for that row.  By default, these columns are named &ldquo;variable&rdquo; and &ldquo;value&rdquo;, though they can be customized using the &ldquo;variable.name&rdquo; and &ldquo;value.name&rdquo; arguments.  For example:</p>
+
+<pre><code class="r">tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;, 
+     measure.vars=c(&quot;total_bill&quot;, &quot;tip&quot;, &quot;sex&quot;, &quot;smoker&quot;, &quot;day&quot;, &quot;time&quot;, &quot;size&quot;, &quot;tip.pct&quot;),
+     variable.name=&quot;characteristic&quot;,
+     value.name=&quot;response&quot;)
+head(x = tips.melted)
+</code></pre>
+
+<pre><code>##   id characteristic response
+## 1  1     total_bill    16.99
+## 2  2     total_bill    10.34
+## 3  3     total_bill    21.01
+## 4  4     total_bill    23.68
+## 5  5     total_bill    24.59
+## 6  6     total_bill    25.29
+</code></pre>
+
+<p>Note also that one need not melt down all columns that aren&#39;t serving as ID columns.  The melted data.frame will only contain the values of the measure variables you select.  For instance:</p>
+
+<pre><code class="r">tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;, 
+     measure.vars=c(&quot;sex&quot;, &quot;day&quot;))
+head(x = tips.melted)
+</code></pre>
+
+<pre><code>##   id variable  value
+## 1  1      sex Female
+## 2  2      sex   Male
+## 3  3      sex   Male
+## 4  4      sex   Male
+## 5  5      sex Female
+## 6  6      sex   Male
+</code></pre>
+
+<h1>Reshaping Data/reshape2/cast</h1>
 
 <ul>
-<li><p>Sometimes, once we&#39;ve melted down the data, we want to recast it</p></li>
-<li><p>There are two main functions for this: <strong>a</strong>cast (for producing <strong>a</strong>rrays) and <strong>d</strong>cast (for producing <strong>d</strong>ata frames)</p></li>
+<li><p>There are two main cast functions in the reshape2 package for converting data from a long format to a wide format: <strong>a</strong>cast() (for producing <strong>a</strong>rrays) and <strong>d</strong>cast() (for producing <strong>d</strong>ata frames)</p></li>
+<li><p>The generic call for (d)cast looks like this:</p></li>
 </ul>
 
-<h1>Using reshape2: cast (acast, dcast)</h1>
-
-<p>The generic call for (d)cast looks like this:</p>
-
-<pre><code class="r">dcast(data = , formula = x_var1 + x_var2 ~ y_var1 + yvar2, fun.aggregate = )
+<pre><code class="r">dcast(data=, formula=xvar1+xvar2 ~ yvar1+yvar2, value.var=, fun.aggregate=)
 </code></pre>
 
-<p>Note that data frames cannot be produced with more than two dimensions</p>
+<p>Some example usages:</p>
 
-<h1>Using reshape2: cast (acast, dcast)</h1>
-
-<p>We can then recast our melted data from the previous example back into its original format</p>
-
-<pre><code class="r">wb.melted$variable &lt;- paste(&quot;var_&quot;, wb.melted$variable, sep = &quot;&quot;)
-
-wb.recast &lt;- dcast(data = wb.melted, formula = country ~ variable)
-
-print(wb.recast)
+<pre><code class="r"># Original data
+head(x = tips)
 </code></pre>
 
-<pre><code>##     country var_1995 var_1996 var_1997 var_1998 var_1999 var_2000 var_2001
-## 1 Australia   49.418    46.62   11.192   14.921    39.93    83.83   44.253
-## 2   Austria    6.586    83.00   18.427   30.395    57.91    97.84    7.357
-## 3   Belgium   53.053    59.85    2.963   27.947    97.76    60.57   54.922
-## 4    Canada   42.387    85.45   86.633   30.181    30.04    67.27   81.840
-## 5   Denmark   67.560    43.49   54.378    8.413    45.76    23.00   30.750
-## 6    France   60.228    63.66   41.852   36.720    68.57    89.39    4.088
+<pre><code>##   total_bill  tip    sex smoker day   time size tip.pct id
+## 1      16.99 1.01 Female     No Sun Dinner    2   5.945  1
+## 2      10.34 1.66   Male     No Sun Dinner    3  16.054  2
+## 3      21.01 3.50   Male     No Sun Dinner    3  16.659  3
+## 4      23.68 3.31   Male     No Sun Dinner    2  13.978  4
+## 5      24.59 3.61 Female     No Sun Dinner    4  14.681  5
+## 6      25.29 4.71   Male     No Sun Dinner    4  18.624  6
 </code></pre>
 
-<h1>Regression</h1>
+<pre><code class="r"># Cast a data.frame containing the individual column and columns containing the expansion of &quot;age9&quot; on the basis of its unique values
+tips.cast&lt;-dcast(data=tips, formula=id~sex, value.var=&quot;tip.pct&quot;)
+head(x = tips.cast)
+</code></pre>
 
-<p>Running regressions in R is extremely simple, very straightforwd (though doing things with standard errors requires a little extra work)</p>
+<pre><code>##   id Female  Male
+## 1  1  5.945    NA
+## 2  2     NA 16.05
+## 3  3     NA 16.66
+## 4  4     NA 13.98
+## 5  5 14.681    NA
+## 6  6     NA 18.62
+</code></pre>
+
+<pre><code class="r"># Previously melted data
+tips.melted&lt;-melt(data = tips, id.vars = &quot;id&quot;)
+head(x = tips.melted)
+</code></pre>
+
+<pre><code>##   id   variable value
+## 1  1 total_bill 16.99
+## 2  2 total_bill 10.34
+## 3  3 total_bill 21.01
+## 4  4 total_bill 23.68
+## 5  5 total_bill 24.59
+## 6  6 total_bill 25.29
+</code></pre>
+
+<pre><code class="r"># Cast a new data.frame from melted data.frame containing the individual column and expanding the &quot;variable&quot; column
+tips.cast&lt;-dcast(data=tips.melted, formula=id~variable, value.var=&quot;value&quot;)
+head(x = tips.cast)
+</code></pre>
+
+<pre><code>##   id total_bill  tip    sex smoker day   time size          tip.pct
+## 1  1      16.99 1.01 Female     No Sun Dinner    2 5.94467333725721
+## 2  2      10.34 1.66   Male     No Sun Dinner    3 16.0541586073501
+## 3  3      21.01  3.5   Male     No Sun Dinner    3 16.6587339362208
+## 4  4      23.68 3.31   Male     No Sun Dinner    2 13.9780405405405
+## 5  5      24.59 3.61 Female     No Sun Dinner    4 14.6807645384303
+## 6  6      25.29 4.71   Male     No Sun Dinner    4 18.6239620403321
+</code></pre>
+
+<h1>Describing Relationships &amp; Causal Inference</h1>
 
 <ul>
+<li><p>Once we&#39;ve carried out group-wise operations and perhaps reshaped it, we may also like to attempt describing the relationships in the data or conducting some causal inference</p></li>
+<li><p>This often requires doing the following:
+1) Estimating Regressions
+2) Carryingout Regression Diagnostics</p></li>
+</ul>
+
+<h1>Inference/Regression</h1>
+
+<ul>
+<li><p>Running regressions in R is extremely simple, very straightforwd (though doing things with standard errors requires a little extra work)</p></li>
 <li><p>Most basic, catch-all regression function in R is <em>glm</em></p></li>
 <li><p><em>glm</em> fits a generalized linear model with your choice of family/link function (gaussian, logit, poisson, etc.)</p></li>
 <li><p><em>lm</em> is just a standard linear regression (equivalent to glm with family=gaussian(link=&ldquo;identity&rdquo;))</p></li>
+<li><p>The basic glm call looks something like this:</p></li>
 </ul>
 
-<h1>glm</h1>
-
-<p>The basic glm call looks something like this:</p>
-
-<pre><code class="r">glm(formula = y ~ x1 + x2 + x3 + ..., family = familyname(link = &quot;linkname&quot;), 
-    data = )
+<pre><code class="r">glm(formula=y~x1+x2+x3+..., family=familyname(link=&quot;linkname&quot;), data=)
 </code></pre>
 
-<p>There are a whole bunch of families and links to use (help(family) for a full list), but some essentials are <strong>binomial(link = &ldquo;logit&rdquo;)</strong>, <strong>gaussian(link = &ldquo;identity&rdquo;)</strong>, and <strong>poisson(link = &ldquo;log&rdquo;)</strong></p>
+<ul>
+<li><p>There are a bunch of families and links to use (help(family) for a full list), but some essentials are <strong>binomial(link = &ldquo;logit&rdquo;)</strong>, <strong>gaussian(link = &ldquo;identity&rdquo;)</strong>, and <strong>poisson(link = &ldquo;log&rdquo;)</strong></p></li>
+<li><p>Example: suppose we want to regress the tip percent on the total bill and the size of the party, as well as the gender and smoker status of the tipper.  The glm call would be something like this:</p></li>
+</ul>
 
-<h1>An Example</h1>
-
-<p>Suppose we want to regress being an old man on political party identification, income, and religion using a logit model.  The glm call would be something like this:</p>
-
-<pre><code class="r">oldman.reg &lt;- glm(formula = old.man ~ partyid + income + relign8, family = binomial(link = &quot;logit&quot;), 
-    data = oldmendat)
+<pre><code class="r"># Regress tip percent on total bill and party size
+reg&lt;-glm(formula=tip.pct~total_bill+size+sex+smoker, 
+                family=gaussian, data=tips)
 </code></pre>
 
-<p>When we store this regression in an object, we get access to several items of interest</p>
+<ul>
+<li>When we store this regression in an object, we get access to several items of interest</li>
+</ul>
 
-<pre><code class="r">objects(oldman.reg)
+<pre><code class="r"># View objects contained in the regression output
+objects(reg)
 </code></pre>
 
 <pre><code>##  [1] &quot;aic&quot;               &quot;boundary&quot;          &quot;call&quot;             
@@ -1586,403 +1388,258 @@ print(wb.recast)
 ## [10] &quot;df.null&quot;           &quot;df.residual&quot;       &quot;effects&quot;          
 ## [13] &quot;family&quot;            &quot;fitted.values&quot;     &quot;formula&quot;          
 ## [16] &quot;iter&quot;              &quot;linear.predictors&quot; &quot;method&quot;           
-## [19] &quot;model&quot;             &quot;na.action&quot;         &quot;null.deviance&quot;    
-## [22] &quot;offset&quot;            &quot;prior.weights&quot;     &quot;qr&quot;               
-## [25] &quot;R&quot;                 &quot;rank&quot;              &quot;residuals&quot;        
-## [28] &quot;terms&quot;             &quot;weights&quot;           &quot;xlevels&quot;          
-## [31] &quot;y&quot;
+## [19] &quot;model&quot;             &quot;null.deviance&quot;     &quot;offset&quot;           
+## [22] &quot;prior.weights&quot;     &quot;qr&quot;                &quot;R&quot;                
+## [25] &quot;rank&quot;              &quot;residuals&quot;         &quot;terms&quot;            
+## [28] &quot;weights&quot;           &quot;xlevels&quot;           &quot;y&quot;
 </code></pre>
 
-<pre><code class="r">oldman.reg$coefficients
+<pre><code class="r"># Examine regression coefficients
+reg$coefficients
 </code></pre>
 
-<pre><code>##            (Intercept)      partyidrepublican     partyidindependent 
-##                -2.0321                 0.0907                 0.1398 
-##  partyidsomething else  income$15,000-$29,999  income$30,000-$49,999 
-##                -0.7690                -0.1353                -0.5616 
-##  income$50,000-$74,999  income$75,000-$99,999        relign8catholic 
-##                -0.8756                -0.8373                -0.5462 
-##      relign8mormon/lds relign8other christian          relign8jewish 
-##                -0.5397                -1.8787                 0.1290 
-##          relign8muslim  relign8something else            relign8none 
-##                -1.6732                -1.7342                -1.2106
+<pre><code>## (Intercept)  total_bill        size     sexMale   smokerYes 
+##     19.5286     -0.2830      0.7483     -0.2544      1.0259
 </code></pre>
 
-<pre><code class="r">oldman.reg$df.residual
+<pre><code class="r"># Examine regression DoF
+reg$df.residual
 </code></pre>
 
-<pre><code>## [1] 62949
+<pre><code>## [1] 239
 </code></pre>
 
-<pre><code class="r">oldman.reg$aic
+<pre><code class="r"># Examine regression fit (AIC)
+reg$aic
 </code></pre>
 
-<pre><code>## [1] 23042
+<pre><code>## [1] 1553
 </code></pre>
 
-<h1>summary.glm()</h1>
+<ul>
+<li>R has a helpful summary method for regression objects</li>
+</ul>
 
-<p>But often times, we just want a nice summary.  R has a series of &ldquo;summary&rdquo; functions for certain object classes (&ldquo;glm&rdquo;, in this case) that automatically create nice overviews of the regression results from all the information contained in a fitted object.</p>
-
-<pre><code class="r">sum.oldman.reg &lt;- summary(oldman.reg)
-
-print(sum.oldman.reg)
+<pre><code class="r">summary(reg)
 </code></pre>
 
 <pre><code>## 
 ## Call:
-## glm(formula = old.man ~ partyid + income + relign8, family = binomial(link = &quot;logit&quot;), 
-##     data = oldmendat)
+## glm(formula = tip.pct ~ total_bill + size + sex + smoker, family = gaussian, 
+##     data = tips)
 ## 
 ## Deviance Residuals: 
 ##    Min      1Q  Median      3Q     Max  
-## -0.563  -0.376  -0.267  -0.193   3.239  
+## -10.29   -3.36   -0.31    2.47   51.29  
 ## 
 ## Coefficients:
-##                        Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)             -2.0321     0.0463  -43.86  &lt; 2e-16 ***
-## partyidrepublican        0.0907     0.0449    2.02  0.04319 *  
-## partyidindependent       0.1398     0.0500    2.80  0.00512 ** 
-## partyidsomething else   -0.7690     0.1420   -5.42  6.1e-08 ***
-## income$15,000-$29,999   -0.1353     0.0499   -2.71  0.00668 ** 
-## income$30,000-$49,999   -0.5616     0.0543  -10.35  &lt; 2e-16 ***
-## income$50,000-$74,999   -0.8756     0.0552  -15.85  &lt; 2e-16 ***
-## income$75,000-$99,999   -0.8373     0.1207   -6.93  4.1e-12 ***
-## relign8catholic         -0.5462     0.0461  -11.85  &lt; 2e-16 ***
-## relign8mormon/lds       -0.5397     0.1066   -5.06  4.1e-07 ***
-## relign8other christian  -1.8787     0.0745  -25.21  &lt; 2e-16 ***
-## relign8jewish            0.1290     0.1071    1.20  0.22856    
-## relign8muslim           -1.6732     0.4527   -3.70  0.00022 ***
-## relign8something else   -1.7342     0.1249  -13.88  &lt; 2e-16 ***
-## relign8none             -1.2106     0.0794  -15.25  &lt; 2e-16 ***
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  19.5286     1.2235   15.96  &lt; 2e-16 ***
+## total_bill   -0.2830     0.0533   -5.31  2.5e-07 ***
+## size          0.7483     0.4978    1.50     0.13    
+## sexMale      -0.2544     0.7773   -0.33     0.74    
+## smokerYes     1.0259     0.7825    1.31     0.19    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## (Dispersion parameter for binomial family taken to be 1)
+## (Dispersion parameter for gaussian family taken to be 33.11)
 ## 
-##     Null deviance: 24542  on 62963  degrees of freedom
-## Residual deviance: 23012  on 62949  degrees of freedom
-##   (11324 observations deleted due to missingness)
-## AIC: 23042
+##     Null deviance: 9063.4  on 243  degrees of freedom
+## Residual deviance: 7913.0  on 239  degrees of freedom
+## AIC: 1553
 ## 
-## Number of Fisher Scoring iterations: 7
+## Number of Fisher Scoring iterations: 2
 </code></pre>
 
-<p>Can also extract useful things from the summary object (like a matrix of coefficient estimates&hellip;)</p>
+<ul>
+<li>Can also extract useful things from the summary object</li>
+</ul>
 
-<pre><code class="r">objects(sum.oldman.reg)
+<pre><code class="r"># Store summary method results
+sum.reg&lt;-summary(reg)
+# View summary method results objects
+objects(sum.reg)
 </code></pre>
 
 <pre><code>##  [1] &quot;aic&quot;            &quot;aliased&quot;        &quot;call&quot;           &quot;coefficients&quot;  
 ##  [5] &quot;contrasts&quot;      &quot;cov.scaled&quot;     &quot;cov.unscaled&quot;   &quot;deviance&quot;      
 ##  [9] &quot;deviance.resid&quot; &quot;df&quot;             &quot;df.null&quot;        &quot;df.residual&quot;   
-## [13] &quot;dispersion&quot;     &quot;family&quot;         &quot;iter&quot;           &quot;na.action&quot;     
-## [17] &quot;null.deviance&quot;  &quot;terms&quot;
+## [13] &quot;dispersion&quot;     &quot;family&quot;         &quot;iter&quot;           &quot;null.deviance&quot; 
+## [17] &quot;terms&quot;
 </code></pre>
 
-<pre><code class="r">coef &lt;- sum.oldman.reg$coefficients
-print(coef)
+<pre><code class="r"># View table of coefficients
+sum.reg$coefficients
 </code></pre>
 
-<pre><code>##                        Estimate Std. Error z value   Pr(&gt;|z|)
-## (Intercept)             -2.0321    0.04634 -43.855  0.000e+00
-## partyidrepublican        0.0907    0.04486   2.022  4.319e-02
-## partyidindependent       0.1398    0.04995   2.800  5.118e-03
-## partyidsomething else   -0.7690    0.14196  -5.417  6.068e-08
-## income$15,000-$29,999   -0.1353    0.04988  -2.712  6.684e-03
-## income$30,000-$49,999   -0.5616    0.05428 -10.347  4.326e-25
-## income$50,000-$74,999   -0.8756    0.05524 -15.851  1.391e-56
-## income$75,000-$99,999   -0.8373    0.12075  -6.935  4.074e-12
-## relign8catholic         -0.5462    0.04610 -11.848  2.198e-32
-## relign8mormon/lds       -0.5397    0.10661  -5.062  4.146e-07
-## relign8other christian  -1.8787    0.07451 -25.215 2.746e-140
-## relign8jewish            0.1290    0.10711   1.204  2.286e-01
-## relign8muslim           -1.6732    0.45273  -3.696  2.192e-04
-## relign8something else   -1.7342    0.12494 -13.881  8.284e-44
-## relign8none             -1.2106    0.07940 -15.248  1.693e-52
+<pre><code>##             Estimate Std. Error t value  Pr(&gt;|t|)
+## (Intercept)  19.5286    1.22355 15.9607 1.583e-39
+## total_bill   -0.2830    0.05327 -5.3117 2.484e-07
+## size          0.7483    0.49784  1.5030 1.341e-01
+## sexMale      -0.2544    0.77730 -0.3273 7.437e-01
+## smokerYes     1.0259    0.78249  1.3111 1.911e-01
 </code></pre>
 
-<h1>Factors with glm</h1>
+<ul>
+<li><p>Note that, in our results, R has broken up our variables into their different factor levels (as it will do whenever your regressors have factor levels)</p></li>
+<li><p>If your data aren&#39;t factorized, you can tell glm to factorize a variable (i.e. create dummy variables on the fly) by writing</p></li>
+</ul>
 
-<p>Note that, in our results, R has broken up our variables into their different factor levels (as it will do whenever your regressors have factor levels)</p>
-
-<p>If your data aren&#39;t factorized, you can tell glm to factorize a variable (i.e. create dummy variables on the fly) by writing</p>
-
-<pre><code class="r">glm(formula = y ~ x1 + x2 + factor(x3), family = family(link = &quot;link&quot;), data = data)
+<pre><code class="r">glm(formula=y~x1+x2+factor(x3), family=family(link=&quot;link&quot;), data=)
 </code></pre>
 
-<p>This is really helpful for doing fixed effects (although you may need to use either the package <em>plm</em>, or de-mean the data in advance, if you want two-way fixed effects &ndash; and careful with those standard errors)</p>
+<ul>
+<li>There are also some useful shortcuts for regressing on interaction terms:</li>
+</ul>
 
-<h1>Interactions with glm</h1>
+<p><strong>x1:x2</strong> interacts all terms in x1 with all terms in x2</p>
 
-<p>x1:x2 interacts all terms in x1 with all terms in x2</p>
-
-<pre><code class="r">summary(glm(formula = old.man ~ partyid:relign8, family = binomial(link = &quot;logit&quot;), 
-    data = oldmendat))
+<pre><code class="r">summary(glm(formula=tip.pct~total_bill+size+sex:smoker, 
+                family=gaussian, data=tips))
 </code></pre>
 
 <pre><code>## 
 ## Call:
-## glm(formula = old.man ~ partyid:relign8, family = binomial(link = &quot;logit&quot;), 
-##     data = oldmendat)
+## glm(formula = tip.pct ~ total_bill + size + sex:smoker, family = gaussian, 
+##     data = tips)
 ## 
 ## Deviance Residuals: 
 ##    Min      1Q  Median      3Q     Max  
-## -0.474  -0.416  -0.321  -0.190   3.018  
+## -10.92   -3.51   -0.56    2.75   51.96  
 ## 
 ## Coefficients: (1 not defined because of singularities)
-##                                               Estimate Std. Error z value
-## (Intercept)                                   -4.38670    0.35575  -12.33
-## partyiddemocrat:relign8protestant              2.05179    0.35847    5.72
-## partyidrepublican:relign8protestant            1.98342    0.35764    5.55
-## partyidindependent:relign8protestant           2.12719    0.35953    5.92
-## partyidsomething else:relign8protestant        1.26875    0.41027    3.09
-## partyiddemocrat:relign8catholic                1.44507    0.36035    4.01
-## partyidrepublican:relign8catholic              1.54119    0.36084    4.27
-## partyidindependent:relign8catholic             1.50967    0.36320    4.16
-## partyidsomething else:relign8catholic          0.70361    0.45322    1.55
-## partyiddemocrat:relign8mormon/lds              1.83103    0.41190    4.45
-## partyidrepublican:relign8mormon/lds            1.37272    0.38074    3.61
-## partyidindependent:relign8mormon/lds           1.75105    0.42141    4.16
-## partyidsomething else:relign8mormon/lds        0.84574    0.80065    1.06
-## partyiddemocrat:relign8other christian         0.37790    0.36992    1.02
-## partyidrepublican:relign8other christian       0.16285    0.37294    0.44
-## partyidindependent:relign8other christian      0.40099    0.38279    1.05
-## partyidsomething else:relign8other christian   0.07055    0.47738    0.15
-## partyiddemocrat:relign8jewish                  1.92954    0.37784    5.11
-## partyidrepublican:relign8jewish                2.25951    0.41859    5.40
-## partyidindependent:relign8jewish               2.19307    0.40300    5.44
-## partyidsomething else:relign8jewish          -10.17936  130.15390   -0.08
-## partyiddemocrat:relign8muslim                  0.05597    0.79570    0.07
-## partyidrepublican:relign8muslim                1.77174    0.69590    2.55
-## partyidindependent:relign8muslim               0.00468    1.06727    0.00
-## partyidsomething else:relign8muslim          -10.17936  202.51553   -0.05
-## partyiddemocrat:relign8something else          0.24819    0.39916    0.62
-## partyidrepublican:relign8something else        0.86476    0.42194    2.05
-## partyidindependent:relign8something else       0.55546    0.40917    1.36
-## partyidsomething else:relign8something else   -0.15659    0.61580   -0.25
-## partyiddemocrat:relign8none                    0.79135    0.37254    2.12
-## partyidrepublican:relign8none                  1.09171    0.38746    2.82
-## partyidindependent:relign8none                 0.97190    0.37511    2.59
-## partyidsomething else:relign8none                   NA         NA      NA
-##                                              Pr(&gt;|z|)    
-## (Intercept)                                   &lt; 2e-16 ***
-## partyiddemocrat:relign8protestant             1.0e-08 ***
-## partyidrepublican:relign8protestant           2.9e-08 ***
-## partyidindependent:relign8protestant          3.3e-09 ***
-## partyidsomething else:relign8protestant       0.00199 ** 
-## partyiddemocrat:relign8catholic               6.1e-05 ***
-## partyidrepublican:relign8catholic             1.9e-05 ***
-## partyidindependent:relign8catholic            3.2e-05 ***
-## partyidsomething else:relign8catholic         0.12055    
-## partyiddemocrat:relign8mormon/lds             8.8e-06 ***
-## partyidrepublican:relign8mormon/lds           0.00031 ***
-## partyidindependent:relign8mormon/lds          3.2e-05 ***
-## partyidsomething else:relign8mormon/lds       0.29082    
-## partyiddemocrat:relign8other christian        0.30698    
-## partyidrepublican:relign8other christian      0.66236    
-## partyidindependent:relign8other christian     0.29484    
-## partyidsomething else:relign8other christian  0.88251    
-## partyiddemocrat:relign8jewish                 3.3e-07 ***
-## partyidrepublican:relign8jewish               6.7e-08 ***
-## partyidindependent:relign8jewish              5.3e-08 ***
-## partyidsomething else:relign8jewish           0.93766    
-## partyiddemocrat:relign8muslim                 0.94392    
-## partyidrepublican:relign8muslim               0.01090 *  
-## partyidindependent:relign8muslim              0.99650    
-## partyidsomething else:relign8muslim           0.95991    
-## partyiddemocrat:relign8something else         0.53409    
-## partyidrepublican:relign8something else       0.04041 *  
-## partyidindependent:relign8something else      0.17462    
-## partyidsomething else:relign8something else   0.79927    
-## partyiddemocrat:relign8none                   0.03365 *  
-## partyidrepublican:relign8none                 0.00484 ** 
-## partyidindependent:relign8none                0.00957 ** 
-## partyidsomething else:relign8none                  NA    
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)          19.6104     1.2989   15.10  &lt; 2e-16 ***
+## total_bill           -0.2774     0.0532   -5.22  3.9e-07 ***
+## size                  0.7394     0.4959    1.49     0.14    
+## sexFemale:smokerNo   -0.8129     1.1044   -0.74     0.46    
+## sexMale:smokerNo     -0.0582     0.9653   -0.06     0.95    
+## sexFemale:smokerYes   1.9337     1.2553    1.54     0.12    
+## sexMale:smokerYes         NA         NA      NA       NA    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## (Dispersion parameter for binomial family taken to be 1)
+## (Dispersion parameter for gaussian family taken to be 32.85)
 ## 
-##     Null deviance: 26783  on 66822  degrees of freedom
-## Residual deviance: 25533  on 66791  degrees of freedom
-##   (7465 observations deleted due to missingness)
-## AIC: 25597
+##     Null deviance: 9063.4  on 243  degrees of freedom
+## Residual deviance: 7818.2  on 238  degrees of freedom
+## AIC: 1552
 ## 
-## Number of Fisher Scoring iterations: 13
+## Number of Fisher Scoring iterations: 2
 </code></pre>
 
-<h1>Interactions with glm</h1>
+<p><strong>x1*x2</strong> produces the cross of x1 and x2, or x1+x2+x1:x2</p>
 
-<p>x1*x2 produces the cross of x1 and x2, or x1+x2+x1:x2</p>
-
-<pre><code class="r">summary(glm(formula = old.man ~ partyid * relign8, family = binomial(link = &quot;logit&quot;), 
-    data = oldmendat))
+<pre><code class="r">summary(glm(formula=tip.pct~total_bill+size+sex*smoker, 
+                family=gaussian, data=tips))
 </code></pre>
 
 <pre><code>## 
 ## Call:
-## glm(formula = old.man ~ partyid * relign8, family = binomial(link = &quot;logit&quot;), 
-##     data = oldmendat)
+## glm(formula = tip.pct ~ total_bill + size + sex * smoker, family = gaussian, 
+##     data = tips)
 ## 
 ## Deviance Residuals: 
 ##    Min      1Q  Median      3Q     Max  
-## -0.474  -0.416  -0.321  -0.190   3.018  
+## -10.92   -3.51   -0.56    2.75   51.96  
 ## 
 ## Coefficients:
-##                                               Estimate Std. Error z value
-## (Intercept)                                   -2.33492    0.04414  -52.90
-## partyidrepublican                             -0.06837    0.05744   -1.19
-## partyidindependent                             0.07540    0.06823    1.11
-## partyidsomething else                         -0.78303    0.20909   -3.74
-## relign8catholic                               -0.60671    0.07245   -8.37
-## relign8mormon/lds                             -0.22076    0.21226   -1.04
-## relign8other christian                        -1.67388    0.11060  -15.13
-## relign8jewish                                 -0.12225    0.13473   -0.91
-## relign8muslim                                 -1.99582    0.71311   -2.80
-## relign8something else                         -1.80360    0.18633   -9.68
-## relign8none                                   -1.26044    0.11908  -10.58
-## partyidrepublican:relign8catholic              0.16449    0.10123    1.62
-## partyidindependent:relign8catholic            -0.01080    0.11540   -0.09
-## partyidsomething else:relign8catholic          0.04157    0.35479    0.12
-## partyidrepublican:relign8mormon/lds           -0.38994    0.25458   -1.53
-## partyidindependent:relign8mormon/lds          -0.15538    0.31431   -0.49
-## partyidsomething else:relign8mormon/lds       -0.20225    0.77545   -0.26
-## partyidrepublican:relign8other christian      -0.14668    0.16159   -0.91
-## partyidindependent:relign8other christian     -0.05231    0.18685   -0.28
-## partyidsomething else:relign8other christian   0.47568    0.39413    1.21
-## partyidrepublican:relign8jewish                0.39834    0.26108    1.53
-## partyidindependent:relign8jewish               0.18813    0.23815    0.79
-## partyidsomething else:relign8jewish          -11.32587  130.15364   -0.09
-## partyidrepublican:relign8muslim                1.78415    0.93145    1.92
-## partyidindependent:relign8muslim              -0.12670    1.23440   -0.10
-## partyidsomething else:relign8muslim           -9.45230  202.51658   -0.05
-## partyidrepublican:relign8something else        0.68495    0.29589    2.31
-## partyidindependent:relign8something else       0.23187    0.27981    0.83
-## partyidsomething else:relign8something else    0.37825    0.57372    0.66
-## partyidrepublican:relign8none                  0.36873    0.19774    1.86
-## partyidindependent:relign8none                 0.10515    0.17617    0.60
-## partyidsomething else:relign8none             -0.00832    0.42721   -0.02
-##                                              Pr(&gt;|z|)    
-## (Intercept)                                   &lt; 2e-16 ***
-## partyidrepublican                             0.23393    
-## partyidindependent                            0.26909    
-## partyidsomething else                         0.00018 ***
-## relign8catholic                               &lt; 2e-16 ***
-## relign8mormon/lds                             0.29832    
-## relign8other christian                        &lt; 2e-16 ***
-## relign8jewish                                 0.36423    
-## relign8muslim                                 0.00513 ** 
-## relign8something else                         &lt; 2e-16 ***
-## relign8none                                   &lt; 2e-16 ***
-## partyidrepublican:relign8catholic             0.10419    
-## partyidindependent:relign8catholic            0.92543    
-## partyidsomething else:relign8catholic         0.90673    
-## partyidrepublican:relign8mormon/lds           0.12560    
-## partyidindependent:relign8mormon/lds          0.62107    
-## partyidsomething else:relign8mormon/lds       0.79423    
-## partyidrepublican:relign8other christian      0.36400    
-## partyidindependent:relign8other christian     0.77950    
-## partyidsomething else:relign8other christian  0.22746    
-## partyidrepublican:relign8jewish               0.12708    
-## partyidindependent:relign8jewish              0.42956    
-## partyidsomething else:relign8jewish           0.93066    
-## partyidrepublican:relign8muslim               0.05544 .  
-## partyidindependent:relign8muslim              0.91825    
-## partyidsomething else:relign8muslim           0.96277    
-## partyidrepublican:relign8something else       0.02062 *  
-## partyidindependent:relign8something else      0.40730    
-## partyidsomething else:relign8something else   0.50970    
-## partyidrepublican:relign8none                 0.06222 .  
-## partyidindependent:relign8none                0.55060    
-## partyidsomething else:relign8none             0.98447    
+##                   Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)        18.7975     1.2924   14.54  &lt; 2e-16 ***
+## total_bill         -0.2774     0.0532   -5.22  3.9e-07 ***
+## size                0.7394     0.4959    1.49    0.137    
+## sexMale             0.7547     0.9757    0.77    0.440    
+## smokerYes           2.7466     1.2777    2.15    0.033 *  
+## sexMale:smokerYes  -2.6884     1.5819   -1.70    0.091 .  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## (Dispersion parameter for binomial family taken to be 1)
+## (Dispersion parameter for gaussian family taken to be 32.85)
 ## 
-##     Null deviance: 26783  on 66822  degrees of freedom
-## Residual deviance: 25533  on 66791  degrees of freedom
-##   (7465 observations deleted due to missingness)
-## AIC: 25597
+##     Null deviance: 9063.4  on 243  degrees of freedom
+## Residual deviance: 7818.2  on 238  degrees of freedom
+## AIC: 1552
 ## 
-## Number of Fisher Scoring iterations: 13
+## Number of Fisher Scoring iterations: 2
 </code></pre>
 
-<h1>Regression Diagnostics</h1>
+<h1>Inferences/Regression Diagnostics</h1>
 
-<p>The package <em>lmtest</em> has most of what you&#39;ll need to run basic regression diagnostics.</p>
+<ul>
+<li><p>The package <em>lmtest</em> has most of what you&#39;ll need to run basic regression diagnostics.</p></li>
+<li><p>Breusch-Pagan Test for Heteroscedasticity </p></li>
+</ul>
 
-<p>Breusch-Pagan Test for Heteroscedasticity </p>
-
-<pre><code class="r">bptest(oldman.reg)
+<pre><code class="r">bptest(reg)
 </code></pre>
 
 <pre><code>## 
 ##  studentized Breusch-Pagan test
 ## 
-## data:  oldman.reg
-## BP = 1497, df = 14, p-value &lt; 2.2e-16
+## data:  reg
+## BP = 6.968, df = 4, p-value = 0.1376
 </code></pre>
 
-<p>Breusch-Pagan Test for Heteroscedasticity </p>
+<ul>
+<li>Breusch-Godfrey Test for Higher-order Serial Correlation </li>
+</ul>
 
-<pre><code class="r">bptest(oldman.reg)
+<pre><code class="r">bgtest(reg)
 </code></pre>
 
 <pre><code>## 
-##  studentized Breusch-Pagan test
+##  Breusch-Godfrey test for serial correlation of order up to 1
 ## 
-## data:  oldman.reg
-## BP = 1497, df = 14, p-value &lt; 2.2e-16
+## data:  reg
+## LM test = 0.0012, df = 1, p-value = 0.9721
 </code></pre>
 
-<p>Also have tests for autocorrelation of disturbances (Durwin-Watson), higher-order serial correlation (Breusch-Godfrey)</p>
+<ul>
+<li>Durbin-Watson Test for Autocorrelation of Disturbances</li>
+</ul>
 
-<p>Can also estimate heteroskedasticity/autocorrelation consistent standard errors via <em>coeftest</em> and the <em>sandwich</em> package</p>
+<pre><code class="r">dwtest(reg)
+</code></pre>
 
-<pre><code class="r">coeftest(x = oldman.reg, vcov. = vcovHC)
+<pre><code>## 
+##  Durbin-Watson test
+## 
+## data:  reg
+## DW = 1.991, p-value = 0.4502
+## alternative hypothesis: true autocorrelation is greater than 0
+</code></pre>
+
+<ul>
+<li>Can also estimate heteroskedasticity/autocorrelation consistent standard errors via <em>coeftest</em> and the <em>sandwich</em> package</li>
+</ul>
+
+<pre><code class="r">coeftest(x=reg, vcov.=vcovHC)
 </code></pre>
 
 <pre><code>## 
 ## z test of coefficients:
 ## 
-##                        Estimate Std. Error z value Pr(&gt;|z|)    
-## (Intercept)             -2.0321     0.0474  -42.86  &lt; 2e-16 ***
-## partyidrepublican        0.0907     0.0451    2.01  0.04440 *  
-## partyidindependent       0.1398     0.0498    2.81  0.00499 ** 
-## partyidsomething else   -0.7690     0.1425   -5.40  6.8e-08 ***
-## income$15,000-$29,999   -0.1353     0.0497   -2.72  0.00649 ** 
-## income$30,000-$49,999   -0.5616     0.0542  -10.35  &lt; 2e-16 ***
-## income$50,000-$74,999   -0.8756     0.0554  -15.81  &lt; 2e-16 ***
-## income$75,000-$99,999   -0.8373     0.1204   -6.95  3.6e-12 ***
-## relign8catholic         -0.5462     0.0462  -11.81  &lt; 2e-16 ***
-## relign8mormon/lds       -0.5397     0.1072   -5.04  4.8e-07 ***
-## relign8other christian  -1.8787     0.0744  -25.26  &lt; 2e-16 ***
-## relign8jewish            0.1290     0.1073    1.20  0.22938    
-## relign8muslim           -1.6732     0.4559   -3.67  0.00024 ***
-## relign8something else   -1.7342     0.1258  -13.79  &lt; 2e-16 ***
-## relign8none             -1.2106     0.0802  -15.09  &lt; 2e-16 ***
+##             Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)  19.5286     1.0849   18.00  &lt; 2e-16 ***
+## total_bill   -0.2830     0.0756   -3.74  0.00018 ***
+## size          0.7483     0.4684    1.60  0.11016    
+## sexMale      -0.2544     0.7632   -0.33  0.73887    
+## smokerYes     1.0259     0.9985    1.03  0.30422    
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 </code></pre>
 
-<p>For panel data, the <em>plm</em> package also allows you to compute panel-corrected (Beck-Katz) standard errors</p>
-
 <h1>Breakout and overnight homework</h1>
 
-<p>Consider the voting preference data. Fit a logistic regression to the data for California (state number 5), modeling preference for Bush (pres04=2) vs. Kerry (pres04=1) (removing the other candidates) as a function of income, potentially including additional covariates such as sex, race and age. What do you find in terms of how income associates with voting preference?</p>
+<p>Consider the tipping data. Fit a logistic regression to the data for SUNDAY, modeling the probability of leaving a good tip (&gt;=15%) as a function of the total bill and the size of the party, potentially including additional covariates such as sex, smoker status, and time. What do you find in terms of how the total bill associates with the probability of leaving a good tip?</p>
 
-<p>How do you predict the probability of voting for Kerry for a given set of covariate values? Consider the <code>predict.glm()</code> function and what its help page says. Or write code that converts from the model coefficients to the probability scale. Compare the predicted probability of voting for Kerry for a white male of high income with a white male of low income. Do the same for white females. </p>
+<p>How do you predict the probability of leaving a good tip for a given set of covariate values? Consider the <code>predict.glm()</code> function and what its help page says. Or write code that converts from the model coefficients to the probability scale. Compare the predicted probability of leaving a good tip for a party of two with a party of four.</p>
 
 <p>If you&#39;re feeling ambitious&hellip;</p>
 
-<p>Using the tools for stratified analyses we have seen today, fit separate models of voting preference as a function of (personal) income and sex (and potentially additional covariates) for each state (or a collection of states of interest to you). How do the effect of income and sex vary by state? The file stateIncome.txt is a tab-delimited file of mean income by state. See if the effects of income and sex are correlated with the state-level mean income. </p>
+<p>Using the tools for stratified analyses we have seen today, fit separate models of tipping behavior across different days. How do the effects of the total bill amount and size of party vary by day?</p>
 
 <p>For our purposes here, don&#39;t worry much about the uncertainty in the estimates you get in the logistic regression modeling, but of course in a real analysis you would need to do this. </p>
-
-<p>Note that the translation from the state numbers to names can be obtained by looking at:
-<code>numToName &lt;- data.frame(name = row.names(state.x77), num = 1:50)</code>.</p>
 
 <h1>Breakout Answers!</h1>
 
