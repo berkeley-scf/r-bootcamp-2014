@@ -5,21 +5,17 @@
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
-library(plyr)
-library(reshape2)
 library(ggplot2)
-library(lattice)
-library(gridExtra)
-mydata<-read.csv("../../data/cpds.csv")
+data<-read.csv("../../data/cpds.csv")
 ```
 
-Breakout Questions:
+# Breakout Questions:
 
 1) Not all variable types are suitable for representation by every ggplot aesthetic.  What kinds of variables can the aesthetics color, size, and shape meaningfully represent? 
 
-2) ggplot graphics are often layered, with some data represented by a set of aesthetics being overlayed upon a different combination of data and aesthetics.  Can you fit simple linear trend lines to every facet of the grided voter turnout graph?  Hint: use a simple linear regression and consult ?geom_smooth
+2) Using ggplot2, create a trellis plot where, for a given country, each panel uses a) HOLLOW CIRCLES to plot real GDP growth over time, and b) a red LOESS smoother without standard errors to plot the trend in unemployment over time.  BONUS: limit the years shown to the period from 2000 to 2010, and turn off the grey background.
 
-Breakout Answers:
+# Breakout Answers:
 
 1) 
 
@@ -30,8 +26,17 @@ Shape: discrete, unordered
 2) 
 
 ```{r}
-ggplot(data=mydata, aes(x=year, y=vturn))+geom_point()+facet_wrap(~country)+
-  geom_smooth(method="lm", color="red", size=1)
+library(ggplot2)
+
+# Create plot
+plot<-ggplot(data=data)+
+  geom_point(aes(x = year, y = realgdpgr),shape=1)+
+  geom_smooth(aes(x = year, y = unemp), se=F, method="loess", color="red")+
+  facet_wrap(facets = ~country)
+plot
+
+# Limit x-axis range and turn off grey background
+plot+xlim(2000,2010)+theme_bw()
 ```
 
 

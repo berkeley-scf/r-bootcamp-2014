@@ -1,68 +1,110 @@
 % R bootcamp, Module 5: Breakout solutions
 % August 2014, UC Berkeley
-% Chris Paciorek and Chris Krogslund
+% Chris Krogslund
 
 ```{r chunksetup, include=FALSE} 
 # include any code here you don't want to show up in the document,
 # e.g. package and dataset loading
-require(foreign)
-require(fields)
-vote <- read.dta('../../data/2004_labeled_processed_race.dta')
-earnings <- read.dta('../../data/heights.dta')
 ```
 
-# Breakout
+# Breakout and overnight homework
 
-Consider the voting preference data. Fit a logistic regression to the data for California (state number 5), modeling preference for Bush (pres04=2) vs. Kerry (pres04=1) (removing the other candidates) as a function of income, potentially including additional covariates such as sex, race and age. What do you find in terms of how income associates with voting preference?
+Consider the tipping data. Fit a logistic regression to the data for SUNDAY, modeling the probability of leaving a good tip (>=15%) as a function of the total bill and the size of the party, potentially including additional covariates such as sex, smoker status, and time. What do you find in terms of how the total bill associates with the probability of leaving a good tip?
+
+How do you predict the probability of leaving a good tip for a given set of covariate values? Consider the `predict.glm()` function and what its help page says. Or write code that converts from the model coefficients to the probability scale. Compare the predicted probability of leaving a good tip for a party of two with a party of four.
+
+# Breakout Solutions
 
 ```{r}
-ca <- vote[vote$state == 5, ]
-ca <- ca[ca$pres04 == 1 | ca$pres04 == 2, ]
-ca$pres04[ca$pres04 == 2] <- 0 # 0=bush; 1=kerry
-mod0 <- glm(pres04 ~ income, data = ca, family = binomial)
-mod1 <- glm(pres04 ~ income + race + sex, data = ca, family = binomial)
-# stratified models
-mod_white <- glm(pres04 ~ income + sex, data = ca[ca$race == 'white', ], 
-  family = binomial)
-mod_black <- glm(pres04 ~ income + sex, data = ca[ca$race == 'black', ], 
-  family = binomial)
+library(reshape2)
+
+# Load data
+data(tips)
+
+# Create binary indicator for good tip (i.e. >=15%)
+tips$good.tip<-ifelse(test = tips$tip/tips$total_bill>=0.15, yes = 1, no = 0)
+
+# Subset the data to include just observations from Sundays
+tips.sun<-tips[tips$day=="Sun",]
+
+# Regress good.tip on total_bill and size; get summary output; isolate total_bill coefficient
+reg<-glm(formula = good.tip~total_bill+size, family = binomial(logit), data = tips.sun)
+sum.reg<-summary(reg)
+sum.reg$coefficients
+
+# Plot predicted values versus total_bill
+plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+
+# Re-estimate model with interactions
+reg<-glm(formula = good.tip~total_bill*size, family = binomial(logit), data = tips.sun)
+sum.reg<-summary(reg)
+sum.reg$coefficients
+
+# Plot predicted values versus total_bill
+plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+
+# Re-estimate model with quadratic term on total_bill
+reg<-glm(formula = good.tip~I(total_bill^2)+total_bill+size, family = binomial(logit), data = tips.sun)
+sum.reg<-summary(reg)
+sum.reg$coefficients
+
+# Plot predicted values versus total_bill
+plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+
+# Re-estimate model with additional covariates
+reg<-glm(formula = good.tip~total_bill+size+sex+smoker, family = binomial(logit), data = tips.sun)
+sum.reg<-summary(reg)
+sum.reg$coefficients
+
+# Plot predicted values versus total_bill
+plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+
+# Re-estimate model with interactions and additional covariates
+reg<-glm(formula = good.tip~total_bill*size+sex+smoker, family = binomial(logit), data = tips.sun)
+sum.reg<-summary(reg)
+sum.reg$coefficients
+
+# Plot predicted values versus total_bill
+plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+
+# Re-estimate model with quadratic term on total_bill and additional covariates
+reg<-glm(formula = good.tip~I(total_bill^2)+total_bill+size+sex+smoker, family = binomial(logit), data = tips.sun)
+sum.reg<-summary(reg)
+sum.reg$coefficients
+
+# Plot predicted values versus total_bill
+plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+
+# Compare predicted probability of leaving a good tip for group sizes of two and four
+plot(x = tips.sun$size, y = exp(predict(object = reg)), xlab = "Size of Party", ylab = "Pr(Good Tip)")
+mean(exp(predict(object = reg))[tips.sun$size==2])
+mean(exp(predict(object = reg))[tips.sun$size==4])
 ```
 
-How do you predict the probability of voting for Kerry for a given set of covariate values? Consider the `predict.glm()` function and what its help page says. Or write code that converts from the model coefficients to the probability scale. Compare the predicted probability of voting for Kerry for a white male of high income with a white male of low income. Do the same for white females. 
+# Ambitious Homework
 
+Using the tools for stratified analyses we have seen today, fit separate models of tipping behavior across different days. How do the effects of the total bill amount and size of party vary by day?
+
+For our purposes here, don't worry much about the uncertainty in the estimates you get in the logistic regression modeling, but of course in a real analysis you would need to do this. 
+
+# Ambitious Solutions
 ```{r}
-predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', 
-race = 'white'), type = 'response')
-predict(mod1, newdata = data.frame(income = "$15,000-$29,999", sex = 'female', 
-race = 'white'), type = 'response')
-predict(mod1, newdata = data.frame(income = "$75,000-$99,999", sex = 'female', 
-race = 'black'), type = 'response')
-```
-
-
-# Ambitious solutions
-
-Using the tools for stratified analyses we have seen today, fit separate models of voting preference as a function of (personal) income and sex (and potentially additional covariates) for each state (or a collection of states of interest to you). How do the effect of income and sex vary by state? The file *stateIncome.txt* is a tab-delimited file of mean income by state. See if the effects of income and sex are correlated with the state-level mean income. 
-
-The following only barely scratches the surface of what one could/should do.
-
-```{r}
-vote_white <- vote[vote$race == "white", ]
-vote_white <- vote_white[vote_white$pres04 == 1 | vote_white$pres04 == 2, ]
-vote_white$pres04[vote_white$pres04 == 2] <- 0 # 0=bush; 1=kerry
-spl <- split(vote_white, vote_white$state)
-out <- sapply(spl, function(x) {
-  mod <- glm(pres04 ~ income + sex, data = x, family = binomial)
-  mod$coef
+# Compare effects of tota_bill and party size across days
+out<-lapply(X = unique(tips$day), FUN = function(day){
+  reg<-glm(formula = good.tip~total_bill+size+sex+smoker, family = binomial(logit), data = tips[tips$day==day,])
+  data.frame(summary(reg)$coefficients, day=day, var=rownames(summary(reg)$coefficients))
 })
-
-stateIncome <- read.table('../../data/stateIncome.txt', sep = '\t', stringsAsFactors = FALSE)
-names(stateIncome) <- c('state', 'avgIncome')
-stateIncome <- stateIncome[-9, ] # remove DC
-identical(stateIncome[ , 1], row.names(state.x77)) # check ordering
-
-plot(stateIncome$avgIncome, out[6, ], xlab = 'average state income', ylab = 'female effect')
-# identify(stateIncome$avgIncome, out[6, ])
-stateIncome[37, ] # perhaps a large standard error?
+out<-do.call("rbind", out)
+out[out$var=="total_bill",]
+out[out$var=="size",]
 ```
+
+
+
+
+
+
+
+
+
 
