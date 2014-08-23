@@ -1,4 +1,4 @@
-R bootcamp, Module 0: Recruit processing
+% R bootcamp, Module 0: Recruit processing
 % August 2014, UC Berkeley
 % Chris Paciorek
 
