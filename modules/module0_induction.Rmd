@@ -28,7 +28,7 @@ If you need Airbears access as a guest (i.e., you don't have a CalNet ID), try:
 
 # A little warm-up
 
-This isn't really all that related to R, programming or statistics, but check out the 'binary solo' in this [Flight of the Conchords song](http://www.geeksugar.com/Flight-Conchords-Binary-Robot-Video-19831449).
+This isn't really all that related to R, programming or statistics, but check out the 'binary solo' in this [Flight of the Conchords song](https://www.youtube.com/watch?v=B1BdQcJ2ZYY).
 
 # How we'll operate
 
