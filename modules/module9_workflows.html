@@ -388,7 +388,7 @@ execution, and reporting.  For more information, see Bioconductor&#39;s <a href=
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.864   0.036   0.901
+##   0.856   0.020   0.875
 </code></pre>
 
 <pre><code class="r">
@@ -399,8 +399,8 @@ benchmark(ifelse(x &lt; 0, x, 0), x[x &lt; 0] &lt;- 0, replications = 5, columns
 </code></pre>
 
 <pre><code>##   replications elapsed
-## 1            5   9.991
-## 2            5   1.246
+## 1            5   9.731
+## 2            5   1.226
 </code></pre>
 
 <h1>Profiling your code</h1>
@@ -475,8 +475,8 @@ gc()
 </code></pre>
 
 <pre><code>##             used  (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells    252020  13.5     531268  28.4    531268  28.4
-## Vcells 101187741 772.1  122921923 937.9 111194879 848.4
+## Ncells   1404469  75.1    2251281 120.3   2105982 112.5
+## Vcells 102679827 783.4  124566959 950.4 112686977 859.8
 </code></pre>
 
 <pre><code class="r">rm(x)
@@ -484,8 +484,8 @@ gc()
 </code></pre>
 
 <pre><code>##           used (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells  252037 13.5     531268  28.4    531268  28.4
-## Vcells 1187780  9.1   98337538 750.3 111194879 848.4
+## Ncells 1404486 75.1    2251281 120.3   2105982 112.5
+## Vcells 2679866 20.5   99653567 760.3 112686977 859.8
 </code></pre>
 
 <h1>Scripting</h1>

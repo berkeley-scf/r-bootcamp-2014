@@ -100,7 +100,7 @@ z &lt;- <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;fields&quot;</span>)</code></pre>
 <p>If you're on a network and are not the administrator of the machine, you may need to explicitly tell R to install it in a directory you are able to write in:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="st">&quot;fields&quot;</span>, <span class="dt">lib =</span> <span class="kw">file.path</span>(<span class="st">&quot;~&quot;</span>, <span class="st">&quot;R&quot;</span>))</code></pre>
-<p>If you're not using the VM, this would be a good point to install the various packages we need for the bootcamp, which can be done easily with the following command:</p>
+<p>If you're not using the VM, now (or at the break) would be a good point to install the various packages we need for the bootcamp, which can be done easily with the following command:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;RSQLite&quot;</span>, <span class="st">&quot;plyr&quot;</span>, <span class="st">&quot;reshape2&quot;</span>, <span class="st">&quot;ggplot2&quot;</span>, <span class="st">&quot;chron&quot;</span>, <span class="st">&quot;gridExtra&quot;</span>, 
     <span class="st">&quot;codetools&quot;</span>, <span class="st">&quot;rbenchmark&quot;</span>, <span class="st">&quot;lme4&quot;</span>, <span class="st">&quot;doParallel&quot;</span>, <span class="st">&quot;foreach&quot;</span>, <span class="st">&quot;xtable&quot;</span>, <span class="st">&quot;fields&quot;</span>), 
     <span class="dt">repos =</span> <span class="st">&quot;http://cran.cnr.berkeley.edu&quot;</span>)</code></pre>
@@ -133,7 +133,7 @@ z &lt;- <span class="kw">list</span>(<span class="dt">a =</span> <span class="dv
 y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 <span class="kw">lm</span>(y ~ x)</code></pre>
 <pre><code>## y ~ x
-## &lt;environment: 0x2059660&gt;</code></pre>
+## &lt;environment: 0x2bd9670&gt;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">stats::<span class="kw">lm</span>(y ~ x)</code></pre>
 <pre><code>## 
 ## Call:
@@ -141,7 +141,7 @@ y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 ## 
 ## Coefficients:
 ## (Intercept)            x  
-##       0.196        0.220</code></pre>
+##    -0.14675     -0.00847</code></pre>
 <p>Can you explain what is going on? Consider the results of <code>search()</code>.</p>
 <h3 id="looking-inside-a-package">Looking inside a package</h3>
 <p>Packages are available as &quot;Package source&quot;, namely the raw code and help files, and &quot;binaries&quot;, where stuff is packaged up for R to use efficiently.</p>
@@ -242,16 +242,10 @@ y &lt;- <span class="kw">rnorm</span>(<span class="dv">10</span>)
 ##   2</code></pre>
 <p><code>xtable()</code> formats tables for HTML and Latex (the default).</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(xtable)</code></pre>
-<pre><code>## Loading required package: xtable
-## 
-## Attaching package: 'xtable'
-## 
-## The following object is masked from 'package:spam':
-## 
-##     display</code></pre>
+<pre><code>## Loading required package: xtable</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">xtable</span>(<span class="kw">table</span>(vote$race, vote$pres04)), <span class="dt">type =</span> <span class="st">&quot;html&quot;</span>)</code></pre>
 <pre><code>## &lt;!-- html table generated in R 3.0.3 by xtable 1.7-1 package --&gt;
-## &lt;!-- Thu Aug 14 13:42:43 2014 --&gt;
+## &lt;!-- Sat Aug 23 00:37:05 2014 --&gt;
 ## &lt;TABLE border=1&gt;
 ## &lt;TR&gt; &lt;TH&gt;  &lt;/TH&gt; &lt;TH&gt; 0 &lt;/TH&gt; &lt;TH&gt; 1 &lt;/TH&gt; &lt;TH&gt; 2 &lt;/TH&gt; &lt;TH&gt; 3 &lt;/TH&gt; &lt;TH&gt; 4 &lt;/TH&gt; &lt;TH&gt; 9 &lt;/TH&gt;  &lt;/TR&gt;
 ##   &lt;TR&gt; &lt;TD align=&quot;right&quot;&gt; white &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 111 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 26184 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 33045 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 417 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt;  14 &lt;/TD&gt; &lt;TD align=&quot;right&quot;&gt; 409 &lt;/TD&gt; &lt;/TR&gt;
@@ -318,7 +312,7 @@ git push</code></pre>
 </div>
 <div class="section slide level1" id="breakout">
 <h1 id="breakout">Breakout</h1>
-<p>Nothing very formal here, but make sure you're able to install a package from CRAN and that you're able to read/write files from an arbitrary directory on your computer's filesystem. Grab one of us if you have any problems.</p>
+<p>Nothing very formal here, but make sure you're able to install the packages from CRAN (if you're not using the VM) and that you're able to read/write files from an arbitrary directory on your computer's filesystem. Grab one of us if you have any problems.</p>
 </div>
 </body>
 </html>

@@ -66,7 +66,7 @@ mod1 &lt;- <span class="kw">lm</span>(yc ~ x)
 mod2 &lt;- <span class="kw">glm</span>(yb ~ x, <span class="dt">family =</span> binomial)
 mod2$residuals  <span class="co"># access field with list-like syntax</span></code></pre>
 <pre><code>##      1      2      3      4      5      6      7      8      9     10 
-##  1.383  2.746 -1.839  1.284 -3.317  1.363  1.792 -2.012 -2.425  1.675</code></pre>
+##  1.790 -1.837  1.460 -1.707  2.903 -2.888  1.626  2.269 -1.471 -2.049</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="kw">class</span>(mod2)</code></pre>
 <pre><code>## [1] &quot;glm&quot; &quot;lm&quot;</code></pre>
@@ -113,7 +113,7 @@ mod2$residuals  <span class="co"># access field with list-like syntax</span></co
 predict</code></pre>
 <pre><code>## function (object, ...) 
 ## UseMethod(&quot;predict&quot;)
-## &lt;bytecode: 0x2e7ce88&gt;
+## &lt;bytecode: 0x2d53090&gt;
 ## &lt;environment: namespace:stats&gt;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 <span class="co"># predict.glm</span></code></pre>
@@ -373,13 +373,13 @@ for (i in <span class="dv">1</span>:nVals) {
     results[i] &lt;- <span class="kw">mean</span>(tmp)
 }
 results</code></pre>
-<pre><code>## [1] 0.01714 1.45942 0.57049</code></pre>
+<pre><code>## [1] 0.02858 2.03474 0.45037</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">varName</code></pre>
 <pre><code>## [1] &quot;x3&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">tmp</code></pre>
-<pre><code>##  [1] 0.51848 0.92448 0.97144 0.68128 0.62092 0.47182 0.16178 0.77517
-##  [9] 0.08038 0.17747 0.99355 0.64242 0.96764 0.96558 0.42405 0.29440
-## [17] 0.36135 0.64028 0.18423 0.55307</code></pre>
+<pre><code>##  [1] 0.03453 0.10640 0.06975 0.66517 0.52901 0.39469 0.06389 0.19704
+##  [9] 0.84498 0.68498 0.85568 0.39368 0.99177 0.63353 0.71870 0.11327
+## [17] 0.45101 0.59706 0.21217 0.45010</code></pre>
 <p>Or suppose you needed to create &quot;x1&quot;, &quot;x2&quot;, &quot;x3&quot;, automatically.</p>
 <pre class="sourceCode r"><code class="sourceCode r">nVals &lt;- <span class="dv">3</span>
 results &lt;- <span class="kw">rep</span>(<span class="dv">0</span>, nVals)
@@ -388,8 +388,8 @@ for (i in <span class="dv">1</span>:nVals) {
     <span class="kw">assign</span>(varName, <span class="kw">rnorm</span>(<span class="dv">10</span>))
 }
 x2</code></pre>
-<pre><code>##  [1]  0.89785  0.17682  0.65694 -0.10115 -0.15638  1.19206  2.08961
-##  [8]  0.77743 -0.82522 -0.02275</code></pre>
+<pre><code>##  [1] -0.4407  0.4204  0.2650  1.7677  0.3121 -0.4689  1.5276 -0.7457
+##  [9]  0.0708 -0.3093</code></pre>
 <p>Can you think of any uses of this ability for R to self-generate?</p>
 </div>
 <div class="section slide level1" id="file-encodings">
@@ -402,11 +402,11 @@ x2</code></pre>
 <h1 id="dealing-with-encodings-in-r">Dealing with encodings in R</h1>
 <p>To read files with other characters correctly into R, you may need to tell R what encoding the file is in. E.g., see help on <code>read.table()</code> for the <em>fileEncoding</em> and <em>encoding</em> arguments.</p>
 <p>With strings already in R, you can convert between encodings with <code>iconv()</code>:</p>
-<pre class="sourceCode r"><code class="sourceCode r">text &lt;- <span class="st">&quot;_Melhore sua seguran</span><span class="ch">\xe7a</span><span class="st">_&quot;</span>
+<pre class="sourceCode r"><code class="sourceCode r">text &lt;- <span class="st">&quot;Melhore sua seguran</span><span class="ch">\xe7a</span><span class="st">&quot;</span>
 <span class="kw">iconv</span>(text, <span class="dt">from =</span> <span class="st">&quot;latin1&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;UTF-8&quot;</span>)</code></pre>
-<pre><code>## [1] &quot;_Melhore sua segurança_&quot;</code></pre>
+<pre><code>## [1] &quot;Melhore sua segurança&quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">iconv</span>(text, <span class="dt">from =</span> <span class="st">&quot;latin1&quot;</span>, <span class="dt">to =</span> <span class="st">&quot;ASCII&quot;</span>, <span class="dt">sub =</span> <span class="st">&quot;???&quot;</span>)</code></pre>
-<pre><code>## [1] &quot;_Melhore sua seguran???a_&quot;</code></pre>
+<pre><code>## [1] &quot;Melhore sua seguran???a&quot;</code></pre>
 <p>You can mark a string with an encoding so R can display it correctly:</p>
 <pre class="sourceCode r"><code class="sourceCode r">x &lt;- <span class="st">&quot;fa</span><span class="ch">\xe7</span><span class="st">ile&quot;</span>
 <span class="kw">Encoding</span>(x) &lt;- <span class="st">&quot;latin1&quot;</span>
@@ -588,16 +588,6 @@ out[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre>
 <pre><code>## [1]  0.0004037 -0.0002178 -0.0002258  0.0005587  0.0002852</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">require</span>(parallel)
 nCores &lt;- <span class="dv">4</span>
-
-testFun &lt;- function(i) {
-    <span class="kw">set.seed</span>(i)
-    mn &lt;- <span class="kw">mean</span>(<span class="kw">rnorm</span>(n))
-    mn
-}
-
-n &lt;- <span class="fl">1e+07</span>
-nSims &lt;- <span class="dv">100</span>
-
 out2 &lt;- <span class="kw">mclapply</span>(<span class="kw">seq_len</span>(nSims), testFun, <span class="dt">mc.cores =</span> nCores)
 out2[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre>
 <pre><code>## [[1]]

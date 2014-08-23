@@ -281,24 +281,28 @@ methods(predict)
 </code></pre>
 
 <pre><code>##  [1] predict.ar*                predict.Arima*            
-##  [3] predict.arima0*            predict.bs*               
-##  [5] predict.bSpline*           predict.glm               
-##  [7] predict.glmmPQL*           predict.gls*              
-##  [9] predict.gnls*              predict.HoltWinters*      
-## [11] predict.lda*               predict.lm                
-## [13] predict.lme*               predict.lmList*           
-## [15] predict.loess*             predict.lqs*              
-## [17] predict.mca*               predict.merMod*           
-## [19] predict.mlm                predict.nbSpline*         
-## [21] predict.nlme*              predict.nls*              
-## [23] predict.npolySpline*       predict.ns*               
-## [25] predict.pbSpline*          predict.polr*             
-## [27] predict.poly               predict.polySpline*       
-## [29] predict.ppolySpline*       predict.ppr*              
-## [31] predict.prcomp*            predict.princomp*         
-## [33] predict.qda*               predict.rlm*              
-## [35] predict.smooth.spline*     predict.smooth.spline.fit*
-## [37] predict.StructTS*         
+##  [3] predict.arima0*            predict.bam*              
+##  [5] predict.bs*                predict.bSpline*          
+##  [7] predict.gam                predict.glm               
+##  [9] predict.glmmPQL*           predict.gls*              
+## [11] predict.gnls*              predict.HoltWinters*      
+## [13] predict.interp.surface     predict.Krig              
+## [15] predict.lda*               predict.lm                
+## [17] predict.lme*               predict.lmList*           
+## [19] predict.loess*             predict.lqs*              
+## [21] predict.mca*               predict.merMod*           
+## [23] predict.mKrig              predict.mlm               
+## [25] predict.nbSpline*          predict.nlme*             
+## [27] predict.nls*               predict.npolySpline*      
+## [29] predict.ns*                predict.pbSpline*         
+## [31] predict.polr*              predict.poly              
+## [33] predict.polySpline*        predict.ppolySpline*      
+## [35] predict.ppr*               predict.prcomp*           
+## [37] predict.princomp*          predict.qda*              
+## [39] predict.qsreg              predict.rlm*              
+## [41] predict.smooth.spline*     predict.smooth.spline.fit*
+## [43] predict.sreg               predict.StructTS*         
+## [45] predict.surface            predict.surface.default   
 ## 
 ##    Non-visible functions are asterisked
 </code></pre>
@@ -309,7 +313,7 @@ predict
 
 <pre><code>## function (object, ...) 
 ## UseMethod(&quot;predict&quot;)
-## &lt;bytecode: 0x2e7ce88&gt;
+## &lt;bytecode: 0x2d53090&gt;
 ## &lt;environment: namespace:stats&gt;
 </code></pre>
 
@@ -758,17 +762,17 @@ x2
 
 <p>With strings already in R, you can convert between encodings with <code>iconv()</code>:</p>
 
-<pre><code class="r">text &lt;- &quot;_Melhore sua seguran\xe7a_&quot;
+<pre><code class="r">text &lt;- &quot;Melhore sua seguran\xe7a&quot;
 iconv(text, from = &quot;latin1&quot;, to = &quot;UTF-8&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;_Melhore sua segurança_&quot;
+<pre><code>## [1] &quot;Melhore sua segurança&quot;
 </code></pre>
 
 <pre><code class="r">iconv(text, from = &quot;latin1&quot;, to = &quot;ASCII&quot;, sub = &quot;???&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;_Melhore sua seguran???a_&quot;
+<pre><code>## [1] &quot;Melhore sua seguran???a&quot;
 </code></pre>
 
 <p>You can mark a string with an encoding so R can display it correctly:</p>
@@ -1025,16 +1029,6 @@ out[1:5]
 
 <pre><code class="r">require(parallel)
 nCores &lt;- 4
-
-testFun &lt;- function(i) {
-    set.seed(i)
-    mn &lt;- mean(rnorm(n))
-    mn
-}
-
-n &lt;- 1e+07
-nSims &lt;- 100
-
 out2 &lt;- mclapply(seq_len(nSims), testFun, mc.cores = nCores)
 out2[1:5]
 </code></pre>

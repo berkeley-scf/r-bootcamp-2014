@@ -60,7 +60,6 @@ body, td {
 body {
   max-width: 800px;
   margin: auto;
-  padding: 1em;
   line-height: 20px;
 }
 
@@ -68,28 +67,28 @@ tt, code, pre {
    font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
 }
 
-h1 {
-   font-size:2.2em;
+h1 { 
+   font-size:2.2em; 
 }
 
-h2 {
-   font-size:1.8em;
+h2 { 
+   font-size:1.8em; 
 }
 
-h3 {
-   font-size:1.4em;
+h3 { 
+   font-size:1.4em; 
 }
 
-h4 {
-   font-size:1.0em;
+h4 { 
+   font-size:1.0em; 
 }
 
-h5 {
-   font-size:0.9em;
+h5 { 
+   font-size:0.9em; 
 }
 
-h6 {
-   font-size:0.8em;
+h6 { 
+   font-size:0.8em; 
 }
 
 a:visited {
@@ -133,54 +132,54 @@ hr {
 }
 
 @media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
    }
 
-   body {
-      font-size:12pt;
-      max-width:100%;
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
    }
 
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
+   hr { 
       visibility: hidden;
       page-break-before: always;
    }
 
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
    }
 
-   tr, img {
-      page-break-inside: avoid;
+   tr, img { 
+      page-break-inside: avoid; 
    }
 
-   img {
-      max-width: 100% !important;
+   img { 
+      max-width: 100% !important; 
    }
 
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
    }
 
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
    }
 
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
+   h2, h3 { 
+      page-break-after: avoid; 
    }
 }
 </style>
@@ -196,25 +195,25 @@ hr {
 <li>For some, it might just be basic calculations</li>
 </ul>
 
-<pre><code class="r">63.24*pi # Multiply 63.24 by pi
+<pre><code class="r">63.24 * pi  # Multiply 63.24 by pi
 </code></pre>
 
 <pre><code>## [1] 198.7
 </code></pre>
 
-<pre><code class="r">exp(x=4.39) # Raise e to the power of 4.39
+<pre><code class="r">exp(x = 4.39)  # Raise e to the power of 4.39
 </code></pre>
 
 <pre><code>## [1] 80.64
 </code></pre>
 
-<pre><code class="r">log(x=1.7) # Take the log of 1.7
+<pre><code class="r">log(x = 1.7)  # Take the log of 1.7
 </code></pre>
 
 <pre><code>## [1] 0.5306
 </code></pre>
 
-<pre><code class="r">tan(x=58) # Compute the tangent of 58
+<pre><code class="r">tan(x = 58)  # Compute the tangent of 58
 </code></pre>
 
 <pre><code>## [1] 8.331
@@ -225,23 +224,23 @@ hr {
 </ul>
 
 <pre><code class="r"># Take one million samples from the standard normal distribution
-data.sample&lt;-rnorm(n=1000000, mean=0, sd=1) 
+data.sample &lt;- rnorm(n = 1e+06, mean = 0, sd = 1)
 
 # Build a 1000 x 1000 matrix from the sample data
-big.matrix&lt;-matrix(data=data.sample, ncol=1000) 
+big.matrix &lt;- matrix(data = data.sample, ncol = 1000)
 
-dim(x=big.matrix) # Confirm that &quot;big.matrix&quot; is 1000 x 1000
+dim(x = big.matrix)  # Confirm that &#39;big.matrix&#39; is 1000 x 1000
 </code></pre>
 
 <pre><code>## [1] 1000 1000
 </code></pre>
 
-<pre><code class="r">big.matrix.inverse&lt;-solve(a=big.matrix) # Compute the inverse of &quot;big.matrix&quot;
-system.time(expr=solve(a=big.matrix)) # Compute time required to invert &quot;big.matrix&quot;
+<pre><code class="r">big.matrix.inverse &lt;- solve(a = big.matrix)  # Compute the inverse of &#39;big.matrix&#39;
+system.time(expr = solve(a = big.matrix))  # Compute time required to invert &#39;big.matrix&#39;
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   1.433   0.007   1.453
+##   0.692   0.016   0.126
 </code></pre>
 
 <h1>Useful Stuff: Applied Research Edition</h1>
@@ -272,8 +271,8 @@ class(x = tips)
 <pre><code>## [1] &quot;data.frame&quot;
 </code></pre>
 
-<pre><code class="r"># Get the object dimensionality 
-dim(x = tips) # Note this is rows by columns
+<pre><code class="r"># Get the object dimensionality
+dim(x = tips)  # Note this is rows by columns
 </code></pre>
 
 <pre><code>## [1] 244   7
@@ -322,39 +321,40 @@ str(object = tips)
 1) Note that these functions are sensitive to missing values (NA); you should be sure to specify na.rm=T to avoid errors </p></li>
 </ul>
 
-<pre><code class="r"># Sample 100 times from the standard normal distribution 
-sample.data&lt;-rnorm(n=100, mean=0, sd=1)
+<pre><code class="r"># Sample 100 times from the standard normal distribution
+sample.data &lt;- rnorm(n = 100, mean = 0, sd = 1)
 
 # Attempt to calculate the sample mean (absence of NAs)
-mean(x=sample.data)
+mean(x = sample.data)
 </code></pre>
 
-<pre><code>## [1] 0.1554
+<pre><code>## [1] 0.071
 </code></pre>
 
-<pre><code class="r"># Add some missing values to the sample
-sample.data[c(1,4,16,64)]&lt;-NA
+<pre><code class="r">
+# Add some missing values to the sample
+sample.data[c(1, 4, 16, 64)] &lt;- NA
 
 # Attempt to calculate the sample mean (presence of NAs)
-mean(x=sample.data) # Action for NAs is not specified
+mean(x = sample.data)  # Action for NAs is not specified
 </code></pre>
 
 <pre><code>## [1] NA
 </code></pre>
 
-<pre><code class="r">mean(x=sample.data, na.rm = TRUE) # Action for NAs is not specified
+<pre><code class="r">mean(x = sample.data, na.rm = TRUE)  # Action for NAs is not specified
 </code></pre>
 
-<pre><code>## [1] 0.1434
+<pre><code>## [1] 0.05974
 </code></pre>
 
 <p>2) These functions are also sensitive to the presence of factor variables; remove the factor levels to avoid errors (usually use one of as.vector(), as.character(), or as.numeric())</p>
 
-<pre><code class="r"># Get a random sample of zeroes and ones 
-sample.data&lt;-sample(x = c(0,1), size = 100, replace = T)
+<pre><code class="r"># Get a random sample of zeroes and ones
+sample.data &lt;- sample(x = c(0, 1), size = 100, replace = T)
 
 # Add factor levels to the sample
-sample.data&lt;-factor(x = sample.data)
+sample.data &lt;- factor(x = sample.data)
 
 # Attempt to calculate the sample mean (with factor levels)
 mean(x = sample.data)
@@ -366,21 +366,23 @@ mean(x = sample.data)
 <pre><code>## [1] NA
 </code></pre>
 
-<pre><code class="r"># Remove factor levels
-sample.data&lt;-as.numeric(x = sample.data)
+<pre><code class="r">
+# Remove factor levels
+sample.data &lt;- as.numeric(x = sample.data)
 
 # Check that there are no more factor levels in the sample data
-is.factor(x=sample.data)
+is.factor(x = sample.data)
 </code></pre>
 
 <pre><code>## [1] FALSE
 </code></pre>
 
-<pre><code class="r"># Attempt to calculate the sample mean (without factor levels)
-mean(x=sample.data, na.rm = T)
+<pre><code class="r">
+# Attempt to calculate the sample mean (without factor levels)
+mean(x = sample.data, na.rm = T)
 </code></pre>
 
-<pre><code>## [1] 1.44
+<pre><code>## [1] 1.49
 </code></pre>
 
 <ul>
@@ -388,28 +390,28 @@ mean(x=sample.data, na.rm = T)
 </ul>
 
 <pre><code class="r"># Mean
-mean(x=tips$tip, na.rm=T)
+mean(x = tips$tip, na.rm = T)
 </code></pre>
 
 <pre><code>## [1] 2.998
 </code></pre>
 
 <pre><code class="r"># Median
-median(x=tips$tip, na.rm=T)
+median(x = tips$tip, na.rm = T)
 </code></pre>
 
 <pre><code>## [1] 2.9
 </code></pre>
 
 <pre><code class="r"># Standard Deviation
-sd(x=tips$tip, na.rm=T)
+sd(x = tips$tip, na.rm = T)
 </code></pre>
 
 <pre><code>## [1] 1.384
 </code></pre>
 
 <pre><code class="r"># Quartiles
-quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.25))
+quantile(x = tips$tip, na.rm = T, probs = seq(from = 0, to = 1, by = 0.25))
 </code></pre>
 
 <pre><code>##     0%    25%    50%    75%   100% 
@@ -417,7 +419,7 @@ quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.25))
 </code></pre>
 
 <pre><code class="r"># Quintiles
-quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.2))
+quantile(x = tips$tip, na.rm = T, probs = seq(from = 0, to = 1, by = 0.2))
 </code></pre>
 
 <pre><code>##     0%    20%    40%    60%    80%   100% 
@@ -425,7 +427,7 @@ quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.2))
 </code></pre>
 
 <pre><code class="r"># Deciles
-quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.1))
+quantile(x = tips$tip, na.rm = T, probs = seq(from = 0, to = 1, by = 0.1))
 </code></pre>
 
 <pre><code>##     0%    10%    20%    30%    40%    50%    60%    70%    80%    90% 
@@ -435,7 +437,7 @@ quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.1))
 </code></pre>
 
 <pre><code class="r"># Percentiles
-quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.01))
+quantile(x = tips$tip, na.rm = T, probs = seq(from = 0, to = 1, by = 0.01))
 </code></pre>
 
 <pre><code>##     0%     1%     2%     3%     4%     5%     6%     7%     8%     9% 
@@ -466,8 +468,8 @@ quantile(x=tips$tip, na.rm=T, probs=seq(from=0, to=1, by=0.01))
 <li>We could do the same thing for lots of variables, but there is an easier way!</li>
 </ul>
 
-<pre><code class="r"># Compute standard summary statistics for object &quot;red.blue&quot;
-summary(object=tips)
+<pre><code class="r"># Compute standard summary statistics for object &#39;red.blue&#39;
+summary(object = tips)
 </code></pre>
 
 <pre><code>##    total_bill         tip            sex      smoker      day    
@@ -492,7 +494,7 @@ summary(object=tips)
 </ul>
 
 <pre><code class="r"># Isolate the gender column
-gender&lt;-tips$sex
+gender &lt;- tips$sex
 
 # Get a vector of counts for unique values, divide by total count
 table(gender)
@@ -511,7 +513,7 @@ table(gender)
 ## 0.3566 0.6434
 </code></pre>
 
-<pre><code class="r">table(gender)/length(gender)*100
+<pre><code class="r">table(gender)/length(gender) * 100
 </code></pre>
 
 <pre><code>## gender
@@ -519,8 +521,9 @@ table(gender)
 ##  35.66  64.34
 </code></pre>
 
-<pre><code class="r"># Isolate the gender and smoker columns
-gender.smoker&lt;-tips[,c(&quot;sex&quot;, &quot;smoker&quot;)]
+<pre><code class="r">
+# Isolate the gender and smoker columns
+gender.smoker &lt;- tips[, c(&quot;sex&quot;, &quot;smoker&quot;)]
 
 # Get a vector of counts for unique values, divide by total count
 table(gender.smoker)
@@ -541,7 +544,7 @@ table(gender.smoker)
 ##   Male   0.3975 0.2459
 </code></pre>
 
-<pre><code class="r">table(gender.smoker)/nrow(gender.smoker)*100
+<pre><code class="r">table(gender.smoker)/nrow(gender.smoker) * 100
 </code></pre>
 
 <pre><code>##         smoker
@@ -763,10 +766,10 @@ d) Progress bars for lengthy computation
 e) Informative error messages</li>
 </ul>
 
-<pre><code class="r"># Install the &quot;plyr&quot; package (only necessary one time)
-# install.packages(&quot;plyr&quot;) # Not Run
+<pre><code class="r"># Install the &#39;plyr&#39; package (only necessary one time)
+# install.packages(&#39;plyr&#39;) # Not Run
 
-# Load the &quot;plyr&quot; package (necessary every new R session)
+# Load the &#39;plyr&#39; package (necessary every new R session)
 library(plyr)
 </code></pre>
 
@@ -785,16 +788,17 @@ library(plyr)
 
 <p>All of the major plyr functions have the same basic syntax</p>
 
-<pre><code class="r">xxply(.data=, .variables=, .fun=, ...)
+<pre><code class="r">xxply(.data = , .variables = , .fun = , ...)
 </code></pre>
 
 <p>Consider the case where we want to calculate tipping behavior across gender, smoking status, and day-of-the-week from a data.frame, then return them as a data.frame:</p>
 
 <pre><code class="r"># Calculate tip amount as percent of total bill
-tips$tip.pct&lt;-tips$tip/tips$total_bill*100
+tips$tip.pct &lt;- tips$tip/tips$total_bill * 100
 
-# Using the appropriate plyr function (ddply), compute average tip percentages
-ddply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+# Using the appropriate plyr function (ddply), compute average tip
+# percentages
+ddply(.data = tips, .variables = .(gender, smoker, day), .fun = summarize, mean.tip.pct = mean(x = tip.pct))
 </code></pre>
 
 <pre><code>##    gender smoker  day mean.tip.pct
@@ -818,7 +822,7 @@ ddply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pc
 
 <p>Consider the case where we want to calculate tipping behavior across gender, smoking status, and day-of-the-week from a data.frame, then return them as a list:</p>
 
-<pre><code class="r">dlply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+<pre><code class="r">dlply(.data = tips, .variables = .(gender, smoker, day), .fun = summarize, mean.tip.pct = mean(x = tip.pct))
 </code></pre>
 
 <pre><code>## $Female.No.Fri
@@ -909,8 +913,9 @@ ddply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pc
 
 <p>Consider the case where we want to calculate vote choice statistics across race from a list, and return them as a data.frame:</p>
 
-<pre><code class="r"># Split the data.frame into a list on the basis of gender, smoker status, and day-of-the-week
-tips.split&lt;-split(x=tips, f = list(tips$sex, tips$smoker, tips$day))
+<pre><code class="r"># Split the data.frame into a list on the basis of gender, smoker status,
+# and day-of-the-week
+tips.split &lt;- split(x = tips, f = list(tips$sex, tips$smoker, tips$day))
 head(x = tips.split, n = 3)
 </code></pre>
 
@@ -935,8 +940,9 @@ head(x = tips.split, n = 3)
 ## 227      10.09 2.00 Female    Yes Fri  Lunch    2   19.82
 </code></pre>
 
-<pre><code class="r"># Compute summary statistics (note: no .variables argument)
-ldply(.data=tips.split, .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+<pre><code class="r">
+# Compute summary statistics (note: no .variables argument)
+ldply(.data = tips.split, .fun = summarize, mean.tip.pct = mean(x = tip.pct))
 </code></pre>
 
 <pre><code>##                .id mean.tip.pct
@@ -960,7 +966,7 @@ ldply(.data=tips.split, .fun=summarize, mean.tip.pct=mean(x = tip.pct))
 
 <p>Consider the case where we want to calculate vote choice statistics across race from a list, and return them as a list:</p>
 
-<pre><code class="r">llply(.data=tips.split, .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+<pre><code class="r">llply(.data = tips.split, .fun = summarize, mean.tip.pct = mean(x = tip.pct))
 </code></pre>
 
 <pre><code>## $Female.No.Fri
@@ -1037,8 +1043,10 @@ ldply(.data=tips.split, .fun=summarize, mean.tip.pct=mean(x = tip.pct))
 
 <p><strong>transform</strong>: applies a function to a data.frame and adds new vectors (columns) to it</p>
 
-<pre><code class="r"># Add a column containing the average tip of the gender of the individual on that day
-tips.transformed&lt;-ddply(.data=tips, .variables=.(sex, day), .fun=transform, sex.day.avg=mean(x=tip.pct))
+<pre><code class="r"># Add a column containing the average tip of the gender of the individual on
+# that day
+tips.transformed &lt;- ddply(.data = tips, .variables = .(sex, day), .fun = transform, 
+    sex.day.avg = mean(x = tip.pct))
 head(x = tips.transformed, n = 15)
 </code></pre>
 
@@ -1063,9 +1071,8 @@ head(x = tips.transformed, n = 15)
 <p>Note that <strong>transform</strong> can&#39;t do transformations that involve the results of <em>other</em> transformations from the same call</p>
 
 <pre><code class="r"># Attempt to add new columns that draw on other (but still new) columns
-tips.transformed&lt;-ddply(.data=tips, .variables=.(sex, day), .fun=transform, 
-                        sex.day.avg=mean(x=tip.pct),
-                        sex.day.avg.deviation=tip.pct-sex.day.avg)
+tips.transformed &lt;- ddply(.data = tips, .variables = .(sex, day), .fun = transform, 
+    sex.day.avg = mean(x = tip.pct), sex.day.avg.deviation = tip.pct - sex.day.avg)
 </code></pre>
 
 <pre><code>## Error: object &#39;sex.day.avg&#39; not found
@@ -1074,9 +1081,8 @@ tips.transformed&lt;-ddply(.data=tips, .variables=.(sex, day), .fun=transform,
 <p>For this, we need <strong>mutate</strong>: just like transform, but it executes the commands iteratively so transformations can be carried out that rely on previous transformations from the same call</p>
 
 <pre><code class="r"># Attempt to add new columns that draw on other (but still new) columns
-tips.transformed&lt;-ddply(.data=tips, .variables=.(sex, day), .fun=mutate, 
-                        sex.day.avg=mean(x=tip.pct),
-                        sex.day.avg.deviation=tip.pct-sex.day.avg)
+tips.transformed &lt;- ddply(.data = tips, .variables = .(sex, day), .fun = mutate, 
+    sex.day.avg = mean(x = tip.pct), sex.day.avg.deviation = tip.pct - sex.day.avg)
 head(x = tips.transformed, n = 15)
 </code></pre>
 
@@ -1117,7 +1123,8 @@ head(x = tips.transformed, n = 15)
 <p>Another very useful function is <strong>arrange</strong>, which orders a data frame on the basis of column contents</p>
 
 <pre><code class="r"># Compute average tips across gender, smoker status, and day of the week
-tips.summary&lt;-ddply(.data=tips, .variables=.(gender, smoker, day), .fun=summarize, mean.tip.pct=mean(x = tip.pct))
+tips.summary &lt;- ddply(.data = tips, .variables = .(gender, smoker, day), .fun = summarize, 
+    mean.tip.pct = mean(x = tip.pct))
 
 # Arrange summarized data from highest average tip to lowest average tip
 arrange(df = tips.summary, mean.tip.pct)
@@ -1142,7 +1149,8 @@ arrange(df = tips.summary, mean.tip.pct)
 ## 16 Female    Yes  Sun        23.71
 </code></pre>
 
-<pre><code class="r"># Arrange summarized data from lowest average tip to highest average tip
+<pre><code class="r">
+# Arrange summarized data from lowest average tip to highest average tip
 arrange(df = tips.summary, desc(mean.tip.pct))
 </code></pre>
 
@@ -1173,10 +1181,10 @@ arrange(df = tips.summary, desc(mean.tip.pct))
 <li><p>The <strong>reshape2</strong> package overcomes these argument and task inconsistencies to provide a simple, relatively fast way to alter the form of a data.frame.  The package contains effectively two commands, and their functions are in their names: <strong>melt</strong> and <strong>cast</strong></p></li>
 </ul>
 
-<pre><code class="r"># Install the &quot;reshape2&quot; package (only necessary one time)
-# install.packages(&quot;reshape2&quot;) # Not Run
+<pre><code class="r"># Install the &#39;reshape2&#39; package (only necessary one time)
+# install.packages(&#39;reshape2&#39;) # Not Run
 
-# Load the &quot;reshape2&quot; package (necessary every new R session)
+# Load the &#39;reshape2&#39; package (necessary every new R session)
 library(reshape2)
 </code></pre>
 
@@ -1189,14 +1197,14 @@ library(reshape2)
 </ul>
 
 <pre><code class="r"># Basic Call
-melt(data=, id.vars=, measure.vars=, variable.name=, value.name=)
+melt(data = , id.vars = , measure.vars = , variable.name = , value.name = )
 </code></pre>
 
 <p>To see how this works in practice, suppose we wanted to convert this data from its current wide format to an entirely long format.  How to proceed?</p>
 
 <p><strong>First</strong>, select which columns you want to keep (i.e. not melt).  In this case, we&#39;re interested in having individual tips as the unit of analysis.  Unfortunately, there is no column containing an individual identification number in this data, so we&#39;ll just add one as &ldquo;id&rdquo;:</p>
 
-<pre><code class="r">tips$id&lt;-1:nrow(tips)
+<pre><code class="r">tips$id &lt;- 1:nrow(tips)
 head(tips)
 </code></pre>
 
@@ -1213,8 +1221,8 @@ head(tips)
 
 <p>With these two pieces of information, we&#39;re ready to melt down the data.frame:</p>
 
-<pre><code class="r">tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;, 
-     measure.vars=c(&quot;total_bill&quot;, &quot;tip&quot;, &quot;sex&quot;, &quot;smoker&quot;, &quot;day&quot;, &quot;time&quot;, &quot;size&quot;, &quot;tip.pct&quot;))
+<pre><code class="r">tips.melted &lt;- melt(data = tips, id.vars = &quot;id&quot;, measure.vars = c(&quot;total_bill&quot;, 
+    &quot;tip&quot;, &quot;sex&quot;, &quot;smoker&quot;, &quot;day&quot;, &quot;time&quot;, &quot;size&quot;, &quot;tip.pct&quot;))
 head(x = tips.melted)
 </code></pre>
 
@@ -1227,8 +1235,9 @@ head(x = tips.melted)
 ## 6  6 total_bill 25.29
 </code></pre>
 
-<pre><code class="r"># If you want to melt ALL columns that aren&#39;t ID variables, you can also omit the &quot;measure.vars&quot; argument
-tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;)
+<pre><code class="r"># If you want to melt ALL columns that aren&#39;t ID variables, you can also
+# omit the &#39;measure.vars&#39; argument
+tips.melted &lt;- melt(data = tips, id.vars = &quot;id&quot;)
 head(x = tips.melted)
 </code></pre>
 
@@ -1243,10 +1252,9 @@ head(x = tips.melted)
 
 <p>Note that melt collapses all of the measure variables into two columns: one containing the column/measurement name, the other containing the column/measurement value for that row.  By default, these columns are named &ldquo;variable&rdquo; and &ldquo;value&rdquo;, though they can be customized using the &ldquo;variable.name&rdquo; and &ldquo;value.name&rdquo; arguments.  For example:</p>
 
-<pre><code class="r">tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;, 
-     measure.vars=c(&quot;total_bill&quot;, &quot;tip&quot;, &quot;sex&quot;, &quot;smoker&quot;, &quot;day&quot;, &quot;time&quot;, &quot;size&quot;, &quot;tip.pct&quot;),
-     variable.name=&quot;characteristic&quot;,
-     value.name=&quot;response&quot;)
+<pre><code class="r">tips.melted &lt;- melt(data = tips, id.vars = &quot;id&quot;, measure.vars = c(&quot;total_bill&quot;, 
+    &quot;tip&quot;, &quot;sex&quot;, &quot;smoker&quot;, &quot;day&quot;, &quot;time&quot;, &quot;size&quot;, &quot;tip.pct&quot;), variable.name = &quot;characteristic&quot;, 
+    value.name = &quot;response&quot;)
 head(x = tips.melted)
 </code></pre>
 
@@ -1261,8 +1269,7 @@ head(x = tips.melted)
 
 <p>Note also that one need not melt down all columns that aren&#39;t serving as ID columns.  The melted data.frame will only contain the values of the measure variables you select.  For instance:</p>
 
-<pre><code class="r">tips.melted&lt;-melt(data=tips, id.vars=&quot;id&quot;, 
-     measure.vars=c(&quot;sex&quot;, &quot;day&quot;))
+<pre><code class="r">tips.melted &lt;- melt(data = tips, id.vars = &quot;id&quot;, measure.vars = c(&quot;sex&quot;, &quot;day&quot;))
 head(x = tips.melted)
 </code></pre>
 
@@ -1282,7 +1289,7 @@ head(x = tips.melted)
 <li><p>The generic call for (d)cast looks like this:</p></li>
 </ul>
 
-<pre><code class="r">dcast(data=, formula=xvar1+xvar2 ~ yvar1+yvar2, value.var=, fun.aggregate=)
+<pre><code class="r">dcast(data = , formula = xvar1 + xvar2 ~ yvar1 + yvar2, value.var = , fun.aggregate = )
 </code></pre>
 
 <p>Some example usages:</p>
@@ -1300,8 +1307,9 @@ head(x = tips)
 ## 6      25.29 4.71   Male     No Sun Dinner    4  18.624  6
 </code></pre>
 
-<pre><code class="r"># Cast a data.frame containing the individual column and columns containing the expansion of &quot;age9&quot; on the basis of its unique values
-tips.cast&lt;-dcast(data=tips, formula=id~sex, value.var=&quot;tip.pct&quot;)
+<pre><code class="r"># Cast a data.frame containing the individual column and columns containing
+# the expansion of &#39;age9&#39; on the basis of its unique values
+tips.cast &lt;- dcast(data = tips, formula = id ~ sex, value.var = &quot;tip.pct&quot;)
 head(x = tips.cast)
 </code></pre>
 
@@ -1315,7 +1323,7 @@ head(x = tips.cast)
 </code></pre>
 
 <pre><code class="r"># Previously melted data
-tips.melted&lt;-melt(data = tips, id.vars = &quot;id&quot;)
+tips.melted &lt;- melt(data = tips, id.vars = &quot;id&quot;)
 head(x = tips.melted)
 </code></pre>
 
@@ -1328,8 +1336,9 @@ head(x = tips.melted)
 ## 6  6 total_bill 25.29
 </code></pre>
 
-<pre><code class="r"># Cast a new data.frame from melted data.frame containing the individual column and expanding the &quot;variable&quot; column
-tips.cast&lt;-dcast(data=tips.melted, formula=id~variable, value.var=&quot;value&quot;)
+<pre><code class="r"># Cast a new data.frame from melted data.frame containing the individual
+# column and expanding the &#39;variable&#39; column
+tips.cast &lt;- dcast(data = tips.melted, formula = id ~ variable, value.var = &quot;value&quot;)
 head(x = tips.cast)
 </code></pre>
 
@@ -1361,7 +1370,8 @@ head(x = tips.cast)
 <li><p>The basic glm call looks something like this:</p></li>
 </ul>
 
-<pre><code class="r">glm(formula=y~x1+x2+x3+..., family=familyname(link=&quot;linkname&quot;), data=)
+<pre><code class="r">glm(formula = y ~ x1 + x2 + x3 + ..., family = familyname(link = &quot;linkname&quot;), 
+    data = )
 </code></pre>
 
 <ul>
@@ -1370,8 +1380,8 @@ head(x = tips.cast)
 </ul>
 
 <pre><code class="r"># Regress tip percent on total bill and party size
-reg&lt;-glm(formula=tip.pct~total_bill+size+sex+smoker, 
-                family=gaussian, data=tips)
+reg &lt;- glm(formula = tip.pct ~ total_bill + size + sex + smoker, family = gaussian, 
+    data = tips)
 </code></pre>
 
 <ul>
@@ -1456,7 +1466,7 @@ reg$aic
 </ul>
 
 <pre><code class="r"># Store summary method results
-sum.reg&lt;-summary(reg)
+sum.reg &lt;- summary(reg)
 # View summary method results objects
 objects(sum.reg)
 </code></pre>
@@ -1485,7 +1495,7 @@ sum.reg$coefficients
 <li><p>If your data aren&#39;t factorized, you can tell glm to factorize a variable (i.e. create dummy variables on the fly) by writing</p></li>
 </ul>
 
-<pre><code class="r">glm(formula=y~x1+x2+factor(x3), family=family(link=&quot;link&quot;), data=)
+<pre><code class="r">glm(formula = y ~ x1 + x2 + factor(x3), family = family(link = &quot;link&quot;), data = )
 </code></pre>
 
 <ul>
@@ -1494,8 +1504,8 @@ sum.reg$coefficients
 
 <p><strong>x1:x2</strong> interacts all terms in x1 with all terms in x2</p>
 
-<pre><code class="r">summary(glm(formula=tip.pct~total_bill+size+sex:smoker, 
-                family=gaussian, data=tips))
+<pre><code class="r">summary(glm(formula = tip.pct ~ total_bill + size + sex:smoker, family = gaussian, 
+    data = tips))
 </code></pre>
 
 <pre><code>## 
@@ -1530,8 +1540,8 @@ sum.reg$coefficients
 
 <p><strong>x1*x2</strong> produces the cross of x1 and x2, or x1+x2+x1:x2</p>
 
-<pre><code class="r">summary(glm(formula=tip.pct~total_bill+size+sex*smoker, 
-                family=gaussian, data=tips))
+<pre><code class="r">summary(glm(formula = tip.pct ~ total_bill + size + sex * smoker, family = gaussian, 
+    data = tips))
 </code></pre>
 
 <pre><code>## 
@@ -1613,7 +1623,7 @@ sum.reg$coefficients
 <li>Can also estimate heteroskedasticity/autocorrelation consistent standard errors via <em>coeftest</em> and the <em>sandwich</em> package</li>
 </ul>
 
-<pre><code class="r">coeftest(x=reg, vcov.=vcovHC)
+<pre><code class="r">coeftest(x = reg, vcov. = vcovHC)
 </code></pre>
 
 <pre><code>## 

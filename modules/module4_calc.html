@@ -214,14 +214,14 @@ system.time(trunc &lt;- ifelse(vals &gt; 0, vals, 0))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.348   0.008   0.358
+##   0.332   0.004   0.335
 </code></pre>
 
 <pre><code class="r">system.time(vals &lt;- vals * (vals &gt; 0))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.008   0.000   0.010
+##   0.008   0.000   0.009
 </code></pre>
 
 <pre><code class="r">tmp &lt;- as.character(vote$age60)
@@ -365,7 +365,7 @@ system.time({
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   3.168   0.080   3.264
+##   2.680   0.008   2.697
 </code></pre>
 
 <p>The same holds for using <code>rbind()</code>, <code>cbind()</code>, or adding to a list, one element at a time.</p>
@@ -380,7 +380,7 @@ system.time({
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   1.696   0.012   1.717
+##   1.632   0.004   1.643
 </code></pre>
 
 <p><strong>Question</strong>: Thoughts on why these are so slow? Think about what R might be doing behind the scenes</p>
@@ -398,7 +398,7 @@ system.time({
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.088   0.000   0.085
+##   0.068   0.000   0.066
 </code></pre>
 
 <p>Here&#39;s how to pre-allocate an empty list: </p>
@@ -451,19 +451,19 @@ lapply(myList, min)
 </code></pre>
 
 <pre><code>## [[1]]
-## [1] -0.6752
+## [1] -1.486
 ## 
 ## [[2]]
-## [1] -0.6321
+## [1] -0.1877
 ## 
 ## [[3]]
-## [1] -2.292
+## [1] -1.081
 </code></pre>
 
 <pre><code class="r">sapply(myList, min)
 </code></pre>
 
-<pre><code>## [1] -0.6752 -0.6321 -2.2923
+<pre><code>## [1] -1.4861 -0.1877 -1.0808
 </code></pre>
 
 <p>Note that we don&#39;t generally want to use <code>apply()</code> on a data frame. </p>

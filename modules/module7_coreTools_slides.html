@@ -100,8 +100,10 @@ fx &lt;- <span class="kw">apply</span>(x, <span class="dv">1</span>, banana)
 <h1 id="gam-in-action">GAM in action</h1>
 <p>Let's consider height in the earnings dataset.</p>
 <p>Any hypotheses about the relationship of earnings with height and education?</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mgcv)
-mod_male &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</span>(height, <span class="dt">k =</span> <span class="dv">10</span>) + <span class="kw">s</span>(ed, <span class="dt">k =</span> <span class="dv">10</span>), <span class="dt">data =</span> earnings[earnings$sex == 
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(mgcv)</code></pre>
+<pre><code>## Loading required package: nlme
+## This is mgcv 1.8-2. For overview type 'help(&quot;mgcv-package&quot;)'.</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">mod_male &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</span>(height, <span class="dt">k =</span> <span class="dv">10</span>) + <span class="kw">s</span>(ed, <span class="dt">k =</span> <span class="dv">10</span>), <span class="dt">data =</span> earnings[earnings$sex == 
     <span class="dv">1</span>, ])
 mod_female &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</span>(height, <span class="dt">k =</span> <span class="dv">10</span>) + <span class="kw">s</span>(ed, <span class="dt">k =</span> <span class="dv">10</span>), <span class="dt">data =</span> earnings[earnings$sex == 
     <span class="dv">2</span>, ])
@@ -112,7 +114,7 @@ mod_female &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</span>(he
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10)
-## &lt;environment: 0x15b5d90&gt;
+## &lt;environment: 0x2a8e670&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -128,7 +130,7 @@ mod_female &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</span>(he
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.168   Deviance explained = 17.8%
-## GCV score = 4.6545e+08  Scale est. = 4.5925e+08  n = 520</code></pre>
+## GCV = 4.6545e+08  Scale est. = 4.5925e+08  n = 520</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod_female)</code></pre>
 <pre><code>## 
 ## Family: gaussian 
@@ -136,7 +138,7 @@ mod_female &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</span>(he
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10)
-## &lt;environment: 0x15b5d90&gt;
+## &lt;environment: 0x2a8e670&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -147,12 +149,12 @@ mod_female &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</span>(he
 ## Approximate significance of smooth terms:
 ##            edf Ref.df     F p-value    
 ## s(height) 1.00   1.00  0.51    0.47    
-## s(ed)     2.16   2.73 47.62  &lt;2e-16 ***
+## s(ed)     2.16   2.73 47.55  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.134   Deviance explained = 13.7%
-## GCV score = 1.8821e+08  Scale est. = 1.873e+08  n = 859</code></pre>
+## GCV = 1.8821e+08  Scale est. = 1.873e+08  n = 859</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(mod_male)</code></pre>
 <div class="figure">
@@ -177,7 +179,7 @@ mod_female_full &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</spa
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10) + race
-## &lt;environment: 0x15b5d90&gt;
+## &lt;environment: 0x2a8e670&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -194,7 +196,7 @@ mod_female_full &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</spa
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.177   Deviance explained = 18.8%
-## GCV score = 4.6118e+08  Scale est. = 4.5425e+08  n = 520</code></pre>
+## GCV = 4.6118e+08  Scale est. = 4.5425e+08  n = 520</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(mod_female_full)</code></pre>
 <pre><code>## 
 ## Family: gaussian 
@@ -202,7 +204,7 @@ mod_female_full &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</spa
 ## 
 ## Formula:
 ## earn ~ s(height, k = 10) + s(ed, k = 10) + race
-## &lt;environment: 0x15b5d90&gt;
+## &lt;environment: 0x2a8e670&gt;
 ## 
 ## Parametric coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
@@ -214,12 +216,12 @@ mod_female_full &lt;- <span class="kw">gam</span>(earn ~ <span class="kw">s</spa
 ## Approximate significance of smooth terms:
 ##            edf Ref.df     F p-value    
 ## s(height) 1.00   1.00  0.64    0.43    
-## s(ed)     2.74   3.44 37.69  &lt;2e-16 ***
+## s(ed)     2.74   3.44 37.70  &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 ## 
 ## R-sq.(adj) =  0.134   Deviance explained = 13.9%
-## GCV score = 1.8844e+08  Scale est. = 1.8718e+08  n = 859</code></pre>
+## GCV = 1.8844e+08  Scale est. = 1.8718e+08  n = 859</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))
 <span class="kw">plot</span>(mod_male_full)</code></pre>
 <div class="figure">
@@ -265,12 +267,12 @@ x &lt;- <span class="kw">seq</span>(-<span class="dv">5</span>, <span class="dv"
 </div>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rmultinom</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dt">prob =</span> <span class="kw">c</span>(<span class="fl">0.1</span>, <span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.25</span>, <span class="fl">0.05</span>))</code></pre>
 <pre><code>##      [,1]
-## [1,]    8
-## [2,]    9
-## [3,]   21
-## [4,]   31
-## [5,]   28
-## [6,]    3</code></pre>
+## [1,]   14
+## [2,]    8
+## [3,]   18
+## [4,]   28
+## [5,]   23
+## [6,]    9</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r">
 x &lt;- <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="dt">length =</span> <span class="dv">100</span>)
 <span class="kw">plot</span>(x, <span class="kw">dchisq</span>(x, <span class="dt">df =</span> <span class="dv">1</span>), <span class="dt">type =</span> <span class="st">&quot;l&quot;</span>)
@@ -283,8 +285,8 @@ x &lt;- <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">
 <h1 id="other-types-of-simulation-and-sampling">Other types of simulation and sampling</h1>
 <p>We can draw a sample with or without replacement.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">sample</span>(<span class="kw">row.names</span>(state.x77), <span class="dv">7</span>, <span class="dt">replace =</span> <span class="ot">FALSE</span>)</code></pre>
-<pre><code>## [1] &quot;Ohio&quot;         &quot;Maine&quot;        &quot;Oregon&quot;       &quot;Mississippi&quot; 
-## [5] &quot;North Dakota&quot; &quot;Vermont&quot;      &quot;Kentucky&quot;</code></pre>
+<pre><code>## [1] &quot;North Dakota&quot; &quot;New Mexico&quot;   &quot;Arizona&quot;      &quot;Georgia&quot;     
+## [5] &quot;Florida&quot;      &quot;Wisconsin&quot;    &quot;Kentucky&quot;</code></pre>
 <p>Here's an example of some code that would be part of coding up a bootstrap.</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># actual mean</span>
 <span class="kw">mean</span>(earnings$earn, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
@@ -292,7 +294,7 @@ x &lt;- <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co"># here's a bootstrap sample:</span>
 smp &lt;- <span class="kw">sample</span>(<span class="kw">seq_len</span>(<span class="kw">nrow</span>(earnings)), <span class="dt">replace =</span> <span class="ot">TRUE</span>)
 <span class="kw">mean</span>(earnings$earn[smp], <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</code></pre>
-<pre><code>## [1] 20317</code></pre>
+<pre><code>## [1] 20282</code></pre>
 <p>It's a good idea to use <code>seq_along()</code> and <code>seq_len()</code> and not syntax like <code>1:length(earnings)</code> in <code>sample()</code> because the outcome of <code>length()</code> might in some cases be unexpected (e.g., if you're taking subsets of a dataset). Similar reasoning holds when setting up for loops: e.g.,</p>
 <pre class="sourceCode r"><code class="sourceCode r">for (i in <span class="kw">seq_len</span>(<span class="kw">nrow</span>(earnings))) {
     <span class="co"># blah</span>
