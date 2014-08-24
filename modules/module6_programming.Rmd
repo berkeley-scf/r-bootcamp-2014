@@ -342,7 +342,7 @@ max <- histNormal(1000)
 max
 ```
 
-# User-defined functions V: multiple arguments, default values
+# Functions with multiple arguments and default values
 
 ```{r, echo=TRUE, results='markup', fig.cap=""}
 newFunction <- function(num, threshold=0, modifier=2) {
@@ -372,7 +372,7 @@ hist(sapply(rnorm(10000), newFunction), breaks=60, freq=FALSE)
 hist(sapply(rnorm(10000), newFunction, modifier=1), breaks=60, freq=FALSE)
 ```
 
-# User-defined functions VI: `...` argument
+# What is the "..." argument for?
 
 ```{r, fig.cap=""}
 
