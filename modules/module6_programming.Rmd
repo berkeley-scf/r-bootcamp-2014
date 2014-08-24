@@ -2,6 +2,85 @@
 % August 2014, UC Berkeley
 % Chris Paciorek/Jarrod Millman
 
+# When do I start programming?
+
+
+> “[W]e wanted users to be able to begin in an interactive environment,
+> where they did not consciously think of themselves as programming.
+> Then as their needs became clearer and their sophistication increased,
+> they should be able **to slide gradually into programming, when the
+> language and system aspects would become more important**.”
+
+[John Chambers, “Stages in the Evolution of S”](http://www.stat.bell-labs.com/S/history.html)
+
+# Key Principles
+
+- Everything that exists is an object.
+- Everything that happens is a function call.
+
+   [John Chambers' useR!2014 talk](http://user2014.stat.ucla.edu/files/chambers.pdf)
+
+### What does the 2nd principle mean?
+
+Are arithmetic operations really just functions?
+```{r}
+3+2
+'+'(3,2)
+```
+
+What about indexing?
+
+```{r}
+x=matrix(runif(100),10)
+x[,2]
+'['(x,,2)
+```
+
+### What does the 1st principle mean?
+
+```{r}
+class(1)
+class(runif)
+class(function(x) x^2)
+myfunc = function(x) x^2
+class(myfunc)
+```
+
+# So what is a function in R?
+
+You've been working with functions for at least a day now and you've
+probably started to get an informal feel for them.  Now it is time to make
+those informal notions more precise.
+
+> In computer programming, a subroutine is **a sequence of program
+> instructions that perform a specific task, packaged as a unit**. This unit
+> can then be used in programs wherever that particular task should be
+> performed. Subprograms may be defined within programs, or separately in
+> libraries that can be used by multiple programs.
+
+http://en.wikipedia.org/wiki/Function_(computer_science)
+
+Technically, R has more than one type of function, but we will only
+consider the most important type called a **closure**.  Closures are a
+general programming construct that roughly mean a callable (i.e.,
+subroutine) and a referencing environment.
+
+A closure has three components:
+
+- its formals (its argument list)
+- its body (expr in the statement below)
+- its environment which provides the enclosure of the evaluation frame when the closure is used
+
+> function( arglist ) expr
+
+```{r}
+square = function(x) x^2
+formals(square)
+body(square)
+environment(square)
+```
+
+
 # `if`-`else` statements
 
 ```{r}
@@ -287,15 +366,6 @@ histNormalWrapper <- function(N, ...) {
 histNormalWrapper(1000)
 histNormalWrapper(1000, breaks=50)
 ```
-
-# Anonymous functions
-
-Define throwaway functions on the fly:
-```{r, fig.cap=""}
-hist(sapply(rnorm(10000), function(x) {x*3}), breaks=60, freq=FALSE)
-```
-
-(Note that a function is just an object like any other R object -- that means that it can be passed as an argument to other functions like sapply().)
 
 # Scoping
 
