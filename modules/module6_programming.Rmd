@@ -71,7 +71,13 @@ A closure has three components:
 - its body (expr in the statement below)
 - its environment which provides the enclosure of the evaluation frame when the closure is used
 
+Consider this generic function
+
 > function( arglist ) expr
+
+- ```arglist``` corresponds to the function's formals
+- ```expr``` corresponds to the function's body
+- the environment provides the context for the evaluation of the body
 
 ```{r}
 square = function(x) x^2
@@ -80,6 +86,72 @@ formals(square)
 body(square)
 ```
 
+# Function arguments
+
+We will return to the enivornment and body in a moment.  First let's look
+a bit more closely at the formal argument.  Formal arguments are part of
+the function definition and don't change based on how the function is
+called.  When a function is called it will be called with some actual
+arguments.
+
+How does R map the actual arguments of a function call in a specific
+instance to the formal arguments of its definition?
+
+It first tries to match the actual arguments to the formal arguments by
+exact name, then by prefix matching, and finally by position.
+
+Default and missing arguments
+
+Lazy evaluation
+
+
+# Lexical scope
+
+"Look up symbol values based on how functions were nested
+when they were created, not how they are nested when they are called.
+
+Importantly, you don’t need to know how the function
+
+is called to figure out where the value of a variable will be looked up.
+You just need to look at the function’s definition.
+"
+
+Just look up one level ...
+
+```{r}
+x <- 2
+f <- function() {
+    y <- 1
+    c(x, y)
+}
+g()
+```
+
+```{r}
+a <- 1
+b <- 2
+
+f <- function(x)  a*x + b
+
+g <- function(x) {
+    a <- 2
+    b <- 1
+    f(x)
+}
+
+g(2)
+```
+
+```{r}
+f <- function(a, b) {
+    a <- 2
+    b <- 1
+    return(function(x) a*x + b)
+}
+
+g <- f(2, 1)
+g(2)
+```
 
 # User-defined functions III: a function
 
