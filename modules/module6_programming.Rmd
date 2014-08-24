@@ -13,6 +13,10 @@
 
 [John Chambers, “Stages in the Evolution of S”](http://www.stat.bell-labs.com/S/history.html)
 
+### Acknowledgement
+
+[Advanced R](http://adv-r.had.co.nz/) by Hadley Wickham.
+
 # Key Principles
 
 - Everything that exists is an object.
@@ -42,8 +46,8 @@ x[,2]
 class(1)
 class(runif)
 class(function(x) x^2)
-myfunc = function(x) x^2
-class(myfunc)
+square = function(x) x^2
+class(square)
 ```
 
 # So what is a function in R?
@@ -97,24 +101,63 @@ arguments.
 How does R map the actual arguments of a function call in a specific
 instance to the formal arguments of its definition?
 
-It first tries to match the actual arguments to the formal arguments by
+```{r}
+args(runif)
+runif(5)
+runif(min=0, 5)
+runif(min=0, 5, 2)
+runif(min=0, max=5, 2)
+runif(5, 0, 2)
+runif(5, max=2)
+runif(5, ma=2)
+runif(5, m=2)
+```
+
+R first tries to match the actual arguments to the formal arguments by
 exact name, then by prefix matching, and finally by position.
 
-Default and missing arguments
-
-Lazy evaluation
-
+Note:  R allows for default values for function arguments.
 
 # Lexical scope
 
-"Look up symbol values based on how functions were nested
-when they were created, not how they are nested when they are called.
+Now let's quickly look at what the environment involves.  We've
+already encountered environments.
 
-Importantly, you don’t need to know how the function
+```{r}
+ls()
+```
 
-is called to figure out where the value of a variable will be looked up.
-You just need to look at the function’s definition.
-"
+An environment in R is a data structure that associates a set of names
+with a set of values.
+
+```{r}
+e <- new.env()
+e$add <- '+'
+e$x <- "a"
+e$y <- rnorm(10)
+e
+ls(e)
+```
+
+Every environment (except the **empty** one) has a parent environment.
+
+```{r}
+.GlobalEnv
+parent.env(e)
+environmentName(parent.env(e))
+```
+
+
+```{r}
+search()
+```
+
+How does R look up symbol values?  To answer this it is helpful to
+introduce some new vocabulary.
+
+**Scope** refers to which variables a given piece of code can access.
+
+R uses **lexical scoping**: functions can access variables in their own scope relative to where they are **defined** (**not** relative to where they are called).
 
 Just look up one level ...
 
@@ -124,7 +167,7 @@ f <- function() {
     y <- 1
     c(x, y)
 }
-g()
+f()
 ```
 
 ```{r}
@@ -144,8 +187,6 @@ g(2)
 
 ```{r}
 f <- function(a, b) {
-    a <- 2
-    b <- 1
     return(function(x) a*x + b)
 }
 
@@ -153,28 +194,95 @@ g <- f(2, 1)
 g(2)
 ```
 
-# User-defined functions III: a function
+# Writing functions
 
-```{r, fig.cap=""}
-isItTrue <- function(val) {
-  if (val) {
-    return(paste(val, "is true"))
-  } else {
-    paste(val, "ain't true")
-  }
-}
+In module 4, we sorted the earnings dataframe based on two of its
+columns.
 
-isItTrue(3.1)
-isItTrue("false")
-isItTrue("bear")
+```{r}
+library(foreign)
+earnings <- read.dta("../data/heights.dta")
+ord <- order(earnings$earn, earnings$height, decreasing=TRUE)
+earnings_ordered <- earnings[ord, ]
 ```
 
-Note:
+How would we encapsulate that functionality generically so that
+we can apply it to other dataframes (or matrices)?
 
-1. R is *loosely-typed*: it doesn't care what kind of variable we pass as arguments until it's time to use them (but then it may throw an error)
-2. Return results via return() statement **or** last line evaluated
+```{r}
+colSorter <- function(data.matrix, col1, col2) {
+    # Sorts a matrix or dataframe based on one or more columns
+    #
+    # Args:
+    #     data.matrix: a dataframe or matrix with at least 2 numeric columns
+    #                  and any number of rows
+    #     col1: a reference to the column to sort on
+    #     col2: a reference to the column to use for ties
+    #
+    # Returns:
+    #     <data.matrix> sorted in increasing order by the values
+    #     in the first column. Any ties should be broken by values
+    #     in the second column. The row pairs should be maintained
+    #     in this matrix
 
-# User-defined functions IV: invisible return
+    ordered.idcs <- order(data.matrix[, col1], data.matrix[, col2], decreasing=TRUE)
+    sorted.matrix <- data.matrix[ordered.idcs, ]
+    return(sorted.matrix)
+}
+
+identical(earnings_ordered, colSorter(earnings, "earn", "height"))
+```
+
+What are the differenct functions parts for colSorter?
+
+```{r}
+environment(colSorter)
+formals(colSorter)
+body(colSorter)
+```
+
+Where did the comments go?
+
+```{r}
+attributes(colSorter)$srcref
+```
+
+Note: Return results via return() statement **or** last line evaluated
+
+# Writing functions with invisible return
+
+```{r}
+colSorter(earnings, "earn", "height")[1:5, 1:5]
+```
+
+
+```{r}
+colSorter <- function(data.matrix, col1, col2) {
+    # Sorts a matrix or dataframe based on one or more columns
+    #
+    # Args:
+    #     data.matrix: a dataframe or matrix with at least 2 numeric columns
+    #                  and any number of rows
+    #     col1: a reference to the column to sort on
+    #     col2: a reference to the column to use for ties
+    #
+    # Returns:
+    #     <data.matrix> sorted in increasing order by the values
+    #     in the first column. Any ties should be broken by values
+    #     in the second column. The row pairs should be maintained
+    #     in this matrix
+
+    ordered.idcs <- order(data.matrix[, col1], data.matrix[, col2], decreasing=TRUE)
+    sorted.matrix <- data.matrix[ordered.idcs, ]
+    return(invisible(sorted.matrix))
+}
+
+colSorter(earnings, "earn", "height")
+colSorter(earnings, "earn", "height")[1:5, 1:5]
+```
+
+
+
 
 ```{r, fig.cap=""}
 histNormal <- function(N) {
@@ -232,32 +340,35 @@ histNormalWrapper(1000)
 histNormalWrapper(1000, breaks=50)
 ```
 
-# Scoping
+# Lazy evaluation
 
-**Scope** refers to which variables a given piece of code can access.
-
-R uses **lexical scoping**: functions can access variables in their own scope relative to where they are **defined** (**not** relative to where they are called).
-
-Scoping is a hard topic... maybe best understood by example:
 ```{r}
-a <- 1
-b <- 2
-f<-function(x)
-{
-  if (x=="a") {a}
-  else if (x=="b") {b}
+colSorter <- function(data.matrix, col1, col2, col3) {
+    ordered.idcs <- order(data.matrix[, col1], data.matrix[, col2], decreasing=TRUE)
+    sorted.matrix <- data.matrix[ordered.idcs, ]
+    return(sorted.matrix)
 }
-g<-function(x)
-{
-  a <- 2
-  b <- 1
-  f(x)
-}
-g("a")
-a
+
+identical(earnings_ordered, colSorter(earnings, "earn", "height"))
 ```
 
-(**global** vs. **local** scope)
+Even though we've called our function with an insufficient number
+of actual arguments to match our formal arguments, R doesn't
+complain.  This is because R doesn't check to see if col3 has been
+associated with an object until R needs to retrieve the object.
+Since col3 isn't referenced in the body of the function,
+R never needs to retrieve its value and find that it can't.
+
+Note that default arguments are lazily evaluated.
+
+```{r}
+f <- function(x=ls()) {
+  a <- 1
+  x
+}
+f()
+f(ls())
+```
 
 # Control flow
 
@@ -332,6 +443,12 @@ And more directly:
 for (i in seq(2,8, by=2)) {
   print(i)
 }
+```
+
+But is it a function?
+
+```{r}
+'for'(i, seq(2,8, by=2), print(i))
 ```
 
 # `while` loop
