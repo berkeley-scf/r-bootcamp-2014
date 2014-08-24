@@ -68,3 +68,42 @@ system.time(colSums.apply(d))
 system.time(colSums.for(d))
 
 ```
+
+# Problem 5, redux
+
+WARNING: This will take several minutes to compute.
+
+```{r}
+library(rbenchmark)
+
+time.builtin = function(x) {
+    return(benchmark(colSums.builtin(x),
+           columns = c('elapsed')))
+}
+
+time.apply = function(x) {
+    return(benchmark(colSums.apply(x),
+           columns = c('elapsed')))
+}
+
+time.for = function(x) {
+    return(benchmark(colSums.for(x),
+           columns = c('elapsed')))
+}
+
+szs = seq(1000, 100000, 5000)
+#szs = seq(1000, 1000000, 50000)
+x = lapply(szs, rnormMatrix, 100)
+
+for.times = sapply(x, time.for)
+apply.times = sapply(x, time.apply)
+builtin.times = sapply(x, time.builtin)
+
+plot(szs, unlist(for.times), main="Benchmarks for computing column sums",
+     ylab="Time elapsed", type='l', col='blue')
+lines(szs, unlist(apply.times), col='red')
+lines(szs, unlist(builtin.times))
+legend("topleft", c("for loop","apply","builtin C function"),
+      fill=c('blue','red','black'))
+```
+
