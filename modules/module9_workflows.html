@@ -45,6 +45,9 @@ var hljs=new function(){function m(p){return p.replace(/&/gm,"&amp;").replace(/<
 hljs.initHighlightingOnLoad();
 </script>
 
+<!-- MathJax scripts -->
+<script type="text/javascript" src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <style type="text/css">
@@ -57,7 +60,6 @@ body, td {
 body {
   max-width: 800px;
   margin: auto;
-  padding: 1em;
   line-height: 20px;
 }
 
@@ -65,28 +67,28 @@ tt, code, pre {
    font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
 }
 
-h1 {
-   font-size:2.2em;
+h1 { 
+   font-size:2.2em; 
 }
 
-h2 {
-   font-size:1.8em;
+h2 { 
+   font-size:1.8em; 
 }
 
-h3 {
-   font-size:1.4em;
+h3 { 
+   font-size:1.4em; 
 }
 
-h4 {
-   font-size:1.0em;
+h4 { 
+   font-size:1.0em; 
 }
 
-h5 {
-   font-size:0.9em;
+h5 { 
+   font-size:0.9em; 
 }
 
-h6 {
-   font-size:0.8em;
+h6 { 
+   font-size:0.8em; 
 }
 
 a:visited {
@@ -130,54 +132,54 @@ hr {
 }
 
 @media print {
-   * {
-      background: transparent !important;
-      color: black !important;
-      filter:none !important;
-      -ms-filter: none !important;
+   * { 
+      background: transparent !important; 
+      color: black !important; 
+      filter:none !important; 
+      -ms-filter: none !important; 
    }
 
-   body {
-      font-size:12pt;
-      max-width:100%;
+   body { 
+      font-size:12pt; 
+      max-width:100%; 
+   }
+       
+   a, a:visited { 
+      text-decoration: underline; 
    }
 
-   a, a:visited {
-      text-decoration: underline;
-   }
-
-   hr {
+   hr { 
       visibility: hidden;
       page-break-before: always;
    }
 
-   pre, blockquote {
-      padding-right: 1em;
-      page-break-inside: avoid;
+   pre, blockquote { 
+      padding-right: 1em; 
+      page-break-inside: avoid; 
    }
 
-   tr, img {
-      page-break-inside: avoid;
+   tr, img { 
+      page-break-inside: avoid; 
    }
 
-   img {
-      max-width: 100% !important;
+   img { 
+      max-width: 100% !important; 
    }
 
-   @page :left {
-      margin: 15mm 20mm 15mm 10mm;
+   @page :left { 
+      margin: 15mm 20mm 15mm 10mm; 
+   }
+     
+   @page :right { 
+      margin: 15mm 10mm 15mm 20mm; 
    }
 
-   @page :right {
-      margin: 15mm 10mm 15mm 20mm;
+   p, h2, h3 { 
+      orphans: 3; widows: 3; 
    }
 
-   p, h2, h3 {
-      orphans: 3; widows: 3;
-   }
-
-   h2, h3 {
-      page-break-after: avoid;
+   h2, h3 { 
+      page-break-after: avoid; 
    }
 }
 </style>
@@ -258,11 +260,14 @@ no longer exists or is different.</li>
 </ul>
 
 <pre><code class="r">library(codetools)
-f &lt;- function() {y &lt;- 3; print(x + y)}
+f &lt;- function() {
+    y &lt;- 3
+    print(x + y)
+}
 findGlobals(f)
 </code></pre>
 
-<pre><code>## [1] &quot;{&quot;     &quot;+&quot;     &quot;&lt;-&quot;    &quot;print&quot; &quot;x&quot;
+<pre><code>## [1] &quot;&lt;-&quot;    &quot;{&quot;     &quot;+&quot;     &quot;print&quot; &quot;x&quot;
 </code></pre>
 
 <ul>
@@ -270,10 +275,13 @@ findGlobals(f)
 </ul>
 
 <pre><code class="r">mat &lt;- matrix(1:4, 2, 2)[1, ]
-dim(mat); print(mat)
+dim(mat)
 </code></pre>
 
 <pre><code>## NULL
+</code></pre>
+
+<pre><code class="r">print(mat)
 </code></pre>
 
 <pre><code>## [1] 1 3
@@ -309,10 +317,10 @@ out problems.</p>
 will give you an idea of the power of these tools.</p>
 
 <pre><code class="r">buggyFun &lt;- function(myDF) {
-   print(names(myDF))
-   myDF$id &lt;- seq_len(nrow(myDF))
-   sums &lt;- rowSums(myDF)
-   return(sums)
+    print(names(myDF))
+    myDF$id &lt;- seq_len(nrow(myDF))
+    sums &lt;- rowSums(myDF)
+    return(sums)
 }
 
 buggyFun(vote)
@@ -326,14 +334,15 @@ buggyFun(vote)
 <pre><code>## Error: &#39;x&#39; must be numeric
 </code></pre>
 
-<pre><code class="r">if(FALSE) {
-  traceback()
-  debug(buggyFun)
-  buggyFun(vote)
+<pre><code class="r">
+if (FALSE) {
+    traceback()
+    debug(buggyFun)
+    buggyFun(vote)
 
-  undebug(buggyFun)
-  options(error = recover)
-  buggyFun(vote)
+    undebug(buggyFun)
+    options(error = recover)
+    buggyFun(vote)
 }
 </code></pre>
 
@@ -374,26 +383,23 @@ execution, and reporting.  For more information, see Bioconductor&#39;s <a href=
 
 <p>There are a few tools in R for timing your code.</p>
 
-<pre><code class="r">system.time(mean(rnorm(1e7)))
+<pre><code class="r">system.time(mean(rnorm(1e+07)))
 </code></pre>
 
 <pre><code>##    user  system elapsed 
-##   0.881   0.020   0.899
+##   0.856   0.020   0.875
 </code></pre>
 
-<pre><code class="r">library(rbenchmark)
+<pre><code class="r">
+library(rbenchmark)
+x &lt;- rnorm(1e+07)
+benchmark(ifelse(x &lt; 0, x, 0), x[x &lt; 0] &lt;- 0, replications = 5, columns = c(&quot;replications&quot;, 
+    &quot;elapsed&quot;))
 </code></pre>
 
-<pre><code>## Error: there is no package called &#39;rbenchmark&#39;
-</code></pre>
-
-<pre><code class="r">x &lt;- rnorm(1e7)
-benchmark(ifelse(x &lt; 0, x, 0),
-                   x[x &lt; 0] &lt;- 0, replications = 5,
-                   columns = c(&#39;replications&#39;, &#39;elapsed&#39;))
-</code></pre>
-
-<pre><code>## Error: could not find function &quot;benchmark&quot;
+<pre><code>##   replications elapsed
+## 1            5   9.731
+## 2            5   1.226
 </code></pre>
 
 <h1>Profiling your code</h1>
@@ -444,41 +450,41 @@ summaryRprof(&quot;profile2.out&quot;)
 
 <p>You can assess memory use with <code>top</code> or <code>ps</code> in Linux/Mac or the Task Manager in Windows.</p>
 
-<pre><code class="r">x &lt;- rnorm(1e7)
+<pre><code class="r">x &lt;- rnorm(1e+07)
 object.size(x)
 </code></pre>
 
 <pre><code>## 80000040 bytes
 </code></pre>
 
-<pre><code class="r">1e7*8/1e6
+<pre><code class="r">1e+07 * 8/1e+06
 </code></pre>
 
 <pre><code>## [1] 80
 </code></pre>
 
-<pre><code class="r">print(object.size(x), units = &#39;auto&#39;)
+<pre><code class="r">print(object.size(x), units = &quot;auto&quot;)
 </code></pre>
 
 <pre><code>## 76.3 Mb
 </code></pre>
 
-<pre><code class="r">x &lt;- rnorm(1e8)
+<pre><code class="r">x &lt;- rnorm(1e+08)
 gc()
 </code></pre>
 
 <pre><code>##             used  (Mb) gc trigger  (Mb)  max used  (Mb)
-## Ncells    242184  13.0     467875  25.0    467875  25.0
-## Vcells 101285834 772.8  123030067 938.7 111297626 849.2
+## Ncells    252022  13.5     531268  28.4    531268  28.4
+## Vcells 101187764 772.1  122921948 937.9 111194902 848.4
 </code></pre>
 
 <pre><code class="r">rm(x)
 gc()
 </code></pre>
 
-<pre><code>##           used (Mb) gc trigger (Mb)  max used  (Mb)
-## Ncells  242199 13.0     467875   25    467875  25.0
-## Vcells 1285871  9.9   98424053  751 111297626 849.2
+<pre><code>##           used (Mb) gc trigger  (Mb)  max used  (Mb)
+## Ncells  252039 13.5     531268  28.4    531268  28.4
+## Vcells 1187803  9.1   98337558 750.3 111194902 848.4
 </code></pre>
 
 <h1>Scripting</h1>
@@ -575,7 +581,7 @@ within a file.</li>
 </ul>
 
 <pre><code class="r">c &lt;- 7
-c(3,5)
+c(3, 5)
 </code></pre>
 
 <pre><code>## [1] 3 5
