@@ -1,60 +1,70 @@
 % R bootcamp, Module 6: Programming
 % August 2014, UC Berkeley
-% Chris Paciorek
+% Jarrod Millman
 ========================================================
 
 # Problem 1
 
-Write a function that returns the mean of N normally distributed random numbers.
 
 ```{r}
-meanOfNormals <- function(N) {
-  mean(rnorm(N))
+rnormMatrix <- function(r, c) {
+    return(matrix(rnorm(r*c), r))
 }
-
-meanOfNormals(1)
-meanOfNormals(10)
-meanOfNormals(100)
-meanOfNormals(1000)
-meanOfNormals(10000)
 ```
 
 # Problem 2
 
-Extend Problem 1: allow the user to pass parameters for the normal distribution, and return both mean and median.
-
 ```{r}
-statsOfNormals <- function(N, mean=0, sd=1) {
-  myVars <- rnorm(N, mean, sd)
-  out <- list(mean(myVars), median(myVars))
-  names(out) <- c("mean","median")
-  out
+colSums.builtin  <- function(x) {
+    return(colSums(x))
 }
-
-statsOfNormals(1, 5, 2)
-statsOfNormals(10, 5, 1)
-statsOfNormals(100, 3)
-statsOfNormals(1000, 3)
-statsOfNormals(10000, 3)
 ```
 
 # Problem 3
 
-Write a function that repeatedly generates random normal variables until it generates a random number more than N standard deviations from the mean. Return the number of samples performed up to that point.
+```{r}
+colSums.apply <- function(x) {
+    return(apply(x, 2, sum))
+}
+```
+
+# Problem 4
 
 ```{r}
-nUntilFluctuation <- function(N) {
-  i <- 0
-  var <- 0
-  while (abs(var) < N) {
-    var = rnorm(1)
-    i = i+1
-  }
-  i
+colSums.for <- function(x) {
+    s <- vector("numeric", ncol(x))
+    for (col in 1:ncol(x)) {
+        s[col] = sum(x[,col])
+    }
+    return(s)
 }
+```
 
-nUntilFluctuation(1)
-nUntilFluctuation(2)
-nUntilFluctuation(3)
-nUntilFluctuation(4)
+# Problem 5
+
+```{r}
+d = rnormMatrix(3, 4)
+colSums.builtin(d)
+colSums.apply(d)
+colSums.for(d)
+
+system.time(colSums.builtin(d))
+system.time(colSums.apply(d))
+system.time(colSums.for(d))
+
+d = rnormMatrix(300, 400)
+system.time(colSums.builtin(d))
+system.time(colSums.apply(d))
+system.time(colSums.for(d))
+
+d = rnormMatrix(30000, 400)
+system.time(colSums.builtin(d))
+system.time(colSums.apply(d))
+system.time(colSums.for(d))
+
+d = rnormMatrix(300, 400000)
+system.time(colSums.builtin(d))
+system.time(colSums.apply(d))
+system.time(colSums.for(d))
+
 ```
