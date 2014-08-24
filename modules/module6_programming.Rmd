@@ -90,6 +90,27 @@ formals(square)
 body(square)
 ```
 
+### But what do they do?
+
+Functions in R return an object.
+
+**Pure functions** always return the same object when given the same input.
+You should try to stick with pure functions as much as possible, because
+they are the easiest kind to reason about.
+
+**Side effects** are when a function affects the state of the world in
+addition to its return value.  Can you think of any side effects that
+you saw an R function produce from yesterday?  What about:
+
+- ```library```
+- ```setwd```
+- ```plot```
+
+**Copy-on-modify** means that if you modify an argument inside the
+function it will not change the original value.  This protects you from
+a major potential source of side effects.  (There are exceptions to this
+rule.)
+
 # Function arguments
 
 We will return to the enivornment and body in a moment.  First let's look
@@ -116,7 +137,10 @@ runif(5, m=2)
 R first tries to match the actual arguments to the formal arguments by
 exact name, then by prefix matching, and finally by position.
 
-Note:  R allows for default values for function arguments.
+WARNING:  Using prefix matching may occassionally save some typing
+when you are doing interactive work that you plan to discard.  However,
+when you are writing code and saving it in a file, you should
+normally be explicit.
 
 # Lexical scope
 
@@ -135,9 +159,21 @@ e <- new.env()
 e$add <- '+'
 e$x <- "a"
 e$y <- rnorm(10)
+class(e)
 e
 ls(e)
 ```
+
+In particular, it is an unordered collection of
+names and values (or keys and values if you are familiar with
+dictionaries).
+
+```{r}
+e[1]
+e[[1]]
+```
+
+NOTE: Environments are not lists.
 
 Every environment (except the **empty** one) has a parent environment.
 
@@ -147,6 +183,9 @@ parent.env(e)
 environmentName(parent.env(e))
 ```
 
+Since each environment has a parent (back to the root empty one),
+this produces a unique path from the immediate environment
+back to the empty one.
 
 ```{r}
 search()
@@ -193,6 +232,13 @@ f <- function(a, b) {
 g <- f(2, 1)
 g(2)
 ```
+
+When a function is made it gets a reference to its enclosing environment.
+
+```{r}
+environment(f)
+```
+
 
 # Writing functions
 
@@ -555,10 +601,28 @@ seq(2,20, by =2)+2
 ```
 
 
-# Breakout
+# Breakout (colSums 3 ways)
 
-1) Write a function that returns the mean of N normally distributed random numbers.
+For this breakout, you will see how long it takes to compute the
+columns sums of a matrix in 3 different ways.
 
-2) Extend exercise #1: allow the user to pass the mean and standard deviation of the normal distribution (but provide default values in case they don't), and return both mean and median of the generated random numbers.
+1. Create a function (rnormMatrix) that takes two arguments (r,c) and
+   returns a rxc matrix of values drawn from a standard normal distribution.
 
-3) Write a function that repeatedly generates random normal variables until it generates a random number more than N standard deviations from the mean. Return the number of samples performed up to that point.
+2. Create a function (colSums.builtin) which takes a matrix and
+   returns a vector of the column sums.  Implement this function
+   using R's builtin function colSums.
+
+3. Create a function (colSums.apply) which takes a matrix and
+   returns a vector of the column sums.  Implement this function
+   using R's builtin function sum and an apply statement.
+
+4. Create a function (colSums.for) which takes a matrix and
+   returns a vector of the column sums.  Implement this function
+   using R's builtin function sum and a for loop.
+
+5. Create a few different sized matrices using rnormMatrix and
+   see how long each of the colSums.xxx functions takes to
+   compute the column sums.  Compare the results from the
+   different function calls to make sure you are computing the
+   same result in each function.
