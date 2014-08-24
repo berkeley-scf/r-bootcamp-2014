@@ -51,8 +51,7 @@ tricks and check that both produce the same output.
 - Parenthesis mis-matches
 - `[...]` vs. `[[...]]`
 = `==` vs. `=` 
-- Comparing real numbers exactly using `==` is dangerous. Suppose you generate `x = 0.333333` in some
-fashion with some code and then check: `x == 1/3`. This will produce FALSE.
+- Comparing real numbers exactly using `==` is dangerous. Suppose you generate `x = 0.333333` in some fashion with some code and then check: `x == 1/3`. This will produce FALSE.
 - Vectors vs. single values: 
   + `||` vs. `|` and `&&` vs `&`
   + You expect a single value but your code gives you a vector
@@ -344,3 +343,9 @@ Here are some useful articles talking about reproducibility.
 * If feasible, include your code for doing analyses and making figures in the relevant document reporting the work by using R Markdown or *Latex* with *knitr* or *Sweave*. 
 * Always set the random number seed so someone else can duplicate your exact numbers.
 * Use version control tools such as Git! 
+
+# Breakout
+
+Please fill out the feedback survey.
+
+http://bit.ly/rbootcamp
