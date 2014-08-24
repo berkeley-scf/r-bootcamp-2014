@@ -33,7 +33,7 @@ sum.reg<-summary(reg)
 sum.reg$coefficients
 
 # Plot predicted values versus total_bill
-plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+plot(x = tips.sun$total_bill, y = predict(object = reg, type = "response"), xlab = "Total Bill", ylab = "Pr(Good Tip)")
 
 # Re-estimate model with interactions
 reg<-glm(formula = good.tip~total_bill*size, family = binomial(logit), data = tips.sun)
@@ -41,7 +41,7 @@ sum.reg<-summary(reg)
 sum.reg$coefficients
 
 # Plot predicted values versus total_bill
-plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+plot(x = tips.sun$total_bill, y = predict(object = reg, type = "response"), xlab = "Total Bill", ylab = "Pr(Good Tip)")
 
 # Re-estimate model with quadratic term on total_bill
 reg<-glm(formula = good.tip~I(total_bill^2)+total_bill+size, family = binomial(logit), data = tips.sun)
@@ -49,7 +49,7 @@ sum.reg<-summary(reg)
 sum.reg$coefficients
 
 # Plot predicted values versus total_bill
-plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+plot(x = tips.sun$total_bill, y = predict(object = reg, type = "response"), xlab = "Total Bill", ylab = "Pr(Good Tip)")
 
 # Re-estimate model with additional covariates
 reg<-glm(formula = good.tip~total_bill+size+sex+smoker, family = binomial(logit), data = tips.sun)
@@ -57,7 +57,7 @@ sum.reg<-summary(reg)
 sum.reg$coefficients
 
 # Plot predicted values versus total_bill
-plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+plot(x = tips.sun$total_bill, y = predict(object = reg, type = "response"), xlab = "Total Bill", ylab = "Pr(Good Tip)")
 
 # Re-estimate model with interactions and additional covariates
 reg<-glm(formula = good.tip~total_bill*size+sex+smoker, family = binomial(logit), data = tips.sun)
@@ -65,7 +65,7 @@ sum.reg<-summary(reg)
 sum.reg$coefficients
 
 # Plot predicted values versus total_bill
-plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+plot(x = tips.sun$total_bill, y = predict(object = reg, type = "response"), xlab = "Total Bill", ylab = "Pr(Good Tip)")
 
 # Re-estimate model with quadratic term on total_bill and additional covariates
 reg<-glm(formula = good.tip~I(total_bill^2)+total_bill+size+sex+smoker, family = binomial(logit), data = tips.sun)
@@ -73,12 +73,12 @@ sum.reg<-summary(reg)
 sum.reg$coefficients
 
 # Plot predicted values versus total_bill
-plot(x = tips.sun$total_bill, y = exp(predict(object = reg)), xlab = "Total Bill", ylab = "Pr(Good Tip)")
+plot(x = tips.sun$total_bill, y = predict(object = reg, type = "response"), xlab = "Total Bill", ylab = "Pr(Good Tip)")
 
 # Compare predicted probability of leaving a good tip for group sizes of two and four
-plot(x = tips.sun$size, y = exp(predict(object = reg)), xlab = "Size of Party", ylab = "Pr(Good Tip)")
-mean(exp(predict(object = reg))[tips.sun$size==2])
-mean(exp(predict(object = reg))[tips.sun$size==4])
+plot(x = tips.sun$size, y = predict(object = reg, type = "response"), xlab = "Size of Party", ylab = "Pr(Good Tip)")
+mean(predict(object = reg, type = "response")[tips.sun$size==2])
+mean(predict(object = reg, type = "response")[tips.sun$size==4])
 ```
 
 # Ambitious Homework
