@@ -2,7 +2,428 @@
 % August 2014, UC Berkeley
 % Chris Paciorek/Jarrod Millman
 
-# `if`-`else` statements
+# When do I start programming?
+
+
+> “[W]e wanted users to be able to begin in an interactive environment,
+> where they did not consciously think of themselves as programming.
+> Then as their needs became clearer and their sophistication increased,
+> they should be able **to slide gradually into programming, when the
+> language and system aspects would become more important**.”
+
+[John Chambers, “Stages in the Evolution of S”](http://www.stat.bell-labs.com/S/history.html)
+
+### Acknowledgement
+
+[Advanced R](http://adv-r.had.co.nz/) by Hadley Wickham.
+
+# Key Principles
+
+- Everything that exists is an object.
+- Everything that happens is a function call.
+
+   [John Chambers' useR!2014 talk](http://user2014.stat.ucla.edu/files/chambers.pdf)
+
+### What does the 2nd principle mean?
+
+Are arithmetic operations really just functions?
+```{r}
+3+2
+'+'(3,2)
+```
+
+What about indexing?
+
+```{r}
+x=matrix(runif(100),10)
+x[,2]
+'['(x,,2)
+```
+
+### What does the 1st principle mean?
+
+```{r}
+class(1)
+class(runif)
+class(function(x) x^2)
+square = function(x) x^2
+class(square)
+```
+
+# So what is a function in R?
+
+You've been working with functions for at least a day now and you've
+probably started to get an informal feel for them.  Now it is time to make
+those informal notions more precise.
+
+> In computer programming, a subroutine is **a sequence of program
+> instructions that perform a specific task, packaged as a unit**. This unit
+> can then be used in programs wherever that particular task should be
+> performed. Subprograms may be defined within programs, or separately in
+> libraries that can be used by multiple programs.
+
+http://en.wikipedia.org/wiki/Function_(computer_science)
+
+Technically, R has more than one type of function, but we will only
+consider the most important type called a **closure**.  Closures are a
+general programming construct that roughly mean a callable (i.e.,
+subroutine) and a referencing environment.
+
+A closure has three components:
+
+- its formals (its argument list)
+- its body (expr in the statement below)
+- its environment which provides the enclosure of the evaluation frame when the closure is used
+
+Consider this generic function
+
+> function( arglist ) expr
+
+- ```arglist``` corresponds to the function's formals
+- ```expr``` corresponds to the function's body
+- the environment provides the context for the evaluation of the body
+
+```{r}
+square = function(x) x^2
+environment(square)
+formals(square)
+body(square)
+```
+
+### But what do they do?
+
+Functions in R return an object.
+
+**Pure functions** always return the same object when given the same input.
+You should try to stick with pure functions as much as possible, because
+they are the easiest kind to reason about.
+
+**Side effects** are when a function affects the state of the world in
+addition to its return value.  Can you think of any side effects that
+you saw an R function produce from yesterday?  What about:
+
+- ```library```
+- ```setwd```
+- ```plot```
+
+**Copy-on-modify** means that if you modify an argument inside the
+function it will not change the original value.  This protects you from
+a major potential source of side effects.  (There are exceptions to this
+rule.)
+
+# Function arguments
+
+We will return to the enivornment and body in a moment.  First let's look
+a bit more closely at the formal argument.  Formal arguments are part of
+the function definition and don't change based on how the function is
+called.  When a function is called it will be called with some actual
+arguments.
+
+How does R map the actual arguments of a function call in a specific
+instance to the formal arguments of its definition?
+
+```{r}
+args(runif)
+runif(5)
+runif(min=0, 5)
+runif(min=0, 5, 2)
+runif(min=0, max=5, 2)
+runif(5, 0, 2)
+runif(5, max=2)
+runif(5, ma=2)
+runif(5, m=2)
+```
+
+R first tries to match the actual arguments to the formal arguments by
+exact name, then by prefix matching, and finally by position.
+
+WARNING:  Using prefix matching may occassionally save some typing
+when you are doing interactive work that you plan to discard.  However,
+when you are writing code and saving it in a file, you should
+normally be explicit.
+
+# Lexical scope
+
+Now let's quickly look at what the environment involves.  We've
+already encountered environments.
+
+```{r}
+ls()
+```
+
+An environment in R is a data structure that associates a set of names
+with a set of values.
+
+```{r}
+e <- new.env()
+e$add <- '+'
+e$x <- "a"
+e$y <- rnorm(10)
+class(e)
+e
+ls(e)
+```
+
+In particular, it is an unordered collection of
+names and values (or keys and values if you are familiar with
+dictionaries).
+
+```{r}
+e[1]
+e[[1]]
+```
+
+NOTE: Environments are not lists.
+
+Every environment (except the **empty** one) has a parent environment.
+
+```{r}
+.GlobalEnv
+parent.env(e)
+environmentName(parent.env(e))
+```
+
+Since each environment has a parent (back to the root empty one),
+this produces a unique path from the immediate environment
+back to the empty one.
+
+```{r}
+search()
+```
+
+How does R look up symbol values?  To answer this it is helpful to
+introduce some new vocabulary.
+
+**Scope** refers to which variables a given piece of code can access.
+
+R uses **lexical scoping**: functions can access variables in their own scope relative to where they are **defined** (**not** relative to where they are called).
+
+Just look up one level ...
+
+```{r}
+x <- 2
+f <- function() {
+    y <- 1
+    c(x, y)
+}
+f()
+```
+
+```{r}
+a <- 1
+b <- 2
+
+f <- function(x)  a*x + b
+
+g <- function(x) {
+    a <- 2
+    b <- 1
+    f(x)
+}
+
+g(2)
+```
+
+```{r}
+f <- function(a, b) {
+    return(function(x) a*x + b)
+}
+
+g <- f(2, 1)
+g(2)
+```
+
+When a function is made it gets a reference to its enclosing environment.
+
+```{r}
+environment(f)
+```
+
+
+# Writing functions
+
+In module 4, we sorted the earnings dataframe based on two of its
+columns.
+
+```{r}
+library(foreign)
+earnings <- read.dta("../data/heights.dta")
+ord <- order(earnings$earn, earnings$height, decreasing=TRUE)
+earnings_ordered <- earnings[ord, ]
+```
+
+How would we encapsulate that functionality generically so that
+we can apply it to other dataframes (or matrices)?
+
+```{r}
+colSorter <- function(data.matrix, col1, col2) {
+    # Sorts a matrix or dataframe based on one or more columns
+    #
+    # Args:
+    #     data.matrix: a dataframe or matrix with at least 2 numeric columns
+    #                  and any number of rows
+    #     col1: a reference to the column to sort on
+    #     col2: a reference to the column to use for ties
+    #
+    # Returns:
+    #     <data.matrix> sorted in increasing order by the values
+    #     in the first column. Any ties should be broken by values
+    #     in the second column. The row pairs should be maintained
+    #     in this matrix
+
+    ordered.idcs <- order(data.matrix[, col1], data.matrix[, col2], decreasing=TRUE)
+    sorted.matrix <- data.matrix[ordered.idcs, ]
+    return(sorted.matrix)
+}
+
+identical(earnings_ordered, colSorter(earnings, "earn", "height"))
+```
+
+What are the differenct functions parts for colSorter?
+
+```{r}
+environment(colSorter)
+formals(colSorter)
+body(colSorter)
+```
+
+Where did the comments go?
+
+```{r}
+attributes(colSorter)$srcref
+```
+
+Note: Return results via return() statement **or** last line evaluated
+
+# Writing functions with invisible return
+
+```{r}
+colSorter(earnings, "earn", "height")[1:5, 1:5]
+```
+
+
+```{r}
+colSorter <- function(data.matrix, col1, col2) {
+    # Sorts a matrix or dataframe based on one or more columns
+    #
+    # Args:
+    #     data.matrix: a dataframe or matrix with at least 2 numeric columns
+    #                  and any number of rows
+    #     col1: a reference to the column to sort on
+    #     col2: a reference to the column to use for ties
+    #
+    # Returns:
+    #     <data.matrix> sorted in increasing order by the values
+    #     in the first column. Any ties should be broken by values
+    #     in the second column. The row pairs should be maintained
+    #     in this matrix
+
+    ordered.idcs <- order(data.matrix[, col1], data.matrix[, col2], decreasing=TRUE)
+    sorted.matrix <- data.matrix[ordered.idcs, ]
+    return(invisible(sorted.matrix))
+}
+
+colSorter(earnings, "earn", "height")
+colSorter(earnings, "earn", "height")[1:5, 1:5]
+```
+
+
+
+
+```{r, fig.cap=""}
+histNormal <- function(N) {
+  vals <- rnorm(N)
+  hist(vals)
+  invisible(max(vals))
+}
+
+histNormal(1000)
+max <- histNormal(1000)
+max
+```
+
+# Functions with multiple arguments and default values
+
+```{r, echo=TRUE, results='markup', fig.cap=""}
+newFunction <- function(num, threshold=0, modifier=2) {
+  if (num < threshold) {
+    return(num / modifier)
+  } else {
+    return(num * modifier)
+  }
+}
+newFunction(2.6)
+```
+
+R lazily matches arguments from left to right:
+```{r}
+newFunction(2.6, 3)
+newFunction(2.6, 3, 1.3)
+```
+
+But we can explicitly specify which argument is which:
+```{r}
+newFunction(2.6, modifier=1.3, threshold=3)
+```
+
+And we can pass the other arguments to most pre-defined R functions:
+```{r, fig.cap=""}
+hist(sapply(rnorm(10000), newFunction), breaks=60, freq=FALSE)
+hist(sapply(rnorm(10000), newFunction, modifier=1), breaks=60, freq=FALSE)
+```
+
+# What is the "..." argument for?
+
+```{r, fig.cap=""}
+
+args(hist)
+histNormalWrapper <- function(N, ...) {
+  vals <- rnorm(N)
+  hist(vals, ...)
+}
+
+histNormalWrapper(1000)
+histNormalWrapper(1000, breaks=50)
+```
+
+# Lazy evaluation
+
+```{r}
+colSorter <- function(data.matrix, col1, col2, col3) {
+    ordered.idcs <- order(data.matrix[, col1], data.matrix[, col2], decreasing=TRUE)
+    sorted.matrix <- data.matrix[ordered.idcs, ]
+    return(sorted.matrix)
+}
+
+identical(earnings_ordered, colSorter(earnings, "earn", "height"))
+```
+
+Even though we've called our function with an insufficient number
+of actual arguments to match our formal arguments, R doesn't
+complain.  This is because R doesn't check to see if col3 has been
+associated with an object until R needs to retrieve the object.
+Since col3 isn't referenced in the body of the function,
+R never needs to retrieve its value and find that it can't.
+
+Note that default arguments are lazily evaluated.
+
+```{r}
+f <- function(x=ls()) {
+  a <- 1
+  x
+}
+f()
+f(ls())
+```
+
+# Control flow
+
+More interesting when there is control flow:
+
+- branching
+- looping
+
+# Branching: `if`-`else` statements
 
 ```{r}
 val <- rnorm(1)
@@ -45,11 +466,6 @@ if ("bear") {
 }
 ```
 
-# Loops
-
-One of the major reasons why programming languages exist is to **automate** away annoying or tedious tasks. Loops are a basic way to do that.
-
-But be careful -- frequently, there is a more R-standard (and usually faster) way to do the same thing.
 
 # `for` loop
 
@@ -73,6 +489,12 @@ And more directly:
 for (i in seq(2,8, by=2)) {
   print(i)
 }
+```
+
+But is it a function?
+
+```{r}
+'for'(i, seq(2,8, by=2), print(i))
 ```
 
 # `while` loop
@@ -178,156 +600,29 @@ myseq
 seq(2,20, by =2)+2
 ```
 
-**Less code** (although sometimes opaque) and **faster** (R-specific).
 
-# User-defined functions
+# Breakout (colSums 3 ways)
 
-Functions: take **arguments** as input, (usually) **return** values as output.
+For this breakout, you will see how long it takes to compute the
+columns sums of a matrix in 3 different ways.
 
-Why define your own functions? Primary reasons:
+1. Create a function (rnormMatrix) that takes two arguments (r,c) and
+   returns a rxc matrix of values drawn from a standard normal distribution.
 
-1. Reusability
-2. Clarity
+2. Create a function (colSums.builtin) which takes a matrix and
+   returns a vector of the column sums.  Implement this function
+   using R's builtin function colSums.
 
-# User-defined functions II: we need a function
+3. Create a function (colSums.apply) which takes a matrix and
+   returns a vector of the column sums.  Implement this function
+   using R's builtin function sum and an apply statement.
 
-Remember this?
-```{r}
-val <- 3.1
-if (val) {
-  "3.1 is true?"
-}
-```
-```{r}
-if ("true") {
-  "true is true?"
-}
-```
-```{r}
-if ("bear") {
-  "bear is true?"
-}
-```
+4. Create a function (colSums.for) which takes a matrix and
+   returns a vector of the column sums.  Implement this function
+   using R's builtin function sum and a for loop.
 
-# User-defined functions III: a function
-
-```{r, fig.cap=""}
-isItTrue <- function(val) {
-  if (val) {
-    return(paste(val, "is true"))
-  } else {
-    paste(val, "ain't true")
-  }
-}
-
-isItTrue(3.1)
-isItTrue("false")
-isItTrue("bear")
-```
-
-Note:
-
-1. R is *loosely-typed*: it doesn't care what kind of variable we pass as arguments until it's time to use them (but then it may throw an error)
-2. Return results via return() statement **or** last line evaluated
-
-# User-defined functions IV: invisible return
-
-```{r, fig.cap=""}
-histNormal <- function(N) {
-  vals <- rnorm(N)
-  hist(vals)
-  invisible(max(vals))
-}
-
-histNormal(1000)
-max <- histNormal(1000)
-max
-```
-
-# User-defined functions V: multiple arguments, default values
-
-```{r, echo=TRUE, results='markup', fig.cap=""}
-newFunction <- function(num, threshold=0, modifier=2) {
-  if (num < threshold) {
-    return(num / modifier)
-  } else {
-    return(num * modifier)
-  }
-}
-newFunction(2.6)
-```
-
-R lazily matches arguments from left to right:
-```{r}
-newFunction(2.6, 3)
-newFunction(2.6, 3, 1.3)
-```
-
-But we can explicitly specify which argument is which:
-```{r}
-newFunction(2.6, modifier=1.3, threshold=3)
-```
-
-And we can pass the other arguments to most pre-defined R functions:
-```{r, fig.cap=""}
-hist(sapply(rnorm(10000), newFunction), breaks=60, freq=FALSE)
-hist(sapply(rnorm(10000), newFunction, modifier=1), breaks=60, freq=FALSE)
-```
-
-# User-defined functions VI: `...` argument
-
-```{r, fig.cap=""}
-
-args(hist)
-histNormalWrapper <- function(N, ...) {
-  vals <- rnorm(N)
-  hist(vals, ...)
-}
-
-histNormalWrapper(1000)
-histNormalWrapper(1000, breaks=50)
-```
-
-# Anonymous functions
-
-Define throwaway functions on the fly:
-```{r, fig.cap=""}
-hist(sapply(rnorm(10000), function(x) {x*3}), breaks=60, freq=FALSE)
-```
-
-(Note that a function is just an object like any other R object -- that means that it can be passed as an argument to other functions like sapply().)
-
-# Scoping
-
-**Scope** refers to which variables a given piece of code can access.
-
-R uses **lexical scoping**: functions can access variables in their own scope relative to where they are **defined** (**not** relative to where they are called).
-
-Scoping is a hard topic... maybe best understood by example:
-```{r}
-a <- 1
-b <- 2
-f<-function(x)
-{
-  if (x=="a") {a}
-  else if (x=="b") {b}
-}
-g<-function(x)
-{
-  a <- 2
-  b <- 1
-  f(x)
-}
-g("a")
-a
-```
-
-(**global** vs. **local** scope)
-
-# Breakout
-
-1) Write a function that returns the mean of N normally distributed random numbers.
-
-2) Extend exercise #1: allow the user to pass the mean and standard deviation of the normal distribution (but provide default values in case they don't), and return both mean and median of the generated random numbers.
-
-3) Write a function that repeatedly generates random normal variables until it generates a random number more than N standard deviations from the mean. Return the number of samples performed up to that point.
+5. Create a few different sized matrices using rnormMatrix and
+   see how long each of the colSums.xxx functions takes to
+   compute the column sums.  Compare the results from the
+   different function calls to make sure you are computing the
+   same result in each function.
