@@ -27,13 +27,15 @@ Base packages, widely-used packages and packages by frequent R contributors are 
 Any other things that you found frustrating and don't think are well-designed?
 
 
-# R tutorials and materials
+# R tutorials, materials, and assistance
 
 Some of this material was borrowed/modified from [Jared Knowles' bootcamp](http://jaredknowles.com/r-bootcamp/)
 
 CRAN has [manuals](http://www.cran.r-project.org/manuals.html) and [contributed learning material](http://www.cran.r-project.org/other-docs.html).
 
 [D-Lab](http://dlab.berkeley.edu) holds workshops on R and other topics, as well as having drop-in office hours. 
+
+For grad students and researchers in statistics, economics and biostatistics, Chris Paciorek provides consulting via consult@stat.berkeley.edu and consult@econ.berkeley.edu and drop-in discussions in Evans 495.
 
 
 # Some good books
